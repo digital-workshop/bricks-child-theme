@@ -3,6 +3,12 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
+// Emergency kill switch -- add this to wp-config.php to force 2FA off
+// regardless of the Security Settings checkbox (e.g. if locked out because
+// the code email isn't arriving). Takes effect immediately, no database
+// access needed.
+//  define( 'SNN_2FA_DISABLE', true );
+
 // ----------------------------------------------------------------------
 // Settings / eligibility
 // ----------------------------------------------------------------------
