@@ -2624,7 +2624,7 @@ msgstr "Gefundene Iframes:"
 #: includes/features/media-image-opt.php:30
 #: includes/features/media-image-opt.php:2527
 msgid "Image Optimization"
-msgstr "Ungültige Protokoll-ID"
+msgstr "Bildoptimierung"
 
 #: includes/features/media-image-opt.php:3016
 msgid "Image optimized successfully."
@@ -2727,7 +2727,7 @@ msgstr "Mehr erfahren:"
 
 #: includes/features/cookie-banner.php:1004
 msgid "Left"
-msgstr "Lichtgeschwindigkeit raus rechts"
+msgstr "Links"
 
 #: includes/features/cookie-banner.php:364
 msgid "Legal Text or Links"
