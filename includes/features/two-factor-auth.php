@@ -46,6 +46,78 @@ function snn_2fa_is_required_for_user( $user ) {
     return ! empty( $non_exempt ) || empty( $roles );
 }
 
+/**
+ * Whether a single IP matches a whitelist rule -- either an exact address or
+ * a CIDR range (e.g. "203.0.113.0/24"). Handles both IPv4 and IPv6 via
+ * inet_pton() so the comparison works on the binary address regardless of
+ * family.
+ */
+function snn_2fa_ip_matches( $ip, $rule ) {
+    $rule = trim( $rule );
+    if ( $rule === '' || $ip === '' ) {
+        return false;
+    }
+
+    if ( strpos( $rule, '/' ) === false ) {
+        return $ip === $rule;
+    }
+
+    list( $subnet, $mask ) = explode( '/', $rule, 2 );
+    $mask = (int) $mask;
+
+    $ip_bin     = @inet_pton( $ip );
+    $subnet_bin = @inet_pton( $subnet );
+
+    if ( $ip_bin === false || $subnet_bin === false || strlen( $ip_bin ) !== strlen( $subnet_bin ) ) {
+        return false;
+    }
+
+    $bytes      = intdiv( $mask, 8 );
+    $remainder  = $mask % 8;
+
+    if ( $bytes > 0 && substr( $ip_bin, 0, $bytes ) !== substr( $subnet_bin, 0, $bytes ) ) {
+        return false;
+    }
+
+    if ( $remainder > 0 ) {
+        $ip_byte     = ord( $ip_bin[ $bytes ] );
+        $subnet_byte = ord( $subnet_bin[ $bytes ] );
+        $mask_byte   = ( 0xFF << ( 8 - $remainder ) ) & 0xFF;
+        if ( ( $ip_byte & $mask_byte ) !== ( $subnet_byte & $mask_byte ) ) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+/**
+ * Whether the current request's IP is on the 2FA whitelist -- these requests
+ * skip two-factor authentication entirely, for every account, regardless of
+ * role. Useful for a trusted office/VPN IP.
+ */
+function snn_2fa_is_ip_whitelisted() {
+    $options   = get_option( 'snn_security_options' );
+    $whitelist = isset( $options['2fa_ip_whitelist'] ) && is_array( $options['2fa_ip_whitelist'] ) ? $options['2fa_ip_whitelist'] : array();
+
+    if ( empty( $whitelist ) ) {
+        return false;
+    }
+
+    $current_ip = function_exists( 'snn_get_user_ip' ) ? snn_get_user_ip() : sanitize_text_field( $_SERVER['REMOTE_ADDR'] ?? '' );
+    if ( $current_ip === '' ) {
+        return false;
+    }
+
+    foreach ( $whitelist as $rule ) {
+        if ( snn_2fa_ip_matches( $current_ip, $rule ) ) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 // ----------------------------------------------------------------------
 // Login interception
 // ----------------------------------------------------------------------
@@ -61,6 +133,9 @@ function snn_2fa_maybe_intercept( $user, $username, $password ) {
         return $user;
     }
     if ( ! snn_2fa_is_required_for_user( $user ) ) {
+        return $user;
+    }
+    if ( snn_2fa_is_ip_whitelisted() ) {
         return $user;
     }
 

@@ -104,6 +104,14 @@ function snn_security_settings_init() {
         'snn-security',
         'snn_security_main_section'
     );
+
+    add_settings_field(
+        '2fa_ip_whitelist',
+        __( 'Two-Factor IP Whitelist', 'snn' ),
+        'snn_2fa_ip_whitelist_callback',
+        'snn-security',
+        'snn_security_main_section'
+    );
 }
 add_action( 'admin_init', 'snn_security_settings_init' );
 
@@ -169,6 +177,70 @@ function snn_2fa_enable_callback() {
         );
         ?>
     </p>
+    <?php
+}
+
+function snn_2fa_ip_whitelist_callback() {
+    $options   = get_option( 'snn_security_options' );
+    $whitelist = isset( $options['2fa_ip_whitelist'] ) && is_array( $options['2fa_ip_whitelist'] ) ? $options['2fa_ip_whitelist'] : array();
+
+    if ( empty( $whitelist ) ) {
+        $whitelist = array( '' );
+    }
+    ?>
+    <div id="snn_2fa_ip_whitelist_rows">
+        <?php foreach ( $whitelist as $ip ) : ?>
+            <div class="snn-2fa-ip-row" style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+                <input type="text" name="snn_security_options[2fa_ip_whitelist][]" value="<?php echo esc_attr( $ip ); ?>" placeholder="203.0.113.5 <?php esc_attr_e( 'or', 'snn' ); ?> 203.0.113.0/24" style="width:280px;">
+                <button type="button" class="button snn-2fa-ip-remove" aria-label="<?php esc_attr_e( 'Remove', 'snn' ); ?>">
+                    <span class="dashicons dashicons-no-alt" style="vertical-align:middle;"></span>
+                </button>
+            </div>
+        <?php endforeach; ?>
+    </div>
+    <button type="button" id="snn_2fa_ip_add" class="button">
+        <span class="dashicons dashicons-plus-alt2" style="vertical-align:middle;"></span>
+        <?php esc_html_e( 'Add IP Address', 'snn' ); ?>
+    </button>
+    <p class="description"><?php esc_html_e( 'Requests from these IP addresses skip two-factor authentication entirely, for every account -- useful for a trusted office or VPN IP. One address or CIDR range (e.g. 203.0.113.0/24) per field.', 'snn' ); ?></p>
+    <script>
+    (function() {
+        const container = document.getElementById('snn_2fa_ip_whitelist_rows');
+        const addBtn = document.getElementById('snn_2fa_ip_add');
+        if (!container || !addBtn) return;
+
+        function bindRemove(row) {
+            const btn = row.querySelector('.snn-2fa-ip-remove');
+            if (!btn) return;
+            btn.addEventListener('click', function() {
+                if (container.children.length > 1) {
+                    row.remove();
+                } else {
+                    const input = row.querySelector('input');
+                    if (input) input.value = '';
+                }
+            });
+        }
+
+        function makeRow() {
+            const row = document.createElement('div');
+            row.className = 'snn-2fa-ip-row';
+            row.style.cssText = 'display:flex; align-items:center; gap:8px; margin-bottom:8px;';
+            row.innerHTML = '<input type="text" name="snn_security_options[2fa_ip_whitelist][]" value="" placeholder="203.0.113.5 <?php echo esc_js( __( 'or', 'snn' ) ); ?> 203.0.113.0/24" style="width:280px;">' +
+                '<button type="button" class="button snn-2fa-ip-remove" aria-label="<?php echo esc_js( __( 'Remove', 'snn' ) ); ?>"><span class="dashicons dashicons-no-alt" style="vertical-align:middle;"></span></button>';
+            bindRemove(row);
+            return row;
+        }
+
+        addBtn.addEventListener('click', function() {
+            const row = makeRow();
+            container.appendChild(row);
+            row.querySelector('input').focus();
+        });
+
+        container.querySelectorAll('.snn-2fa-ip-row').forEach(bindRemove);
+    })();
+    </script>
     <?php
 }
 
