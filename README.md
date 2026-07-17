@@ -11,6 +11,11 @@ Basiert auf [SNN-BRX](https://github.com/sinanisler/snn-brx-child-theme) von [si
 
 *   **Automatische Bildoptimierung bei Upload:** Neu hochgeladene JPG/PNG-Bilder werden automatisch im Hintergrund zu WebP oder AVIF konvertiert und ersetzen das Original in-place (gleiche URL, gleiche Attachment-ID) — funktioniert unabhängig vom Upload-Weg (Mediathek, Block-Editor, REST-API, Bricks Builder). Ersetzt das Plugin [CompressX](https://de.wordpress.org/plugins/compressx/). Standardmäßig deaktiviert, einstellbar unter *Medien → Optimize Media → History & Settings*. Original bleibt für Restore erhalten.
 *   **Zwei-Faktor-Authentifizierung (E-Mail-Code):** Ersetzt das Plugin [Two-Factor](https://wordpress.org/plugins/two-factor/). Anders als das Original ist es kein Opt-in pro Nutzer, sondern ein globaler Schalter unter *Security Settings*, der 2FA für alle Benutzerkonten erzwingt (per E-Mail zugestellter Einmalcode, 15 Minuten gültig). Ausnahme: Konten, deren einzige Rolle(n) WooCommerce „Customer" und/oder „Subscriber" sind, bleiben ausgenommen — jede zusätzliche Rolle (Administrator, Redakteur, Autor, Shop-Manager, ...) erzwingt 2FA trotzdem. Standardmäßig deaktiviert. Das bisherige Captcha-Schutz-Setting (Math-Captcha / Cloudflare Turnstile) wurde dafür entfernt.
+    *   **IP-Whitelist:** Im selben Settings-Bereich können IP-Adressen oder CIDR-Bereiche (z. B. `203.0.113.0/24`) hinterlegt werden, die 2FA komplett überspringen — z. B. für Büro- oder VPN-IPs. Die Seite zeigt die eigene aktuelle IP an und fügt sie per Klick hinzu.
+    *   **Notausschalter:** Falls man sich mal aussperrt (z. B. weil die Code-Mail nicht ankommt), schaltet folgende Zeile in der `wp-config.php` die 2FA-Pflicht sofort aus, ganz ohne Datenbank- oder Admin-Zugriff:
+        ```php
+        define( 'SNN_2FA_DISABLE', true );
+        ```
 
 ## Key Features (Stripped)
 

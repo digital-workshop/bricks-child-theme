@@ -160,7 +160,7 @@ msgstr ""
 msgid "Actions"
 msgstr ""
 
-#: includes/features/security-page.php:203
+#: includes/features/security-page.php:218
 msgid "Add IP Address"
 msgstr ""
 
@@ -193,6 +193,10 @@ msgstr ""
 
 #: includes/features/other-settings.php:729
 msgid "Add a mega menu icon as the first item in the admin bar (admins only)"
+msgstr ""
+
+#: includes/features/security-page.php:203
+msgid "Add my IP"
 msgstr ""
 
 #: includes/features/cookie-banner.php:411
@@ -3706,8 +3710,8 @@ msgstr ""
 #: includes/features/custom-field-settings.php:3017
 #: includes/features/post-types-settings.php:123
 #: includes/features/post-types-settings.php:276
-#: includes/features/security-page.php:195
-#: includes/features/security-page.php:230
+#: includes/features/security-page.php:210
+#: includes/features/security-page.php:246
 #: includes/features/taxonomy-settings.php:91
 #: includes/features/taxonomy-settings.php:195
 msgid "Remove"
@@ -3732,7 +3736,7 @@ msgstr ""
 msgid "Repeater"
 msgstr ""
 
-#: includes/features/security-page.php:205
+#: includes/features/security-page.php:220
 msgid "Requests from these IP addresses skip two-factor authentication entirely, for every account -- useful for a trusted office or VPN IP. One address or CIDR range (e.g. 203.0.113.0/24) per field."
 msgstr ""
 
@@ -5462,6 +5466,10 @@ msgstr ""
 msgid "Your SMTP username. Usually a full email address (you@yourdomain.com), but some API-based providers use a plain username (e.g. \"emailit\" or \"apiuser\")."
 msgstr ""
 
+#: includes/features/security-page.php:197
+msgid "Your current IP address is %s."
+msgstr ""
+
 #: includes/features/login-url-security.php:285
 msgid "Your current login URL:"
 msgstr ""
@@ -5618,8 +5626,8 @@ msgstr ""
 msgid "optimized"
 msgstr ""
 
-#: includes/features/security-page.php:194
-#: includes/features/security-page.php:229
+#: includes/features/security-page.php:209
+#: includes/features/security-page.php:245
 msgid "or"
 msgstr ""
 

@@ -187,7 +187,22 @@ function snn_2fa_ip_whitelist_callback() {
     if ( empty( $whitelist ) ) {
         $whitelist = array( '' );
     }
+
+    $current_ip = function_exists( 'snn_get_user_ip' ) ? snn_get_user_ip() : sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ?? '' ) );
     ?>
+    <p style="margin-top: 0;">
+        <?php
+        printf(
+            /* translators: %s: the visitor's current IP address */
+            esc_html__( 'Your current IP address is %s.', 'snn' ),
+            '<code>' . esc_html( $current_ip ) . '</code>'
+        );
+        ?>
+        <button type="button" id="snn_2fa_add_current_ip" class="button button-small" data-ip="<?php echo esc_attr( $current_ip ); ?>" style="margin-left: 6px;">
+            <span class="dashicons dashicons-admin-network" style="vertical-align:middle;"></span>
+            <?php esc_html_e( 'Add my IP', 'snn' ); ?>
+        </button>
+    </p>
     <div id="snn_2fa_ip_whitelist_rows">
         <?php foreach ( $whitelist as $ip ) : ?>
             <div class="snn-2fa-ip-row" style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
@@ -207,6 +222,7 @@ function snn_2fa_ip_whitelist_callback() {
     (function() {
         const container = document.getElementById('snn_2fa_ip_whitelist_rows');
         const addBtn = document.getElementById('snn_2fa_ip_add');
+        const addCurrentIpBtn = document.getElementById('snn_2fa_add_current_ip');
         if (!container || !addBtn) return;
 
         function bindRemove(row) {
@@ -222,12 +238,15 @@ function snn_2fa_ip_whitelist_callback() {
             });
         }
 
-        function makeRow() {
+        function makeRow(value) {
             const row = document.createElement('div');
             row.className = 'snn-2fa-ip-row';
             row.style.cssText = 'display:flex; align-items:center; gap:8px; margin-bottom:8px;';
             row.innerHTML = '<input type="text" name="snn_security_options[2fa_ip_whitelist][]" value="" placeholder="203.0.113.5 <?php echo esc_js( __( 'or', 'snn' ) ); ?> 203.0.113.0/24" style="width:280px;">' +
                 '<button type="button" class="button snn-2fa-ip-remove" aria-label="<?php echo esc_js( __( 'Remove', 'snn' ) ); ?>"><span class="dashicons dashicons-no-alt" style="vertical-align:middle;"></span></button>';
+            if (value) {
+                row.querySelector('input').value = value;
+            }
             bindRemove(row);
             return row;
         }
@@ -239,6 +258,32 @@ function snn_2fa_ip_whitelist_callback() {
         });
 
         container.querySelectorAll('.snn-2fa-ip-row').forEach(bindRemove);
+
+        if (addCurrentIpBtn) {
+            addCurrentIpBtn.addEventListener('click', function() {
+                const ip = addCurrentIpBtn.dataset.ip;
+                if (!ip) return;
+
+                const inputs = Array.from(container.querySelectorAll('input'));
+
+                const already = inputs.find(function(inp) { return inp.value.trim() === ip; });
+                if (already) {
+                    already.focus();
+                    return;
+                }
+
+                const empty = inputs.find(function(inp) { return inp.value.trim() === ''; });
+                if (empty) {
+                    empty.value = ip;
+                    empty.focus();
+                    return;
+                }
+
+                const row = makeRow(ip);
+                container.appendChild(row);
+                row.querySelector('input').focus();
+            });
+        }
     })();
     </script>
     <?php
