@@ -190,34 +190,67 @@ function snn_2fa_ip_whitelist_callback() {
 
     $current_ip = function_exists( 'snn_get_user_ip' ) ? snn_get_user_ip() : sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ?? '' ) );
     ?>
-    <p style="margin-top: 0;">
-        <?php
-        printf(
-            /* translators: %s: the visitor's current IP address */
-            esc_html__( 'Your current IP address is %s.', 'snn' ),
-            '<code>' . esc_html( $current_ip ) . '</code>'
-        );
-        ?>
-        <button type="button" id="snn_2fa_add_current_ip" class="button button-small" data-ip="<?php echo esc_attr( $current_ip ); ?>" style="margin-left: 6px;">
-            <span class="dashicons dashicons-admin-network" style="vertical-align:middle;"></span>
-            <?php esc_html_e( 'Add my IP', 'snn' ); ?>
+    <style>
+        /* WordPress core's .wp-core-ui .button .dashicons rule sets
+           line-height: 1.9, which inflates the icon's line box and makes
+           these small icon buttons render taller than the text input next
+           to them. Override it back to 1 within this widget only. */
+        #snn_2fa_ip_whitelist_wrap .button .dashicons {
+            line-height: 1 !important;
+            vertical-align: middle;
+        }
+        #snn_2fa_ip_whitelist_wrap .snn-2fa-ip-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        #snn_2fa_ip_whitelist_wrap .snn-2fa-ip-row input[type="text"] {
+            width: 280px;
+            height: 30px;
+            padding: 0 8px;
+            box-sizing: border-box;
+        }
+        #snn_2fa_ip_whitelist_wrap .snn-2fa-ip-remove {
+            height: 30px;
+            box-sizing: border-box;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 8px;
+            flex-shrink: 0;
+        }
+    </style>
+    <div id="snn_2fa_ip_whitelist_wrap">
+        <p style="margin-top: 0;">
+            <?php
+            printf(
+                /* translators: %s: the visitor's current IP address */
+                esc_html__( 'Your current IP address is %s.', 'snn' ),
+                '<code>' . esc_html( $current_ip ) . '</code>'
+            );
+            ?>
+            <button type="button" id="snn_2fa_add_current_ip" class="button button-small" data-ip="<?php echo esc_attr( $current_ip ); ?>" style="margin-left: 6px;">
+                <span class="dashicons dashicons-admin-network"></span>
+                <?php esc_html_e( 'Add my IP', 'snn' ); ?>
+            </button>
+        </p>
+        <div id="snn_2fa_ip_whitelist_rows">
+            <?php foreach ( $whitelist as $ip ) : ?>
+                <div class="snn-2fa-ip-row">
+                    <input type="text" name="snn_security_options[2fa_ip_whitelist][]" value="<?php echo esc_attr( $ip ); ?>" placeholder="203.0.113.5 <?php esc_attr_e( 'or', 'snn' ); ?> 203.0.113.0/24">
+                    <button type="button" class="button snn-2fa-ip-remove" aria-label="<?php esc_attr_e( 'Remove', 'snn' ); ?>">
+                        <span class="dashicons dashicons-no-alt"></span>
+                    </button>
+                </div>
+            <?php endforeach; ?>
+        </div>
+        <button type="button" id="snn_2fa_ip_add" class="button" style="margin-top: 10px;">
+            <span class="dashicons dashicons-plus-alt2"></span>
+            <?php esc_html_e( 'Add IP Address', 'snn' ); ?>
         </button>
-    </p>
-    <div id="snn_2fa_ip_whitelist_rows">
-        <?php foreach ( $whitelist as $ip ) : ?>
-            <div class="snn-2fa-ip-row" style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
-                <input type="text" name="snn_security_options[2fa_ip_whitelist][]" value="<?php echo esc_attr( $ip ); ?>" placeholder="203.0.113.5 <?php esc_attr_e( 'or', 'snn' ); ?> 203.0.113.0/24" style="width:280px !important; height:30px !important; min-height:30px !important; padding:0 8px !important; box-sizing:border-box !important; line-height:28px !important; font-size:14px !important; margin:0 !important; vertical-align:middle !important;">
-                <button type="button" class="button snn-2fa-ip-remove" aria-label="<?php esc_attr_e( 'Remove', 'snn' ); ?>" style="height:30px !important; min-height:30px !important; box-sizing:border-box !important; display:inline-flex !important; align-items:center !important; justify-content:center !important; padding:0 8px !important; margin:0 !important; flex-shrink:0; vertical-align:middle !important;">
-                    <span class="dashicons dashicons-no-alt" style="vertical-align:middle;"></span>
-                </button>
-            </div>
-        <?php endforeach; ?>
+        <p class="description"><?php esc_html_e( 'Requests from these IP addresses skip two-factor authentication entirely, for every account -- useful for a trusted office or VPN IP. One address or CIDR range (e.g. 203.0.113.0/24) per field.', 'snn' ); ?></p>
     </div>
-    <button type="button" id="snn_2fa_ip_add" class="button">
-        <span class="dashicons dashicons-plus-alt2" style="vertical-align:middle;"></span>
-        <?php esc_html_e( 'Add IP Address', 'snn' ); ?>
-    </button>
-    <p class="description"><?php esc_html_e( 'Requests from these IP addresses skip two-factor authentication entirely, for every account -- useful for a trusted office or VPN IP. One address or CIDR range (e.g. 203.0.113.0/24) per field.', 'snn' ); ?></p>
     <script>
     (function() {
         const container = document.getElementById('snn_2fa_ip_whitelist_rows');
@@ -241,9 +274,8 @@ function snn_2fa_ip_whitelist_callback() {
         function makeRow(value) {
             const row = document.createElement('div');
             row.className = 'snn-2fa-ip-row';
-            row.style.cssText = 'display:flex; align-items:center; gap:8px; margin-bottom:8px;';
-            row.innerHTML = '<input type="text" name="snn_security_options[2fa_ip_whitelist][]" value="" placeholder="203.0.113.5 <?php echo esc_js( __( 'or', 'snn' ) ); ?> 203.0.113.0/24" style="width:280px !important; height:30px !important; min-height:30px !important; padding:0 8px !important; box-sizing:border-box !important; line-height:28px !important; font-size:14px !important; margin:0 !important; vertical-align:middle !important;">' +
-                '<button type="button" class="button snn-2fa-ip-remove" aria-label="<?php echo esc_js( __( 'Remove', 'snn' ) ); ?>" style="height:30px !important; min-height:30px !important; box-sizing:border-box !important; display:inline-flex !important; align-items:center !important; justify-content:center !important; padding:0 8px !important; margin:0 !important; flex-shrink:0; vertical-align:middle !important;"><span class="dashicons dashicons-no-alt" style="vertical-align:middle;"></span></button>';
+            row.innerHTML = '<input type="text" name="snn_security_options[2fa_ip_whitelist][]" value="" placeholder="203.0.113.5 <?php echo esc_js( __( 'or', 'snn' ) ); ?> 203.0.113.0/24">' +
+                '<button type="button" class="button snn-2fa-ip-remove" aria-label="<?php echo esc_js( __( 'Remove', 'snn' ) ); ?>"><span class="dashicons dashicons-no-alt"></span></button>';
             if (value) {
                 row.querySelector('input').value = value;
             }
