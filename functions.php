@@ -84,7 +84,9 @@ require_once SNN_PATH . 'includes/ai/abilities/analyze-post-seo.php';
 
 // Utils
 require_once SNN_PATH . 'includes/features/utils.php';
-require_once SNN_PATH . 'includes/features/auto-update-snn-brx-github.php';
+// DISABLED (digital-workshop fork): GitHub auto-updater deaktiviert, damit
+// Updates vom Original-Repo unsere eigenen Anpassungen nicht ueberschreiben.
+// require_once SNN_PATH . 'includes/features/auto-update-snn-brx-github.php';
 
 
 
