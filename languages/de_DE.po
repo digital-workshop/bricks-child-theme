@@ -3078,7 +3078,7 @@ msgstr "Blöcke ausblenden"
 #: includes/editor-settings-bricks.php:48
 #: includes/editor-settings-bricks.php:122
 msgid "Hide Elements Icons on Bricks Editor"
-msgstr "Farbton drehen (Hue Rotate)"
+msgstr "Element-Icons im Bricks-Editor ausblenden"
 
 #: includes/elements/comment-form.php:53
 msgid "Hide “logged-in as” info"
@@ -3086,11 +3086,11 @@ msgstr "Icon"
 
 #: includes/taxonomy-settings.php:75 includes/taxonomy-settings.php:161
 msgid "Hierarchical"
-msgstr "Icon-Farbe"
+msgstr "Hierarchisch"
 
 #: includes/elements/gsap-multi-element-register.php:156
 msgid "Hinge"
-msgstr "Icon-Größe (px)"
+msgstr "Scharnier (Hinge)"
 
 #: includes/elements/image-hotspot.php:54
 msgid "Hotspots"
@@ -3102,7 +3102,7 @@ msgstr "http://yoursite.com"
 
 #: includes/login-settings.php:138
 msgid "https://example.com/redirect-path"
-msgstr "Verwende bei Bedarf define( ‘SNN_CODE_DISABLE’, true ); in functions.php oder wp-config.php, um die Code-Snippets-Funktion vorübergehend zu deaktivieren."
+msgstr "https://example.com/redirect-path"
 
 #. URI of the theme
 #. Author URI of the theme
@@ -3115,12 +3115,12 @@ msgstr "https://twitter.com/intent/tweet?text={text} {url} {image}"
 
 #: includes/login-logo-change-url-change.php:73
 msgid "https://yourwebsite.com"
-msgstr "Bildoptimierung"
+msgstr "https://yourwebsite.com"
 
 #: includes/elements/advanced-image.php:62
 #: includes/elements/gsap-multi-element-register.php:310
 msgid "Hue Rotate"
-msgstr "Importieren"
+msgstr "Farbton drehen (Hue Rotate)"
 
 #: includes/elements/custom-maps.php:59
 #: includes/elements/text-action-social-share.php:48
@@ -3129,11 +3129,11 @@ msgstr "Icon"
 
 #: includes/elements/custom-maps.php:75
 msgid "Icon Color"
-msgstr "Voreinstellungen importieren"
+msgstr "Icon-Farbe"
 
 #: includes/elements/custom-maps.php:67
 msgid "Icon Size (px)"
-msgstr "Weiterleitungen importieren"
+msgstr "Icon-Größe (px)"
 
 #: includes/role-manager.php:515 includes/role-manager.php:672
 msgid "ID %d (Not Found)"
@@ -3145,7 +3145,7 @@ msgstr "Wenn diese Option aktiviert ist, ist dieser Dienst immer aktiv und kann 
 
 #: includes/custom-code-snippets.php:764
 msgid "If needed use define( ‘SNN_CODE_DISABLE’, true ); in functions.php or wp-config.php file to disable the code snippets feature temporarly. "
-msgstr "Verwenden Sie bei Bedarf define( 'SNN_CODE_DISABLE', true ); in der Datei functions.php oder wp-config.php, um die Code-Snippets-Funktion vorübergehend zu deaktivieren. "
+msgstr "Verwende bei Bedarf define( 'SNN_CODE_DISABLE', true ); in der Datei functions.php oder wp-config.php, um die Code-Snippets-Funktion vorübergehend zu deaktivieren. "
 
 #: includes/elements/advanced-image.php:23
 #: includes/elements/image-hotspot.php:21
@@ -3245,11 +3245,11 @@ msgstr "IP oder Benutzer-Agent:"
 
 #: includes/elements/gsap-multi-element-register.php:157
 msgid "Jack In The Box"
-msgstr "Linke Bezeichnung"
+msgstr "Springteufel (Jack In The Box)"
 
 #: includes/elements/gsap-multi-element-register.php:197
 msgid "Jello"
-msgstr "Abstand links (px)"
+msgstr "Wackeln (Jello)"
 
 #: includes/elements/text-action-social-share.php:44
 msgid "Label"
@@ -3261,11 +3261,11 @@ msgstr "Aktuelle Versionsinformationen von GitHub."
 
 #: includes/elements/custom-maps.php:38
 msgid "Latitude"
-msgstr "Rechtstext oder Links"
+msgstr "Breitengrad"
 
 #: includes/elements/custom-maps.php:150
 msgid "Leaflet Pane Filters"
-msgstr "Lichtgeschwindigkeit rein links"
+msgstr "Leaflet-Fenster-Filter"
 
 #: includes/elements/comment-form.php:63 includes/elements/comment-form.php:64
 #: includes/elements/comment-form.php:180
@@ -3303,23 +3303,23 @@ msgstr "Linie"
 
 #: includes/cookie-banner.php:245
 msgid "Legal Text or Links"
-msgstr "Linienfarbe"
+msgstr "Rechtstext oder Links"
 
 #: includes/elements/gsap-multi-element-register.php:150
 msgid "Light Speed In Left"
-msgstr "Link"
+msgstr "Lichtgeschwindigkeit rein links"
 
 #: includes/elements/gsap-multi-element-register.php:148
 msgid "Light Speed In Right"
-msgstr "Beitragstypen verlinken"
+msgstr "Lichtgeschwindigkeit rein rechts"
 
 #: includes/elements/gsap-multi-element-register.php:151
 msgid "Light Speed Out Left"
-msgstr "Revision laden & speichern"
+msgstr "Lichtgeschwindigkeit raus links"
 
 #: includes/elements/gsap-multi-element-register.php:149
 msgid "Light Speed Out Right"
-msgstr "Lichtgeschwindigkeit rechts außen"
+msgstr "Lichtgeschwindigkeit raus rechts"
 
 #: includes/elements/like-button.php:68 includes/elements/like-button.php:69
 msgid "Like"
@@ -3335,11 +3335,11 @@ msgstr "Protokoll-Limit"
 
 #: includes/other-settings.php:56
 msgid "Limit Post Revisions (Per Post)"
-msgstr "URL des Login-Logo-Bildes"
+msgstr "Beitragsrevisionen begrenzen (pro Beitrag)"
 
 #: includes/custom-code-snippets.php:839
 msgid "Line"
-msgstr "Anpassungen der Login-Seite"
+msgstr "Zeile"
 
 #: includes/elements/scroll-line-vertical-indicator.php:45
 msgid "Line Color"
@@ -3351,11 +3351,11 @@ msgstr "Längengrad (Longitude)"
 
 #: includes/taxonomy-settings.php:79
 msgid "Link Post Types"
-msgstr "Schleife (Loop)"
+msgstr "Beitragstypen verlinken"
 
 #: includes/custom-code-snippets.php:949
 msgid "Load Revision & Save"
-msgstr "Schleife / Hin und Her (yoyo)"
+msgstr "Revision laden & speichern"
 
 #: includes/accessibility-settings.php:141
 msgid "Load the Accessibility Widget script."
@@ -3381,7 +3381,7 @@ msgstr "Login Logo Bild URL"
 
 #: includes/login-settings.php:33
 msgid "Login Page Customizations"
-msgstr "Lottie JSON-Datei"
+msgstr "Anpassungen der Login-Seite"
 
 #: includes/login-settings.php:8 includes/login-settings.php:9
 #: includes/login-settings.php:155 includes/settings-page.php:34
@@ -3398,7 +3398,7 @@ msgstr "Schleife"
 
 #: includes/elements/gsap-animations.php:170
 msgid "Loop / yoyo"
-msgstr "Mail-Protokoll"
+msgstr "Schleife / Hin und Her (yoyo)"
 
 #: includes/elements/animated-heading.php:128
 #: includes/elements/lottie-animation.php:35
@@ -3408,7 +3408,7 @@ msgstr "Mail-Protokolle"
 #: includes/elements/gsap-multi-element-register.php:475
 #: includes/elements/gsap-text-animations.php:198
 msgid "Loop True"
-msgstr "Mail SMTP-Einstellungen"
+msgstr "Schleife Wahr"
 
 #: includes/elements/animated-vfx-text.php:29
 msgid "Lorem ipsum dolor sinan amet animated text"
@@ -3428,7 +3428,7 @@ msgstr "Elemente im Bricks Editor breit machen"
 
 #: includes/other-settings.php:153
 msgid "lottie.min.php and Lottie Element"
-msgstr "Code-Snippets verwalten"
+msgstr "lottie.min.php und Lottie-Element"
 
 #: includes/role-manager.php:579
 msgid "Lowercase letters, numbers, and underscores only."
@@ -3454,32 +3454,32 @@ msgstr "SMTP-E-Mail-Einstellungen"
 
 #: includes/security-page.php:54
 msgid "Main Settings"
-msgstr "Obligatorische Funktion"
+msgstr "Haupteinstellungen"
 
 #: includes/editor-settings-bricks.php:133
 msgid "Make Elements Compact But Keep Icons"
-msgstr "Kartenmitte Breitengrad"
+msgstr "Elemente kompakt darstellen, Icons aber behalten"
 
 #: includes/editor-settings-bricks.php:56
 msgid "Make Elements Compact But Keep Icons on Bricks Editor"
-msgstr "Kartenmitte Längengrad"
+msgstr "Elemente im Bricks-Editor kompakt darstellen, Icons aber behalten"
 
 #: includes/editor-settings-bricks.php:64
 #: includes/editor-settings-bricks.php:144
 msgid "Make Elements Wide on Bricks Editor"
-msgstr "Kartenhöhe (px)"
+msgstr "Elemente im Bricks-Editor breit machen"
 
 #: includes/custom-code-snippets.php:745
 msgid "Manage Code Snippets"
-msgstr "Kartenstil"
+msgstr "Code-Snippets verwalten"
 
 #: includes/custom-field-settings.php:88
 msgid "Manage Custom Fields"
-msgstr "Marker"
+msgstr "Benutzerdefinierte Felder verwalten"
 
 #: includes/post-types-settings.php:96
 msgid "Manage Custom Post Types"
-msgstr "Marker Wahr"
+msgstr "Benutzerdefinierte Beitragstypen verwalten"
 
 #: includes/role-manager.php:380
 msgid "Manage Roles"
@@ -3487,7 +3487,7 @@ msgstr "Matrix-Regen"
 
 #: includes/taxonomy-settings.php:55
 msgid "Manage Taxonomies"
-msgstr "Max. Tage zur Aufbewahrung von Protokollen"
+msgstr "Taxonomien verwalten"
 
 #: includes/role-manager.php:374
 msgid "Manage user roles and capabilities. Core roles cannot be deleted and the Administrator role cannot be modified. You can restrict editing access for roles to specific posts or pages."
@@ -3496,7 +3496,7 @@ msgstr "Verwalten Sie Benutzerrollen und -funktionen. Hauptrollen können nicht 
 #: includes/cookie-banner.php:296 includes/cookie-banner.php:330
 #: includes/cookie-banner.php:360 includes/cookie-banner.php:414
 msgid "Mandatory Feature"
-msgstr "Max. Ansichten (global)"
+msgstr "Obligatorische Funktion"
 
 #: includes/elements/custom-maps.php:88
 msgid "Map Center Latitude"
@@ -3508,21 +3508,21 @@ msgstr "Karte Zentrum Längengrad"
 
 #: includes/elements/custom-maps.php:118
 msgid "Map Height (px)"
-msgstr "Maximale Anzahl der aufzubewahrenden Protokolle:"
+msgstr "Kartenhöhe (px)"
 
 #: includes/elements/custom-maps.php:137
 msgid "Map Style"
-msgstr "Medien"
+msgstr "Kartenstil"
 
 #: includes/elements/gsap-animations.php:243
 #: includes/elements/gsap-text-animations.php:339
 msgid "Markers"
-msgstr "Medienkategorien"
+msgstr "Marker"
 
 #: includes/elements/gsap-multi-element-register.php:473
 #: includes/elements/gsap-text-animations.php:196
 msgid "Markers True"
-msgstr "Medien-Löschung"
+msgstr "Marker Wahr"
 
 #: includes/elements/matrix.php:14
 msgid "Matrix Rain"
