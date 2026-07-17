@@ -25,7 +25,7 @@ msgstr "%d Datei(en) konnten nicht gelöscht werden."
 msgid "%d revision(s) for \"%s\" cleared successfully."
 msgstr "%d Revision(en) für „%s“ erfolgreich gelöscht."
 
-#: includes/features/two-factor-auth.php:279
+#: includes/features/two-factor-auth.php:287
 msgid "&larr; Back to login"
 msgstr "&larr; Zurück zum Login"
 
@@ -82,11 +82,11 @@ msgstr "75-85 für Fotos, 85-95 für Grafiken."
 msgid "9999"
 msgstr "9999"
 
-#: includes/features/two-factor-auth.php:69
+#: includes/features/two-factor-auth.php:77
 msgid "<strong>ERROR</strong>: Could not send the verification code email. Please contact the site administrator."
 msgstr "<strong>FEHLER</strong>: Der Bestätigungscode konnte nicht per E-Mail gesendet werden. Bitte kontaktiere den Website-Administrator."
 
-#: includes/features/two-factor-auth.php:59
+#: includes/features/two-factor-auth.php:67
 msgid "<strong>ERROR</strong>: Two-factor authentication is required for this account and is not available over this connection method."
 msgstr "<strong>FEHLER</strong>: Für dieses Konto ist Zwei-Faktor-Authentifizierung erforderlich, die über diese Verbindungsart nicht verfügbar ist."
 
@@ -106,7 +106,7 @@ msgstr "<strong>Wichtig:</strong> Sobald sie ausgeblendet ist, kannst du sie nur
 msgid "<strong>Note:</strong> Administrators are always excluded and cannot be blocked."
 msgstr "<strong>Hinweis:</strong> Administratoren sind immer ausgeschlossen und können nicht gesperrt werden."
 
-#: includes/features/two-factor-auth.php:224
+#: includes/features/two-factor-auth.php:232
 msgid "A new code has been sent."
 msgstr "Ein neuer Code wurde gesendet."
 
@@ -523,7 +523,7 @@ msgstr "Grundeinstellungen"
 msgid "Batch:"
 msgstr "Batch:"
 
-#: includes/features/two-factor-auth.php:134
+#: includes/features/two-factor-auth.php:142
 msgid "Bitte schließe die Anmeldung ab, indem du den Bestätigungscode unten eingibst:"
 msgstr "Bitte schließe die Anmeldung ab, indem du den Bestätigungscode unten eingibst:"
 
@@ -1051,7 +1051,7 @@ msgstr "Cookie-Präferenzen"
 msgid "Cookie Settings"
 msgstr "Cookie-Einstellungen"
 
-#: includes/features/two-factor-auth.php:227
+#: includes/features/two-factor-auth.php:235
 msgid "Could not send a new code. Please try again shortly."
 msgstr "Neuer Code konnte nicht gesendet werden. Bitte versuche es in Kürze erneut."
 
@@ -1193,7 +1193,7 @@ msgstr "Definiere benutzerdefinierte Beitragstypen mit Name, Slug (max. 20 Zeich
 msgid "Define custom taxonomies with name, slug, hierarchical setting, and associated post types:"
 msgstr "Definiere benutzerdefinierte Taxonomien mit Name, Slug, hierarchischer Einstellung und zugeordneten Beitragstypen:"
 
-#: includes/features/two-factor-auth.php:131
+#: includes/features/two-factor-auth.php:139
 msgid "Dein Bestätigungscode"
 msgstr "Dein Bestätigungscode"
 
@@ -1354,7 +1354,7 @@ msgstr "Diagonale Schnitte"
 msgid "Diamond Grid"
 msgstr "Diamant-Raster"
 
-#: includes/features/two-factor-auth.php:136
+#: includes/features/two-factor-auth.php:144
 msgid "Dieser Code läuft in 15 Minuten ab."
 msgstr "Dieser Code läuft in 15 Minuten ab."
 
@@ -2692,7 +2692,7 @@ msgstr "Impressum"
 msgid "Include already optimized images (for re-optimization)"
 msgstr "Bereits optimierte Bilder einbeziehen (für Neuoptimierung)"
 
-#: includes/features/two-factor-auth.php:197
+#: includes/features/two-factor-auth.php:205
 msgid "Incorrect code. Please try again."
 msgstr "Falscher Code. Bitte versuche es erneut."
 
@@ -2826,6 +2826,10 @@ msgstr "Revision laden & speichern"
 #: includes/features/custom-code-snippets.php:134
 msgid "Loading..."
 msgstr "Laden..."
+
+#: includes/features/security-page.php:167
+msgid "Locked out (e.g. the code email isn't arriving)? Add %s to wp-config.php to force this off, no database access needed."
+msgstr "Ausgesperrt (z. B. weil die Code-E-Mail nicht ankommt)? Füge %s zur wp-config.php hinzu, um dies ohne Datenbankzugriff zu erzwingen."
 
 #: includes/features/limit-login-attempts.php:110
 msgid "Login Blocked"
@@ -3489,7 +3493,7 @@ msgstr "Bitte wähle oder gib eine Seiten-URL ein"
 msgid "Please use the Bulk Optimizer page for re-optimization."
 msgstr "Bitte verwende die Seite „Bulk-Optimierer“ für die erneute Optimierung."
 
-#: includes/features/two-factor-auth.php:209
+#: includes/features/two-factor-auth.php:217
 msgid "Please wait a minute before requesting a new code."
 msgstr "Bitte warte eine Minute, bevor du einen neuen Code anforderst."
 
@@ -3738,7 +3742,7 @@ msgstr "Nutzer müssen registriert und eingeloggt sein, um zu kommentieren"
 msgid "Required when your SMTP username is not an email address (API-based providers). This address appears in the From header of sent emails."
 msgstr "Erforderlich, wenn dein SMTP-Benutzername keine E-Mail-Adresse ist (bei API-basierten Anbietern). Diese Adresse erscheint im Von-Header der gesendeten E-Mails."
 
-#: includes/features/two-factor-auth.php:275
+#: includes/features/two-factor-auth.php:283
 msgid "Resend code"
 msgstr "Code erneut senden"
 
@@ -4219,7 +4223,7 @@ msgstr "Sicherheitseinstellungen"
 msgid "Security check failed"
 msgstr "Sicherheitsprüfung fehlgeschlagen"
 
-#: includes/features/two-factor-auth.php:161
+#: includes/features/two-factor-auth.php:169
 msgid "Security check failed. Please log in again."
 msgstr "Sicherheitsprüfung fehlgeschlagen. Bitte melde dich erneut an."
 
@@ -4648,8 +4652,8 @@ msgstr "Snippet-Ausführung ist derzeit deaktiviert. Dieses Kästchen aktivieren
 msgid "Some snippets could not be saved. Please check messages above."
 msgstr "Einige Snippets konnten nicht gespeichert werden. Bitte überprüfe die Nachrichten oben."
 
-#: includes/features/two-factor-auth.php:178
-#: includes/features/two-factor-auth.php:214
+#: includes/features/two-factor-auth.php:186
+#: includes/features/two-factor-auth.php:222
 msgid "Something went wrong. Please log in again."
 msgstr "Etwas ist schiefgelaufen. Bitte melde dich erneut an."
 
@@ -5055,7 +5059,7 @@ msgstr "Dieses Theme wurde entwickelt, um dir die Werkzeuge und Lösungen für"
 msgid "This tool helps you scan any page on your website to detect scripts and iframes. You can then select which scripts to block until users accept cookies."
 msgstr "Mit diesem Tool kannst du jede Seite deiner Website scannen, um Skripte und iFrames zu erkennen. Anschließend kannst du auswählen, welche Skripte blockiert werden sollen, bis Nutzer Cookies akzeptieren."
 
-#: includes/features/two-factor-auth.php:153
+#: includes/features/two-factor-auth.php:161
 msgid "This verification link has expired or is invalid. Please log in again."
 msgstr "Dieser Bestätigungslink ist abgelaufen oder ungültig. Bitte melde dich erneut an."
 
@@ -5104,7 +5108,7 @@ msgstr "Zeitstempel (Timestamp)"
 msgid "Title"
 msgstr "Titel"
 
-#: includes/features/two-factor-auth.php:192
+#: includes/features/two-factor-auth.php:200
 msgid "Too many incorrect attempts. Please log in again."
 msgstr "Zu viele falsche Versuche. Bitte melde dich erneut an."
 
@@ -5244,15 +5248,15 @@ msgstr "Benutzerrollen (mehrere erlaubt)"
 msgid "Valid SMTP port is required. Please configure your SMTP settings."
 msgstr "Ein gültiger SMTP-Port ist erforderlich. Bitte konfiguriere deine SMTP-Einstellungen."
 
-#: includes/features/two-factor-auth.php:263
+#: includes/features/two-factor-auth.php:271
 msgid "Verification Code"
 msgstr "Bestätigungscode"
 
-#: includes/features/two-factor-auth.php:245
+#: includes/features/two-factor-auth.php:253
 msgid "Verification Required"
 msgstr "Bestätigung erforderlich"
 
-#: includes/features/two-factor-auth.php:268
+#: includes/features/two-factor-auth.php:276
 msgid "Verify"
 msgstr "Bestätigen"
 
@@ -5289,7 +5293,7 @@ msgstr "WARNUNG: Die Aktivierung dieser Funktion erlaubt die direkte, unbereinig
 msgid "Warning:"
 msgstr "Warnung:"
 
-#: includes/features/two-factor-auth.php:259
+#: includes/features/two-factor-auth.php:267
 msgid "We sent a verification code to your email address. Enter it below to finish signing in."
 msgstr "Wir haben einen Bestätigungscode an deine E-Mail-Adresse gesendet. Gib ihn unten ein, um die Anmeldung abzuschließen."
 

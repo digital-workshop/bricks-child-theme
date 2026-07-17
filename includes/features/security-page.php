@@ -160,6 +160,15 @@ function snn_2fa_enable_callback() {
     <input type="checkbox" name="snn_security_options[enable_2fa]" value="1" <?php checked(isset($options['enable_2fa']) && $options['enable_2fa'], 1); ?>>
     <p><?php esc_html_e( 'Require a one-time code sent by email to complete login, for every user account.', 'snn' ); ?></p>
     <p class="description"><?php esc_html_e( 'Exception: users whose only role(s) are WooCommerce "Customer" and/or "Subscriber" are exempt. Any account with an additional role (Administrator, Editor, Author, Shop Manager, ...) is always required to use two-factor authentication, even if it also has the Customer role.', 'snn' ); ?></p>
+    <p class="description">
+        <?php
+        printf(
+            /* translators: %s: the constant name SNN_2FA_DISABLE */
+            esc_html__( 'Locked out (e.g. the code email isn\'t arriving)? Add %s to wp-config.php to force this off, no database access needed.', 'snn' ),
+            '<code>define( \'SNN_2FA_DISABLE\', true );</code>'
+        );
+        ?>
+    </p>
     <?php
 }
 

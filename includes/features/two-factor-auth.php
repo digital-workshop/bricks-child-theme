@@ -8,6 +8,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 // ----------------------------------------------------------------------
 
 function snn_2fa_is_enabled() {
+    // Emergency kill switch: add define( 'SNN_2FA_DISABLE', true ); to
+    // wp-config.php to force two-factor authentication off regardless of
+    // the setting below, e.g. if you're locked out because the code email
+    // isn't arriving. Takes effect immediately, no database access needed.
+    if ( defined( 'SNN_2FA_DISABLE' ) && SNN_2FA_DISABLE ) {
+        return false;
+    }
+
     $options = get_option( 'snn_security_options' );
     return ! empty( $options['enable_2fa'] );
 }
