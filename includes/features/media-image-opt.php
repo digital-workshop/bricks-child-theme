@@ -22,6 +22,194 @@ function snn_add_image_optimization_menu() {
   );
 }
 
+// ----------------------------------------------------------------------
+// Automatic optimization of new uploads (settings)
+// ----------------------------------------------------------------------
+
+add_action('admin_init', 'snn_image_opt_auto_settings_init');
+function snn_image_opt_auto_settings_init() {
+    register_setting('snn_image_opt_auto_settings_group', 'snn_image_opt_auto_settings', 'snn_image_opt_auto_settings_sanitize');
+
+    add_settings_section(
+        'snn_image_opt_auto_settings_section',
+        __('Automatic Optimization', 'snn'),
+        'snn_image_opt_auto_settings_section_callback',
+        'snn-image-optimization'
+    );
+
+    add_settings_field(
+        'enabled',
+        __('Automatically Optimize New Uploads', 'snn'),
+        'snn_image_opt_auto_enabled_render',
+        'snn-image-optimization',
+        'snn_image_opt_auto_settings_section'
+    );
+
+    add_settings_field(
+        'format',
+        __('Target Format', 'snn'),
+        'snn_image_opt_auto_format_render',
+        'snn-image-optimization',
+        'snn_image_opt_auto_settings_section'
+    );
+
+    add_settings_field(
+        'quality',
+        __('Quality (0-100)', 'snn'),
+        'snn_image_opt_auto_quality_render',
+        'snn-image-optimization',
+        'snn_image_opt_auto_settings_section'
+    );
+}
+
+function snn_image_opt_auto_settings_sanitize($input) {
+    $sanitized = array();
+    $sanitized['enabled'] = isset($input['enabled']) ? boolval($input['enabled']) : false;
+
+    $format = isset($input['format']) ? sanitize_text_field($input['format']) : 'webp';
+    $sanitized['format'] = in_array($format, array('webp', 'avif'), true) ? $format : 'webp';
+
+    $quality = isset($input['quality']) ? intval($input['quality']) : 80;
+    $sanitized['quality'] = max(0, min(100, $quality));
+
+    return $sanitized;
+}
+
+function snn_image_opt_auto_get_settings() {
+    $defaults = array(
+        'enabled' => false,
+        'format'  => 'webp',
+        'quality' => 80,
+    );
+    return wp_parse_args(get_option('snn_image_opt_auto_settings', array()), $defaults);
+}
+
+function snn_image_opt_auto_settings_section_callback() {
+    ?>
+    <p><?php _e('When enabled, every newly uploaded JPG or PNG image is automatically converted in the background (server-side) and replaces the original in place — same attachment, same URL. The original file is kept and can be restored from the history below.', 'snn'); ?></p>
+    <?php
+}
+
+function snn_image_opt_auto_enabled_render() {
+    $options = snn_image_opt_auto_get_settings();
+    ?>
+    <label>
+        <input type="checkbox" name="snn_image_opt_auto_settings[enabled]" value="1" <?php checked(1, $options['enabled'], true); ?>>
+        <?php _e('Enable automatic optimization for new uploads', 'snn'); ?>
+    </label>
+    <?php
+}
+
+function snn_image_opt_auto_format_render() {
+    $options = snn_image_opt_auto_get_settings();
+    $avif_supported = wp_image_editor_supports(array('mime_type' => 'image/avif'));
+    ?>
+    <select name="snn_image_opt_auto_settings[format]">
+        <option value="webp" <?php selected($options['format'], 'webp'); ?>><?php _e('WebP', 'snn'); ?></option>
+        <option value="avif" <?php echo $avif_supported ? '' : 'disabled'; ?> <?php selected($options['format'], 'avif'); ?>><?php _e('AVIF', 'snn'); ?></option>
+    </select>
+    <?php if (!$avif_supported) : ?>
+        <p class="description"><?php _e('AVIF is not supported by this server (GD/Imagick build). WebP will be used instead.', 'snn'); ?></p>
+    <?php endif; ?>
+    <?php
+}
+
+function snn_image_opt_auto_quality_render() {
+    $options = snn_image_opt_auto_get_settings();
+    ?>
+    <input type="number" name="snn_image_opt_auto_settings[quality]" min="0" max="100" step="1" value="<?php echo esc_attr($options['quality']); ?>">
+    <p class="description"><?php _e('75-85 for photos, 85-95 for graphics.', 'snn'); ?></p>
+    <?php
+}
+
+/**
+ * Resolve the actual target mime type: honors the saved format setting but
+ * falls back to WebP if AVIF isn't actually supported at run time (host may
+ * have changed since the setting was saved).
+ */
+function snn_image_opt_auto_resolve_format() {
+    $options = snn_image_opt_auto_get_settings();
+    if ($options['format'] === 'avif' && wp_image_editor_supports(array('mime_type' => 'image/avif'))) {
+        return array('mime' => 'image/avif', 'ext' => 'avif');
+    }
+    return array('mime' => 'image/webp', 'ext' => 'webp');
+}
+
+add_action('add_attachment', 'snn_auto_optimize_on_upload');
+function snn_auto_optimize_on_upload($attachment_id) {
+    $options = snn_image_opt_auto_get_settings();
+    if (empty($options['enabled'])) {
+        return;
+    }
+
+    $mime_type = get_post_mime_type($attachment_id);
+    if (!in_array($mime_type, array('image/jpeg', 'image/png'), true)) {
+        return; // Skip GIF (animation), SVG, and already-WebP/AVIF uploads.
+    }
+
+    $original_file = get_attached_file($attachment_id);
+    if (!$original_file || !file_exists($original_file)) {
+        return;
+    }
+
+    $target = snn_image_opt_auto_resolve_format();
+
+    $editor = wp_get_image_editor($original_file);
+    if (is_wp_error($editor)) {
+        error_log('SNN auto image optimization: could not load image editor for attachment ' . $attachment_id . ': ' . $editor->get_error_message());
+        return;
+    }
+
+    if (!empty($options['quality'])) {
+        $editor->set_quality((int) $options['quality']);
+    }
+
+    $path_info = pathinfo($original_file);
+    $candidate_filename = wp_unique_filename($path_info['dirname'], $path_info['filename'] . '.' . $target['ext']);
+    $candidate_path = $path_info['dirname'] . '/' . $candidate_filename;
+
+    $saved = $editor->save($candidate_path, $target['mime']);
+    if (is_wp_error($saved)) {
+        error_log('SNN auto image optimization: failed to save converted image for attachment ' . $attachment_id . ': ' . $saved->get_error_message());
+        return;
+    }
+
+    $original_size = filesize($original_file);
+    $new_size = filesize($saved['path']);
+
+    // Mirror CompressX: discard the conversion if it didn't actually save space.
+    if ($new_size >= $original_size) {
+        @unlink($saved['path']);
+        return;
+    }
+
+    $original_url = wp_get_attachment_url($attachment_id);
+    $upload_dir = wp_upload_dir();
+    $new_url = str_replace($upload_dir['basedir'], $upload_dir['baseurl'], $saved['path']);
+
+    update_post_meta($attachment_id, '_snn_original_url', $original_url);
+    update_post_meta($attachment_id, '_snn_original_file', $original_file);
+    update_post_meta($attachment_id, '_snn_original_size', $original_size);
+    update_post_meta($attachment_id, '_snn_original_total_size', $original_size);
+
+    update_attached_file($attachment_id, $saved['path']);
+
+    wp_update_post(array(
+        'ID'             => $attachment_id,
+        'post_mime_type' => $target['mime'],
+        'guid'           => $new_url,
+    ));
+
+    update_post_meta($attachment_id, '_snn_optimized', '1');
+    update_post_meta($attachment_id, '_snn_optimized_date', current_time('mysql'));
+    update_post_meta($attachment_id, '_snn_optimized_size', $new_size);
+
+    // Original file is intentionally kept on disk for restore; the caller
+    // (media_handle_upload() / REST controller) will call
+    // wp_generate_attachment_metadata() right after this hook returns,
+    // building all thumbnail sizes from the file we just replaced above.
+}
+
 // Render the image optimization page
 function snn_image_optimization_page() {
     $active_tab = isset($_GET['tab']) ? sanitize_text_field($_GET['tab']) : 'upload';
@@ -1076,16 +1264,28 @@ function snn_image_optimization_admin_styles() {
 function snn_render_optimize_existing_media_tab() {
     ?>
     <div class="snn-existing-media-optimizer">
-        <p class="description"><?php _e('Convert existing JPG and PNG images in your media library to WebP format. Original images are preserved and can be restored anytime.', 'snn'); ?></p>
-        
+        <p class="description"><?php _e('Convert existing JPG and PNG images in your media library to WebP or AVIF format. Original images are preserved and can be restored anytime.', 'snn'); ?></p>
+
         <div class="notice notice-info inline" style="margin: 15px 0;">
-            <p><strong>⚡ <?php _e('Fast Client-Side Processing:', 'snn'); ?></strong> <?php _e('Images are downloaded and optimized directly in your browser using WebAssembly (libwebp). Keep browser tab open until optimization completes.', 'snn'); ?></p>
+            <p><strong>⚡ <?php _e('Fast Client-Side Processing:', 'snn'); ?></strong> <?php _e('Images are downloaded and optimized directly in your browser using WebAssembly. Keep browser tab open until optimization completes.', 'snn'); ?></p>
         </div>
         
         <div class="optimization-controls" style="margin: 20px 0; padding: 20px; background: #fff; border: 1px solid #c3c4c7; border-radius: 4px;">
             <h3 style="margin-top: 0;"><?php _e('Optimization Settings', 'snn'); ?></h3>
             
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+                <!-- Output Format -->
+                <div class="form-field">
+                    <label for="snn_existing_format" style="display: block; font-weight: 500; margin-bottom: 5px;">
+                        <?php _e('Output Format:', 'snn'); ?>
+                    </label>
+                    <select id="snn_existing_format" style="width: 100%;">
+                        <option value="webp" selected><?php _e('WebP', 'snn'); ?></option>
+                        <option value="avif"><?php _e('AVIF (smaller, slower)', 'snn'); ?></option>
+                    </select>
+                    <p class="description" style="margin-top: 4px;"><?php _e('AVIF compresses better but takes longer to encode in the browser.', 'snn'); ?></p>
+                </div>
+
                 <!-- Quality Setting -->
                 <div class="form-field">
                     <label for="snn_existing_quality" style="display: block; font-weight: 500; margin-bottom: 5px;">
@@ -1094,7 +1294,7 @@ function snn_render_optimize_existing_media_tab() {
                     <input type="number" id="snn_existing_quality" min="0" max="100" step="1" value="80" style="width: 100%;">
                     <p class="description" style="margin-top: 4px;"><?php _e('75-85 for photos, 85-95 for graphics.', 'snn'); ?></p>
                 </div>
-                
+
                 <!-- Maximum Width Setting -->
                 <div class="form-field">
                     <label for="snn_max_width" style="display: block; font-weight: 500; margin-bottom: 5px;">
@@ -1233,6 +1433,7 @@ function snn_render_optimize_existing_media_tab() {
     import { decode as decodeJpeg } from "https://esm.sh/@jsquash/jpeg@1.4.0";
     import { decode as decodePng } from "https://esm.sh/@jsquash/png@3.0.1";
     import { decode as decodeWebp, encode as encodeWebp } from "https://esm.sh/@jsquash/webp@1.4.0";
+    import { encode as encodeAvif } from "https://esm.sh/@jsquash/avif@2.1.0";
     
     const $ = jQuery;
     let scannedImages = [];
@@ -1573,6 +1774,7 @@ function snn_render_optimize_existing_media_tab() {
     // Get settings
     function getSettings() {
         return {
+            format: $('#snn_existing_format').val() || 'webp',
             quality: parseInt($('#snn_existing_quality').val()) || 82,
             maxWidth: parseInt($('#snn_max_width').val()) || 0,
             method: parseInt($('#snn_method').val()) || 4,
@@ -1660,7 +1862,7 @@ function snn_render_optimize_existing_media_tab() {
             method: settings.method,
             alpha_quality: settings.alphaQuality,
         };
-        
+
         if (settings.losslessMode === 'lossless') {
             options.lossless = 1;
         } else if (settings.losslessMode === 'near_lossless') {
@@ -1671,10 +1873,18 @@ function snn_render_optimize_existing_media_tab() {
         } else {
             options.lossless = 0;
         }
-        
+
         return options;
     }
-    
+
+    // @jsquash/avif uses a 0 (best/largest) - 62 (worst/smallest) cqLevel scale
+    // instead of a 0-100 quality scale. Map our existing quality slider onto it
+    // so the same UI control drives both formats.
+    function buildAvifEncodeOptions(settings) {
+        const cqLevel = Math.round((100 - settings.quality) * 0.62);
+        return { cqLevel: Math.max(0, Math.min(62, cqLevel)) };
+    }
+
     // Process single image client-side
     async function processImage(imageUrl, mimeType, originalSize, settings) {
         try {
@@ -1682,54 +1892,67 @@ function snn_render_optimize_existing_media_tab() {
             const response = await fetch(imageUrl);
             if (!response.ok) throw new Error('Download failed');
             const arrayBuffer = await response.arrayBuffer();
-            
+
             // Decode
             let imageData = await decodeImage(arrayBuffer, mimeType);
-            
+
             // Resize if needed
             if (settings.maxWidth > 0 && imageData.width > settings.maxWidth) {
                 imageData = resizeImageData(imageData, settings.maxWidth);
             }
-            
-            // Encode to WebP
-            let encodeOptions = buildEncodeOptions(settings, mimeType);
-            let webpBuffer = await encodeWebp(imageData, encodeOptions);
-            let webpSize = webpBuffer.byteLength;
-            
-            // If auto mode PNG and lossless is bigger, try lossy
-            if (settings.losslessMode === 'auto' && mimeType === 'image/png' && webpSize >= originalSize) {
-                encodeOptions.lossless = 0;
-                webpBuffer = await encodeWebp(imageData, encodeOptions);
-                webpSize = webpBuffer.byteLength;
+
+            const targetIsAvif = settings.format === 'avif';
+            const outputMime = targetIsAvif ? 'image/avif' : 'image/webp';
+            let outputBuffer;
+            let outputSize;
+
+            if (targetIsAvif) {
+                const avifOptions = buildAvifEncodeOptions(settings);
+                outputBuffer = await encodeAvif(imageData, avifOptions);
+                outputSize = outputBuffer.byteLength;
+            } else {
+                // Encode to WebP
+                let encodeOptions = buildEncodeOptions(settings, mimeType);
+                outputBuffer = await encodeWebp(imageData, encodeOptions);
+                outputSize = outputBuffer.byteLength;
+
+                // If auto mode PNG and lossless is bigger, try lossy
+                if (settings.losslessMode === 'auto' && mimeType === 'image/png' && outputSize >= originalSize) {
+                    encodeOptions.lossless = 0;
+                    outputBuffer = await encodeWebp(imageData, encodeOptions);
+                    outputSize = outputBuffer.byteLength;
+                }
             }
-            
+
             // Skip if bigger
-            if (settings.skipIfBigger && webpSize >= originalSize) {
-                return { success: true, skipped: true, originalSize, wouldBeSize: webpSize };
+            if (settings.skipIfBigger && outputSize >= originalSize) {
+                return { success: true, skipped: true, originalSize, wouldBeSize: outputSize };
             }
-            
+
             return {
                 success: true,
                 skipped: false,
-                blob: new Blob([webpBuffer], { type: 'image/webp' }),
+                blob: new Blob([outputBuffer], { type: outputMime }),
+                format: settings.format,
                 originalSize,
-                newSize: webpSize,
-                savings: originalSize - webpSize
+                newSize: outputSize,
+                savings: originalSize - outputSize
             };
         } catch (error) {
             return { success: false, error: error.message };
         }
     }
-    
+
     // Upload optimized image to server
-    async function uploadOptimizedImage(attachmentId, blob, filename) {
+    async function uploadOptimizedImage(attachmentId, blob, filename, format) {
         return new Promise((resolve) => {
+            const ext = format === 'avif' ? '.avif' : '.webp';
             const formData = new FormData();
             formData.append('action', 'snn_save_optimized_existing_image');
             formData.append('attachment_id', attachmentId);
-            formData.append('image', blob, filename.replace(/\.(jpg|jpeg|png)$/i, '.webp'));
+            formData.append('image', blob, filename.replace(/\.(jpg|jpeg|png|webp)$/i, ext));
             formData.append('nonce', '<?php echo wp_create_nonce('snn_optimize_existing_nonce'); ?>');
-            
+
             fetch(ajaxurl, { method: 'POST', body: formData })
                 .then(r => r.json())
                 .then(data => resolve(data))
@@ -1851,7 +2074,7 @@ function snn_render_optimize_existing_media_tab() {
                         $row.find('.savings').text('0%').css('color', '#646970');
                     }
                 } else {
-                    const uploadResult = await uploadOptimizedImage(item.id, result.blob, item.filename);
+                    const uploadResult = await uploadOptimizedImage(item.id, result.blob, item.filename, result.format);
                     
                     if (!uploadResult.success) throw new Error(uploadResult.error || 'Upload failed');
                     
@@ -1960,6 +2183,16 @@ function snn_render_optimize_existing_media_tab() {
 function snn_render_optimization_settings_tab() {
     ?>
     <div class="snn-optimization-settings">
+        <div class="auto-optimize-settings" style="margin: 0 0 20px; padding: 20px; background: #fff; border: 1px solid #c3c4c7; border-radius: 4px;">
+            <form method="post" action="options.php">
+                <?php
+                settings_fields('snn_image_opt_auto_settings_group');
+                do_settings_sections('snn-image-optimization');
+                submit_button(__('Save Automatic Optimization Settings', 'snn'));
+                ?>
+            </form>
+        </div>
+
         <h2><?php _e('Optimization History & Rollback', 'snn'); ?></h2>
         <p class="description"><?php _e('View all optimized images and restore originals if needed.', 'snn'); ?></p>
         
@@ -2917,7 +3150,19 @@ function snn_save_optimized_existing_image() {
     
     $uploaded_file = $_FILES['image']['tmp_name'];
     $new_filename = sanitize_file_name($_FILES['image']['name']);
-    
+
+    // Target format is whatever extension the client-side encoder produced
+    // (webp or avif) -- derive it from the uploaded filename instead of
+    // assuming webp.
+    $uploaded_ext = strtolower(pathinfo($new_filename, PATHINFO_EXTENSION));
+    if ($uploaded_ext === 'avif') {
+        $target_ext = 'avif';
+        $target_mime = 'image/avif';
+    } else {
+        $target_ext = 'webp';
+        $target_mime = 'image/webp';
+    }
+
     // Get original file info
     $original_file = get_attached_file($attachment_id);
     $original_url = wp_get_attachment_url($attachment_id);
@@ -2957,64 +3202,65 @@ function snn_save_optimized_existing_image() {
     
     // Determine new file path
     $path_info = pathinfo($original_file);
-    $webp_path = $path_info['dirname'] . '/' . $path_info['filename'] . '.webp';
-    
-    // CRITICAL: If original is already WebP, rename it first (like JPG→JPG, PNG→PNG)
-    // This ensures original and current URLs are different for proper restore functionality
-    if (strtolower($path_info['extension']) === 'webp') {
-        $original_renamed = $path_info['dirname'] . '/' . $path_info['filename'] . '-original.webp';
-        
+    $new_path = $path_info['dirname'] . '/' . $path_info['filename'] . '.' . $target_ext;
+
+    // CRITICAL: If original is already in the target format, rename it first
+    // (like JPG→JPG, PNG→PNG). This ensures original and current URLs are
+    // different for proper restore functionality.
+    if (strtolower($path_info['extension']) === $target_ext) {
+        $original_renamed = $path_info['dirname'] . '/' . $path_info['filename'] . '-original.' . $target_ext;
+
         // Only rename if not already optimized (first optimization)
         if (!$is_already_optimized && file_exists($original_file)) {
             if (!@rename($original_file, $original_renamed)) {
-                wp_send_json_error(__('Failed to rename original WebP file.', 'snn'));
+                wp_send_json_error(__('Failed to rename original file.', 'snn'));
             }
             // Update the original file path to the renamed version
             $original_file = $original_renamed;
             $original_url = str_replace(basename($path_info['basename']), basename($original_renamed), $original_url);
-            
+
             // Update stored metadata with new paths
             update_post_meta($attachment_id, '_snn_original_url', $original_url);
             update_post_meta($attachment_id, '_snn_original_file', $original_file);
         }
     }
-    
+
     // Move uploaded file
-    if (!move_uploaded_file($uploaded_file, $webp_path)) {
-        wp_send_json_error(__('Failed to save WebP file.', 'snn'));
+    if (!move_uploaded_file($uploaded_file, $new_path)) {
+        wp_send_json_error(__('Failed to save optimized file.', 'snn'));
     }
-    
-    $optimized_size = filesize($webp_path);
-    
+
+    $optimized_size = filesize($new_path);
+
     // Update WordPress attachment
     $upload_dir = wp_upload_dir();
-    $webp_url = str_replace($upload_dir['basedir'], $upload_dir['baseurl'], $webp_path);
-    
-    update_attached_file($attachment_id, $webp_path);
-    
+    $new_url = str_replace($upload_dir['basedir'], $upload_dir['baseurl'], $new_path);
+
+    update_attached_file($attachment_id, $new_path);
+
     wp_update_post(array(
         'ID' => $attachment_id,
-        'post_mime_type' => 'image/webp',
-        'guid' => $webp_url
+        'post_mime_type' => $target_mime,
+        'guid' => $new_url
     ));
-    
+
     // Regenerate thumbnails
     require_once(ABSPATH . 'wp-admin/includes/image.php');
-    $metadata = wp_generate_attachment_metadata($attachment_id, $webp_path);
+    $metadata = wp_generate_attachment_metadata($attachment_id, $new_path);
     wp_update_attachment_metadata($attachment_id, $metadata);
-    
+
     // Mark as optimized
     update_post_meta($attachment_id, '_snn_optimized', '1');
     update_post_meta($attachment_id, '_snn_optimized_date', current_time('mysql'));
     update_post_meta($attachment_id, '_snn_optimized_size', $optimized_size);
-    
+
     // Keep the original file for restoration purposes
     // Do NOT delete the original file - we need it for the restore functionality
     // The original file path is stored in _snn_original_file meta
-    
+
     wp_send_json_success(array(
         'message' => __('Image optimized successfully.', 'snn'),
-        'new_url' => $webp_url,
+        'new_url' => $new_url,
         'original_size' => $original_size,
         'optimized_size' => $optimized_size,
         'savings' => $original_size - $optimized_size
