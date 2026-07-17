@@ -17,13 +17,17 @@ msgstr ""
 msgid " Settings"
 msgstr " Einstellungen"
 
-#: includes/features/media-image-opt.php:3327
+#: includes/features/media-image-opt.php:3573
 msgid "%d file(s) could not be deleted."
 msgstr "%d Datei(en) konnten nicht gelöscht werden."
 
 #: includes/features/custom-code-snippets.php:818
 msgid "%d revision(s) for \"%s\" cleared successfully."
 msgstr "%d Revision(en) für „%s“ erfolgreich gelöscht."
+
+#: includes/features/two-factor-auth.php:279
+msgid "&larr; Back to login"
+msgstr "&larr; Zurück zum Login"
 
 #: includes/features/editor-settings-bricks.php:297
 msgid "(valid 24 h)"
@@ -41,15 +45,15 @@ msgstr "--"
 msgid "/ Custom data-animate"
 msgstr "/ Benutzerdefinierte Daten-Animation"
 
-#: includes/features/media-image-opt.php:1113
+#: includes/features/media-image-opt.php:1313
 msgid "0 - Fastest"
 msgstr "0 - Am schnellsten"
 
-#: includes/features/media-image-opt.php:1104
+#: includes/features/media-image-opt.php:1304
 msgid "0 = no resize. 2000 recommended."
 msgstr "0 = keine Größenänderung. 2000 empfohlen."
 
-#: includes/features/media-image-opt.php:1114
+#: includes/features/media-image-opt.php:1314
 msgid "2 - Fast"
 msgstr "2 - Schnell"
 
@@ -57,25 +61,34 @@ msgstr "2 - Schnell"
 msgid "3D Perspective Flip"
 msgstr "3D-Perspektiv-Flip"
 
-#: includes/features/media-image-opt.php:1115
+#: includes/features/media-image-opt.php:1315
 msgid "4 - Balanced"
 msgstr "4 - Ausgewogen"
 
-#: includes/features/media-image-opt.php:1116
+#: includes/features/media-image-opt.php:1316
 msgid "6 - Best compression"
 msgstr "6 - Beste Komprimierung"
 
-#: includes/features/media-image-opt.php:1141
+#: includes/features/media-image-opt.php:1341
 msgid "60 typical. 0=max, 100=none."
 msgstr "60 typisch. 0=max, 100=keine."
 
-#: includes/features/media-image-opt.php:1095
+#: includes/features/media-image-opt.php:121
+#: includes/features/media-image-opt.php:1295
 msgid "75-85 for photos, 85-95 for graphics."
 msgstr "75-85 für Fotos, 85-95 für Grafiken."
 
 #: includes/features/other-settings.php:210
 msgid "9999"
 msgstr "9999"
+
+#: includes/features/two-factor-auth.php:69
+msgid "<strong>ERROR</strong>: Could not send the verification code email. Please contact the site administrator."
+msgstr "<strong>FEHLER</strong>: Der Bestätigungscode konnte nicht per E-Mail gesendet werden. Bitte kontaktiere den Website-Administrator."
+
+#: includes/features/two-factor-auth.php:59
+msgid "<strong>ERROR</strong>: Two-factor authentication is required for this account and is not available over this connection method."
+msgstr "<strong>FEHLER</strong>: Für dieses Konto ist Zwei-Faktor-Authentifizierung erforderlich, die über diese Verbindungsart nicht verfügbar ist."
 
 #: includes/features/limit-login-attempts.php:107
 msgid "<strong>ERROR</strong>: Your IP address has been temporarily blocked due to too many failed login attempts. Please try again in %d hours."
@@ -93,7 +106,11 @@ msgstr "<strong>Wichtig:</strong> Sobald sie ausgeblendet ist, kannst du sie nur
 msgid "<strong>Note:</strong> Administrators are always excluded and cannot be blocked."
 msgstr "<strong>Hinweis:</strong> Administratoren sind immer ausgeschlossen und können nicht gesperrt werden."
 
-#: includes/features/media-image-opt.php:2751
+#: includes/features/two-factor-auth.php:224
+msgid "A new code has been sent."
+msgstr "Ein neuer Code wurde gesendet."
+
+#: includes/features/media-image-opt.php:2984
 msgid "AJAX Error:"
 msgstr "AJAX-Fehler:"
 
@@ -104,6 +121,22 @@ msgstr "AJAX-Fehler beim Abrufen der Revision."
 #: includes/features/custom-code-snippets.php:977
 msgid "ATTENTION PLEASE! These settings are not for normal users! If you don’t have at least some basic knowledge of HTML, CSS, and FTP login, DO NOT USE IT!"
 msgstr "ACHTUNG BITTE! Diese Einstellungen sind nicht für normale Benutzer! Wenn du nicht mindestens Grundkenntnisse in HTML, CSS und FTP-Login hast, **VERWENDE ES NICHT**!"
+
+#: includes/features/media-image-opt.php:109
+msgid "AVIF"
+msgstr "AVIF"
+
+#: includes/features/media-image-opt.php:1284
+msgid "AVIF (smaller, slower)"
+msgstr "AVIF (kleiner, langsamer)"
+
+#: includes/features/media-image-opt.php:1286
+msgid "AVIF compresses better but takes longer to encode in the browser."
+msgstr "AVIF komprimiert besser, benötigt aber mehr Zeit zum Kodieren im Browser."
+
+#: includes/features/media-image-opt.php:112
+msgid "AVIF is not supported by this server (GD/Imagick build). WebP will be used instead."
+msgstr "AVIF wird von diesem Server nicht unterstützt (GD/Imagick-Build). Stattdessen wird WebP verwendet."
 
 #: includes/features/interactions.php:223
 msgid "Ability to create GSAP animations with just data-animate attributes."
@@ -118,12 +151,12 @@ msgstr "Akzeptieren"
 msgid "Accept Button Text"
 msgstr "Text der Akzeptieren-Schaltfläche"
 
-#: includes/features/media-image-opt.php:2395
-#: includes/features/media-image-opt.php:2401
+#: includes/features/media-image-opt.php:2628
+#: includes/features/media-image-opt.php:2634
 msgid "Action cancelled. Original files were not deleted."
 msgstr "Aktion abgebrochen. Originaldateien wurden nicht gelöscht."
 
-#: includes/features/media-image-opt.php:2021
+#: includes/features/media-image-opt.php:2254
 msgid "Actions"
 msgstr "Aktionen"
 
@@ -211,7 +244,7 @@ msgstr "Alle Änderungen aus dem Entwurf wurden auf diesen Beitrag übertragen. 
 msgid "All error logs have been cleared."
 msgstr "Alle Fehlerprotokolle wurden gelöscht."
 
-#: includes/features/media-image-opt.php:2381
+#: includes/features/media-image-opt.php:2614
 msgid "All originals have already been deleted."
 msgstr "Alle Originale wurden bereits gelöscht."
 
@@ -236,7 +269,7 @@ msgstr "Nutzern erlauben, ihre Cookie-Einstellungen jederzeit zu ändern (DSGVO-
 msgid "Allowed: lowercase letters (a-z), numbers (0-9), dashes (-). No spaces or special characters. Default: snn"
 msgstr "Erlaubt: Kleinbuchstaben (a-z), Zahlen (0-9), Bindestriche (-). Keine Leerzeichen oder Sonderzeichen. Standard: snn"
 
-#: includes/features/media-image-opt.php:1147
+#: includes/features/media-image-opt.php:1347
 msgid "Alpha Quality (0-100):"
 msgstr "Alpha-Qualität (0-100):"
 
@@ -265,7 +298,7 @@ msgstr "Bist du dir absolut sicher, dass du alle Fehlerprotokolle löschen möch
 msgid "Are you absolutely sure you want to delete all revisions for this snippet? This action cannot be undone."
 msgstr "Bist du dir absolut sicher, dass du alle Revisionen für dieses Snippet löschen möchtest? Diese Aktion kann nicht rückgängig gemacht werden."
 
-#: includes/features/security-page.php:53
+#: includes/features/security-page.php:52
 msgid "Are you sure you want to clear all blocked IPs?"
 msgstr "Bist du sicher, dass du alle gesperrten IPs entfernen möchtest?"
 
@@ -273,15 +306,15 @@ msgstr "Bist du sicher, dass du alle gesperrten IPs entfernen möchtest?"
 msgid "Are you sure you want to remove this post type?"
 msgstr "Bist du dir sicher, dass du diesen Beitragstyp entfernen möchtest?"
 
-#: includes/features/media-image-opt.php:2348
+#: includes/features/media-image-opt.php:2581
 msgid "Are you sure you want to restore"
 msgstr "Bist du sicher, dass du wiederherstellen möchtest"
 
-#: includes/features/media-image-opt.php:2362
+#: includes/features/media-image-opt.php:2595
 msgid "Are you sure you want to restore ALL"
 msgstr "Bist du sicher, dass du ALLE wiederherstellen möchtest"
 
-#: includes/features/media-image-opt.php:2301
+#: includes/features/media-image-opt.php:2534
 msgid "Are you sure you want to restore this image to its original?"
 msgstr "Bist du sicher, dass du dieses Bild auf sein Original zurücksetzen möchtest?"
 
@@ -316,11 +349,7 @@ msgstr "Authentifizierung fehlgeschlagen: Ungültiger Benutzername oder Passwort
 msgid "Author"
 msgstr "Autor"
 
-#: includes/features/security-page.php:228
-msgid "Auto"
-msgstr "Automatisch"
-
-#: includes/features/media-image-opt.php:1127
+#: includes/features/media-image-opt.php:1327
 msgid "Auto (smart)"
 msgstr "Automatisch (intelligent)"
 
@@ -328,9 +357,17 @@ msgstr "Automatisch (intelligent)"
 msgid "Auto RAF (Recommended)"
 msgstr "Auto RAF (empfohlen)"
 
-#: includes/features/media-image-opt.php:1132
+#: includes/features/media-image-opt.php:1332
 msgid "Auto: lossy for JPG, lossless for PNG."
 msgstr "Automatisch: verlustbehaftet für JPG, verlustfrei für PNG."
+
+#: includes/features/media-image-opt.php:35
+msgid "Automatic Optimization"
+msgstr "Automatische Optimierung"
+
+#: includes/features/media-image-opt.php:42
+msgid "Automatically Optimize New Uploads"
+msgstr "Neue Uploads automatisch optimieren"
 
 #: includes/features/interactions.php:250
 msgid "Automatically run requestAnimationFrame loop. Keep this enabled for best performance."
@@ -482,9 +519,13 @@ msgstr "Einfacher Rich Text"
 msgid "Basic Settings"
 msgstr "Grundeinstellungen"
 
-#: includes/features/media-image-opt.php:1801
+#: includes/features/media-image-opt.php:2024
 msgid "Batch:"
 msgstr "Batch:"
+
+#: includes/features/two-factor-auth.php:134
+msgid "Bitte schließe die Anmeldung ab, indem du den Bestätigungscode unten eingibst:"
+msgstr "Bitte schließe die Anmeldung ab, indem du den Bestätigungscode unten eingibst:"
 
 #: includes/elements/gsap-multi-element-register.php:199
 msgid "Blink"
@@ -510,7 +551,7 @@ msgstr "Einstellungen für den Block-Editor"
 msgid "Block Selected Resources"
 msgstr "Ausgewählte Ressourcen blockieren"
 
-#: includes/features/security-page.php:51
+#: includes/features/security-page.php:50
 msgid "Blocked IPs Management"
 msgstr "Verwaltung gesperrter IPs"
 
@@ -638,7 +679,7 @@ msgstr "Helligkeit rein"
 msgid "Broken Glass (Polygons)"
 msgstr "Zerbrochenes Glas (Polygone)"
 
-#: includes/features/media-image-opt.php:1967
+#: includes/features/media-image-opt.php:2200
 msgid "Bulk Restore"
 msgstr "Massenwiederherstellung"
 
@@ -678,21 +719,17 @@ msgstr "CSS-Selektor für den Hauptinhaltsbereich. Unterstützt mehrere durch Ko
 msgid "Camera Aperture (Spiral)"
 msgstr "Kamerablende (Spirale)"
 
-#: includes/features/media-image-opt.php:2232
+#: includes/features/media-image-opt.php:2465
 msgid "Cannot Restore"
 msgstr "Kann nicht wiederhergestellt werden"
 
-#: includes/features/media-image-opt.php:2576
+#: includes/features/media-image-opt.php:2809
 msgid "Cannot be restored"
 msgstr "Kann nicht wiederhergestellt werden"
 
-#: includes/features/media-image-opt.php:3360
+#: includes/features/media-image-opt.php:3606
 msgid "Cannot restore: Original file was permanently deleted to save space."
 msgstr "Wiederherstellung nicht möglich: Die Originaldatei wurde zur Speicherplatzersparnis dauerhaft gelöscht."
-
-#: includes/features/security-page.php:102
-msgid "Captcha Protection"
-msgstr "Captcha-Schutz"
 
 #: includes/elements/gsap-multi-element-register.php:129
 #: includes/elements/gsap-multi-element-register.php:325
@@ -770,15 +807,11 @@ msgstr "Auswahlmöglichkeiten (Choices)"
 msgid "Choose Media"
 msgstr "Medien auswählen"
 
-#: includes/features/security-page.php:194
-msgid "Choose the type of captcha protection for login, registration, lost password, and comment forms. Default: None."
-msgstr "Wähle die Art des Captcha-Schutzes für Login-, Registrierungs-, Passwort-vergessen- und Kommentarformulare. Standard: Keine."
-
 #: includes/features/editor-settings-panel-bricks.php:205
 msgid "Clamp Generator"
 msgstr "Clamp-Generator"
 
-#: includes/features/security-page.php:55
+#: includes/features/security-page.php:54
 msgid "Clear All Blocked IPs"
 msgstr "Alle gesperrten IPs entfernen"
 
@@ -794,18 +827,10 @@ msgstr "Alle Revisionen für dieses Snippet löschen"
 msgid "Click \"Scan Page\" to analyze all scripts on that page"
 msgstr "Klicke auf „Seite scannen“, um alle Scripts auf dieser Seite zu analysieren"
 
-#: includes/features/login-math-captcha.php:46
-msgid "Click the image for a new equation"
-msgstr "Klicke auf das Bild für eine neue Rechenaufgabe"
-
 #: includes/features/post-types-settings.php:136
 #: includes/features/post-types-settings.php:289
 msgid "Click to pick icon"
 msgstr "Klicken, um Symbol auszuwählen"
-
-#: includes/features/login-math-captcha.php:43
-msgid "Click to refresh"
-msgstr "Klicken zum Aktualisieren"
 
 #: includes/elements/gsap-multi-element-register.php:243
 msgid "Clip Blob Morph In"
@@ -891,10 +916,6 @@ msgstr "Clip Dreieck links enthüllen"
 msgid "Clip Triangle Right Reveal"
 msgstr "Clip Dreieck rechts enthüllen"
 
-#: includes/features/security-page.php:192
-msgid "Cloudflare Turnstile"
-msgstr "Cloudflare Turnstile"
-
 #: includes/features/custom-code-snippets.php:1054
 msgid "Code Context"
 msgstr "Code-Kontext"
@@ -929,25 +950,21 @@ msgstr "Farbe (Color)"
 msgid "Comments"
 msgstr "Kommentare"
 
-#: includes/features/security-page.php:256
-msgid "Compact (130px)"
-msgstr "Kompakt (130px)"
-
 #: includes/features/custom-code-snippets.php:1169
 msgid "Compare"
 msgstr "Vergleichen"
 
-#: includes/features/media-image-opt.php:1916
-#: includes/features/media-image-opt.php:2450
-#: includes/features/media-image-opt.php:2503
+#: includes/features/media-image-opt.php:2139
+#: includes/features/media-image-opt.php:2683
+#: includes/features/media-image-opt.php:2736
 msgid "Complete!"
 msgstr "Abgeschlossen!"
 
-#: includes/features/media-image-opt.php:1923
+#: includes/features/media-image-opt.php:2146
 msgid "Complete:"
 msgstr "Abgeschlossen:"
 
-#: includes/features/media-image-opt.php:1124
+#: includes/features/media-image-opt.php:1324
 msgid "Compression Type:"
 msgstr "Komprimierungstyp:"
 
@@ -963,7 +980,7 @@ msgstr "Zusätzliche Einstellungen für deine Website unten konfigurieren."
 msgid "Configure animation and interaction settings for your site below."
 msgstr "Konfiguriere unten die Animations- und Interaktionseinstellungen für deine Website."
 
-#: includes/features/security-page.php:168
+#: includes/features/security-page.php:124
 msgid "Configure your security settings below:"
 msgstr "Deine Sicherheitseinstellungen unten konfigurieren:"
 
@@ -995,9 +1012,9 @@ msgstr "Kontrast rein"
 msgid "Controls the position of the mega menu in the admin bar. Lower numbers appear earlier (e.g. 1 = first), higher numbers appear later (e.g. 99 = near end). Default: 35."
 msgstr "Steuert die Position des Mega-Menüs in der Admin-Leiste. Niedrigere Zahlen erscheinen früher (z. B. 1 = zuerst), höhere Zahlen erscheinen später (z. B. 99 = fast am Ende). Standard: 35."
 
-#: includes/features/media-image-opt.php:1079
-msgid "Convert existing JPG and PNG images in your media library to WebP format. Original images are preserved and can be restored anytime."
-msgstr "Konvertiert vorhandene JPG- und PNG-Bilder in deiner Mediathek in das WebP-Format. Die Originalbilder bleiben erhalten und können jederzeit wiederhergestellt werden."
+#: includes/features/media-image-opt.php:1267
+msgid "Convert existing JPG and PNG images in your media library to WebP or AVIF format. Original images are preserved and can be restored anytime."
+msgstr "Konvertiere vorhandene JPG- und PNG-Bilder in deiner Mediathek in das WebP- oder AVIF-Format. Originalbilder bleiben erhalten und können jederzeit wiederhergestellt werden."
 
 #: includes/features/cookie-banner.php:277
 msgid "Cookie Banner"
@@ -1034,6 +1051,10 @@ msgstr "Cookie-Präferenzen"
 msgid "Cookie Settings"
 msgstr "Cookie-Einstellungen"
 
+#: includes/features/two-factor-auth.php:227
+msgid "Could not send a new code. Please try again shortly."
+msgstr "Neuer Code konnte nicht gesendet werden. Bitte versuche es in Kürze erneut."
+
 #: includes/features/draft-revision.php:70
 msgid "Create Revision"
 msgstr "Revision erstellen"
@@ -1048,11 +1069,11 @@ msgstr "Würfel drehen rein"
 msgid "Cube Rotate Out"
 msgstr "Würfel drehen raus"
 
-#: includes/features/media-image-opt.php:2597
+#: includes/features/media-image-opt.php:2830
 msgid "Current Size:"
 msgstr "Aktuelle Größe:"
 
-#: includes/features/media-image-opt.php:2020
+#: includes/features/media-image-opt.php:2253
 msgid "Current URL"
 msgstr "Aktuelle URL"
 
@@ -1060,7 +1081,7 @@ msgstr "Aktuelle URL"
 msgid "Currently Blocked Scripts"
 msgstr "Aktuell blockierte Scripts"
 
-#: includes/features/security-page.php:52
+#: includes/features/security-page.php:51
 msgid "Currently blocked IPs: %d"
 msgstr "Aktuell gesperrte IPs: %d"
 
@@ -1114,7 +1135,7 @@ msgstr "Benutzerdefinierte Felder erfolgreich gespeichert."
 msgid "Customize the login page with your own background image and custom text."
 msgstr "Passe die Login-Seite mit deinem eigenen Hintergrundbild und benutzerdefiniertem Text an."
 
-#: includes/features/media-image-opt.php:2722
+#: includes/features/media-image-opt.php:2955
 msgid "DEBUG: Delete original files now? This will permanently delete the original image and all its thumbnails."
 msgstr "DEBUG: Originaldateien jetzt löschen? Dadurch werden das Originalbild und alle zugehörigen Thumbnails dauerhaft gelöscht."
 
@@ -1125,10 +1146,6 @@ msgstr "DNS-Auflösung fehlgeschlagen: Der Hostname „%s“ konnte nicht aufgel
 #: includes/elements/gsap-text-animations.php:50
 msgid "DOM Element Tag"
 msgstr "DOM-Element-Tag"
-
-#: includes/features/security-page.php:236
-msgid "Dark"
-msgstr "Dunkel"
 
 #: includes/features/other-settings.php:135
 msgid "Dashboard Custom Metabox Content"
@@ -1175,6 +1192,10 @@ msgstr "Definiere benutzerdefinierte Beitragstypen mit Name, Slug (max. 20 Zeich
 #: includes/features/taxonomy-settings.php:85
 msgid "Define custom taxonomies with name, slug, hierarchical setting, and associated post types:"
 msgstr "Definiere benutzerdefinierte Taxonomien mit Name, Slug, hierarchischer Einstellung und zugeordneten Beitragstypen:"
+
+#: includes/features/two-factor-auth.php:131
+msgid "Dein Bestätigungscode"
+msgstr "Dein Bestätigungscode"
 
 #: includes/elements/gsap-animations.php:218
 msgid "Delay"
@@ -1271,28 +1292,28 @@ msgstr "Verzögerung 8"
 msgid "Delay 9"
 msgstr "Verzögerung 9"
 
-#: includes/features/media-image-opt.php:2744
-#: includes/features/media-image-opt.php:2750
+#: includes/features/media-image-opt.php:2977
+#: includes/features/media-image-opt.php:2983
 msgid "Delete Original Files Now (Debug)"
 msgstr "Originaldateien jetzt löschen (Debug)"
 
-#: includes/features/media-image-opt.php:1980
+#: includes/features/media-image-opt.php:2213
 msgid "Delete Originals to Save Space"
 msgstr "Originale löschen, um Speicherplatz zu sparen"
 
-#: includes/features/media-image-opt.php:2224
+#: includes/features/media-image-opt.php:2457
 msgid "Deleted (Space Saved)"
 msgstr "Gelöscht (Speicherplatz gespart)"
 
-#: includes/features/media-image-opt.php:2421
+#: includes/features/media-image-opt.php:2654
 msgid "Deleting original"
 msgstr "Original wird gelöscht"
 
-#: includes/features/media-image-opt.php:2726
+#: includes/features/media-image-opt.php:2959
 msgid "Deleting..."
 msgstr "Wird gelöscht …"
 
-#: includes/features/media-image-opt.php:2459
+#: includes/features/media-image-opt.php:2692
 msgid "Deletion complete:"
 msgstr "Löschung abgeschlossen:"
 
@@ -1333,7 +1354,11 @@ msgstr "Diagonale Schnitte"
 msgid "Diamond Grid"
 msgstr "Diamant-Raster"
 
-#: includes/features/media-image-opt.php:1215
+#: includes/features/two-factor-auth.php:136
+msgid "Dieser Code läuft in 15 Minuten ab."
+msgstr "Dieser Code läuft in 15 Minuten ab."
+
+#: includes/features/media-image-opt.php:1415
 msgid "Dimensions"
 msgstr "Abmessungen"
 
@@ -1417,8 +1442,8 @@ msgstr "Diesen Hinweis ausblenden"
 msgid "Div"
 msgstr "Div"
 
-#: includes/features/media-image-opt.php:1486
-#: includes/features/media-image-opt.php:1874
+#: includes/features/media-image-opt.php:1687
+#: includes/features/media-image-opt.php:2097
 msgid "Done"
 msgstr "Fertig"
 
@@ -1774,7 +1799,7 @@ msgstr "Rechtstext/Links aktivieren"
 msgid "Enable Lenis Smooth Scroll"
 msgstr "Lenis Smooth Scroll aktivieren"
 
-#: includes/features/security-page.php:143
+#: includes/features/security-page.php:77
 msgid "Enable Limit Login Attempts"
 msgstr "Login-Versuch-Begrenzung aktivieren"
 
@@ -1823,6 +1848,10 @@ msgstr "Spalte für Vorschaubild in Beitrags-Tabellen aktivieren"
 msgid "Enable Top Toolbar"
 msgstr "Obere Werkzeugleiste aktivieren"
 
+#: includes/features/security-page.php:102
+msgid "Enable Two-Factor Authentication"
+msgstr "Zwei-Faktor-Authentifizierung aktivieren"
+
 #: includes/features/editor-settings-bricks.php:277
 msgid "Enable URL Coming Soon Bypass"
 msgstr "URL-Umgehung für „Demnächst verfügbar“ aktivieren"
@@ -1830,6 +1859,10 @@ msgstr "URL-Umgehung für „Demnächst verfügbar“ aktivieren"
 #: includes/features/other-settings.php:278
 msgid "Enable admin bar toggle functionality on frontend"
 msgstr "Admin-Leisten-Umschaltfunktion im Frontend aktivieren"
+
+#: includes/features/media-image-opt.php:98
+msgid "Enable automatic optimization for new uploads"
+msgstr "Automatische Optimierung für neue Uploads aktivieren"
 
 #: includes/features/other-settings.php:264
 msgid "Enable draft revision system for all post types"
@@ -1843,7 +1876,7 @@ msgstr "Ausführung aller benutzerdefinierten PHP-Snippets aktivieren"
 msgid "Enable infinite scrolling. Requires syncTouch on touch devices. Default: disabled"
 msgstr "Aktiviert endloses Scrollen. Erfordert syncTouch auf Touch-Geräten. Standard: deaktiviert"
 
-#: includes/features/security-page.php:268
+#: includes/features/security-page.php:131
 msgid "Enable this setting to limit login attempts and automatically block IPs with too many failed logins."
 msgstr "Aktiviere diese Einstellung, um Login-Versuche zu begrenzen und IPs mit zu vielen fehlgeschlagenen Logins automatisch zu sperren."
 
@@ -2035,8 +2068,8 @@ msgstr "Deinen Textinhalt hier eingeben"
 
 #: includes/features/custom-code-snippets.php:136
 #: includes/features/custom-field-settings.php:2894
-#: includes/features/media-image-opt.php:1498
-#: includes/features/media-image-opt.php:1892
+#: includes/features/media-image-opt.php:1699
+#: includes/features/media-image-opt.php:2115
 msgid "Error"
 msgstr "Fehler"
 
@@ -2052,20 +2085,20 @@ msgstr "Fehlerprotokolle"
 msgid "Error Message"
 msgstr "Fehlermeldung"
 
-#: includes/features/media-image-opt.php:2708
+#: includes/features/media-image-opt.php:2941
 msgid "Error during restore."
 msgstr "Fehler bei der Wiederherstellung."
 
-#: includes/features/media-image-opt.php:2210
+#: includes/features/media-image-opt.php:2443
 msgid "Error loading history."
 msgstr "Fehler beim Laden des Verlaufs."
 
-#: includes/features/media-image-opt.php:2329
-#: includes/features/media-image-opt.php:2334
+#: includes/features/media-image-opt.php:2562
+#: includes/features/media-image-opt.php:2567
 msgid "Error restoring image."
 msgstr "Fehler beim Wiederherstellen des Bildes."
 
-#: includes/features/media-image-opt.php:1471
+#: includes/features/media-image-opt.php:1672
 msgid "Error scanning images."
 msgstr "Fehler beim Scannen der Bilder."
 
@@ -2073,17 +2106,21 @@ msgstr "Fehler beim Scannen der Bilder."
 msgid "Error scanning page:"
 msgstr "Fehler beim Scannen der Seite:"
 
-#: includes/features/media-image-opt.php:2745
+#: includes/features/media-image-opt.php:2978
 msgid "Error:"
 msgstr "Fehler:"
 
-#: includes/features/media-image-opt.php:1808
+#: includes/features/media-image-opt.php:2031
 msgid "Est. time remaining:"
 msgstr "Geschätzte verbleibende Zeit:"
 
 #: includes/features/cookie-banner.php:413
 msgid "Examples:"
 msgstr "Beispiele:"
+
+#: includes/features/security-page.php:162
+msgid "Exception: users whose only role(s) are WooCommerce \"Customer\" and/or \"Subscriber\" are exempt. Any account with an additional role (Administrator, Editor, Author, Shop Manager, ...) is always required to use two-factor authentication, even if it also has the Customer role."
+msgstr "Ausnahme: Nutzer, deren einzige Rolle(n) WooCommerce \"Kunde\" und/oder \"Abonnent\" sind, sind ausgenommen. Jedes Konto mit einer zusätzlichen Rolle (Administrator, Redakteur, Autor, Shop-Manager, ...) muss immer Zwei-Faktor-Authentifizierung verwenden, auch wenn es zusätzlich die Rolle \"Kunde\" hat."
 
 #: includes/features/post-types-settings.php:30
 #: includes/features/post-types-settings.php:184
@@ -2106,7 +2143,7 @@ msgstr "Explosion rein"
 msgid "Explode Out"
 msgstr "Explosion raus"
 
-#: includes/features/media-image-opt.php:2400
+#: includes/features/media-image-opt.php:2633
 msgid "FINAL CONFIRMATION: Are you absolutely certain you want to delete all original files? This cannot be undone!"
 msgstr "LETZTE BESTÄTIGUNG: Bist du absolut sicher, dass du alle Originaldateien löschen möchtest? Dies kann nicht rückgängig gemacht werden!"
 
@@ -2196,7 +2233,7 @@ msgstr "Fehler beim Löschen der Revisionen. Ungültiges Snippet oder unzureiche
 msgid "Failed to create snippet: %s - %s"
 msgstr "Fehler beim Erstellen des Snippets: %s - %s"
 
-#: includes/features/media-image-opt.php:3341
+#: includes/features/media-image-opt.php:3587
 msgid "Failed to delete original files. Check file permissions."
 msgstr "Originaldateien konnten nicht gelöscht werden. Überprüfe die Dateiberechtigungen."
 
@@ -2204,17 +2241,17 @@ msgstr "Originaldateien konnten nicht gelöscht werden. Überprüfe die Dateiber
 msgid "Failed to fetch page: "
 msgstr "Seite konnte nicht abgerufen werden: "
 
-#: includes/features/media-image-opt.php:2970
-msgid "Failed to rename original WebP file."
-msgstr "Die ursprüngliche WebP-Datei konnte nicht umbenannt werden."
+#: includes/features/media-image-opt.php:3216
+msgid "Failed to rename original file."
+msgstr "Umbenennen der Originaldatei fehlgeschlagen."
 
 #: includes/features/custom-code-snippets.php:847
 msgid "Failed to restore revision. Invalid ID or permissions."
 msgstr "Fehler beim Wiederherstellen der Revision. Ungültige ID oder Berechtigungen."
 
-#: includes/features/media-image-opt.php:2984
-msgid "Failed to save WebP file."
-msgstr "WebP-Datei konnte nicht gespeichert werden."
+#: includes/features/media-image-opt.php:3230
+msgid "Failed to save optimized file."
+msgstr "Speichern der optimierten Datei fehlgeschlagen."
 
 #: includes/features/cookie-banner.php:755
 msgid "Failed to scan page. Please try again."
@@ -2228,7 +2265,7 @@ msgstr "Test-E-Mail konnte nicht gesendet werden. Details:"
 msgid "Failed to send test email. No specific error details were captured. Check your SMTP settings or server error logs."
 msgstr "Test-E-Mail konnte nicht gesendet werden. Es wurden keine genauen Fehlerdetails erfasst. Überprüfe deine SMTP-Einstellungen oder die Server-Fehlerprotokolle."
 
-#: includes/features/media-image-opt.php:3436
+#: includes/features/media-image-opt.php:3682
 msgid "Failed to update attachment: "
 msgstr "Anhang konnte nicht aktualisiert werden: "
 
@@ -2245,8 +2282,8 @@ msgstr "Fehler beim Aktualisieren des Snippets: %s - %s"
 msgid "False"
 msgstr "Falsch (False)"
 
-#: includes/features/media-image-opt.php:56
-#: includes/features/media-image-opt.php:1082
+#: includes/features/media-image-opt.php:244
+#: includes/features/media-image-opt.php:1270
 msgid "Fast Client-Side Processing:"
 msgstr "Schnelle clientseitige Verarbeitung:"
 
@@ -2268,8 +2305,8 @@ msgstr "Feldname (Field Name)"
 msgid "Field Type"
 msgstr "Feldtyp (Field Type)"
 
-#: includes/features/media-image-opt.php:1214
-#: includes/features/media-image-opt.php:2018
+#: includes/features/media-image-opt.php:1414
+#: includes/features/media-image-opt.php:2251
 msgid "File Name"
 msgstr "Dateiname"
 
@@ -2277,7 +2314,7 @@ msgstr "Dateiname"
 msgid "File Size"
 msgstr "Dateigröße"
 
-#: includes/features/media-image-opt.php:2564
+#: includes/features/media-image-opt.php:2797
 msgid "File Size Comparison:"
 msgstr "Dateigrößenvergleich:"
 
@@ -2365,15 +2402,15 @@ msgstr "Einklappen nach oben"
 msgid "Footer Selector"
 msgstr "Footer-Selektor"
 
-#: includes/features/media-image-opt.php:1150
+#: includes/features/media-image-opt.php:1350
 msgid "For PNG transparency. 100=lossless."
 msgstr "Für PNG-Transparenz. 100=verlustfrei."
 
-#: includes/features/media-image-opt.php:1464
+#: includes/features/media-image-opt.php:1665
 msgid "Found"
 msgstr "Gefunden"
 
-#: includes/features/media-image-opt.php:2579
+#: includes/features/media-image-opt.php:2812
 msgid "Freed: %s"
 msgstr "Freigegeben: %s"
 
@@ -2446,7 +2483,7 @@ msgstr "Gesten-Ausrichtung"
 msgid "Global Snippet Execution"
 msgstr "Globale Snippet-Ausführung"
 
-#: includes/features/media-image-opt.php:2600
+#: includes/features/media-image-opt.php:2833
 msgid "Go to Bulk Optimizer"
 msgstr "Zum Massenoptimierer"
 
@@ -2560,7 +2597,7 @@ msgstr "Element-Icons im Bricks-Editor ausblenden"
 msgid "Hierarchical"
 msgstr "Hierarchisch"
 
-#: includes/features/media-image-opt.php:1118
+#: includes/features/media-image-opt.php:1318
 msgid "Higher = smaller files, slower."
 msgstr "Höher = kleinere Dateien, langsamer."
 
@@ -2568,7 +2605,7 @@ msgstr "Höher = kleinere Dateien, langsamer."
 msgid "Hinge"
 msgstr "Scharnier (Hinge)"
 
-#: includes/features/media-image-opt.php:40
+#: includes/features/media-image-opt.php:228
 msgid "History & Settings"
 msgstr "Verlauf & Einstellungen"
 
@@ -2621,29 +2658,29 @@ msgid "Iframes Found:"
 msgstr "Gefundene Iframes:"
 
 #: includes/features/editor-settings-panel-bricks.php:204
-#: includes/features/media-image-opt.php:30
-#: includes/features/media-image-opt.php:2527
+#: includes/features/media-image-opt.php:218
+#: includes/features/media-image-opt.php:2760
 msgid "Image Optimization"
 msgstr "Bildoptimierung"
 
-#: includes/features/media-image-opt.php:3016
+#: includes/features/media-image-opt.php:3262
 msgid "Image optimized successfully."
 msgstr "Bild erfolgreich optimiert."
 
-#: includes/features/media-image-opt.php:2326
-#: includes/features/media-image-opt.php:3496
+#: includes/features/media-image-opt.php:2559
+#: includes/features/media-image-opt.php:3742
 msgid "Image restored successfully."
 msgstr "Bild erfolgreich wiederhergestellt."
 
-#: includes/features/media-image-opt.php:2697
+#: includes/features/media-image-opt.php:2930
 msgid "Image restored! Refreshing page..."
 msgstr "Bild wiederhergestellt! Seite wird aktualisiert …"
 
-#: includes/features/media-image-opt.php:1082
-msgid "Images are downloaded and optimized directly in your browser using WebAssembly (libwebp). Keep browser tab open until optimization completes."
-msgstr "Bilder werden direkt in deinem Browser mit WebAssembly (libwebp) heruntergeladen und optimiert. Halte den Browser-Tab geöffnet, bis die Optimierung abgeschlossen ist."
+#: includes/features/media-image-opt.php:1270
+msgid "Images are downloaded and optimized directly in your browser using WebAssembly. Keep browser tab open until optimization completes."
+msgstr "Bilder werden heruntergeladen und direkt in deinem Browser mittels WebAssembly optimiert. Lasse den Browser-Tab geöffnet, bis die Optimierung abgeschlossen ist."
 
-#: includes/features/media-image-opt.php:56
+#: includes/features/media-image-opt.php:244
 msgid "Images are optimized directly in your browser using your CPU. Keep this tab open during processing for best performance. Even thousands of images will be processed quickly!"
 msgstr "Bilder werden direkt in deinem Browser mithilfe deiner CPU optimiert. Halte diesen Tab während der Verarbeitung für beste Performance geöffnet. Selbst tausende Bilder werden schnell verarbeitet!"
 
@@ -2651,9 +2688,13 @@ msgstr "Bilder werden direkt in deinem Browser mithilfe deiner CPU optimiert. Ha
 msgid "Imprint"
 msgstr "Impressum"
 
-#: includes/features/media-image-opt.php:1164
+#: includes/features/media-image-opt.php:1364
 msgid "Include already optimized images (for re-optimization)"
 msgstr "Bereits optimierte Bilder einbeziehen (für Neuoptimierung)"
+
+#: includes/features/two-factor-auth.php:197
+msgid "Incorrect code. Please try again."
+msgstr "Falscher Code. Bitte versuche es erneut."
 
 #: includes/features/interactions.php:264
 msgid "Infinite Scroll"
@@ -2693,7 +2734,7 @@ msgstr "Interaktionen & Animationen"
 msgid "Iris Circle"
 msgstr "Iris-Kreis"
 
-#: includes/features/media-image-opt.php:3405
+#: includes/features/media-image-opt.php:3651
 msgid "It may have been deleted or moved."
 msgstr "Sie wurde möglicherweise gelöscht oder verschoben."
 
@@ -2744,10 +2785,6 @@ msgstr "Lerp (Weichheit)"
 #: includes/features/interactions.php:261
 msgid "Lerp applied during syncTouch inertia. Default: 0.075"
 msgstr "Lerp-Wert, der während der syncTouch-Trägheit angewendet wird. Standard: 0.075"
-
-#: includes/features/security-page.php:232
-msgid "Light"
-msgstr "Hell"
 
 #: includes/elements/gsap-multi-element-register.php:150
 msgid "Light Speed In Left"
@@ -2834,11 +2871,11 @@ msgstr "Schleife / Hin und Her (yoyo)"
 msgid "Loop True"
 msgstr "Schleife Wahr"
 
-#: includes/features/media-image-opt.php:1129
+#: includes/features/media-image-opt.php:1329
 msgid "Lossless (perfect)"
 msgstr "Verlustfrei (perfekt)"
 
-#: includes/features/media-image-opt.php:1128
+#: includes/features/media-image-opt.php:1328
 msgid "Lossy (photos)"
 msgstr "Verlustbehaftet (Fotos)"
 
@@ -2853,7 +2890,7 @@ msgstr "SMTP-E-Mail-Einstellungen"
 msgid "Main Content Selector"
 msgstr "Hauptinhalt-Selektor"
 
-#: includes/features/security-page.php:95
+#: includes/features/security-page.php:69
 msgid "Main Settings"
 msgstr "Haupteinstellungen"
 
@@ -2924,11 +2961,11 @@ msgstr "Marker"
 msgid "Markers True"
 msgstr "Marker Wahr"
 
-#: includes/features/media-image-opt.php:1101
+#: includes/features/media-image-opt.php:1301
 msgid "Max Width (px):"
 msgstr "Maximale Breite (px):"
 
-#: includes/features/security-page.php:151
+#: includes/features/security-page.php:85
 msgid "Maximum Login Attempts"
 msgstr "Maximale Login-Versuche"
 
@@ -2937,7 +2974,7 @@ msgstr "Maximale Login-Versuche"
 msgid "Media"
 msgstr "Medien"
 
-#: includes/features/media-image-opt.php:1110
+#: includes/features/media-image-opt.php:1310
 msgid "Method (0-6):"
 msgstr "Methode (0-6):"
 
@@ -2996,11 +3033,11 @@ msgstr "Nach oben verschieben"
 msgid "N/A"
 msgstr "N. Z. (Nicht zutreffend)"
 
-#: includes/features/media-image-opt.php:1130
+#: includes/features/media-image-opt.php:1330
 msgid "Near-Lossless"
 msgstr "Nahezu verlustfrei"
 
-#: includes/features/media-image-opt.php:1138
+#: includes/features/media-image-opt.php:1338
 msgid "Near-Lossless (0-100):"
 msgstr "Nahezu verlustfrei (0-100):"
 
@@ -3008,7 +3045,7 @@ msgstr "Nahezu verlustfrei (0-100):"
 msgid "New Code Snippet"
 msgstr "Neues Code-Snippet"
 
-#: includes/features/media-image-opt.php:1218
+#: includes/features/media-image-opt.php:1418
 msgid "New Size"
 msgstr "Neue Größe"
 
@@ -3044,21 +3081,21 @@ msgstr "Auf dieser Seite wurden keine externen Skripte oder iFrames erkannt."
 msgid "No fields configured for this options page or group not found."
 msgstr "Keine Felder für diese Optionsseite konfiguriert oder Gruppe nicht gefunden."
 
-#: includes/features/media-image-opt.php:2775
-#: includes/features/media-image-opt.php:2915
+#: includes/features/media-image-opt.php:3008
+#: includes/features/media-image-opt.php:3148
 msgid "No image uploaded or upload error."
 msgstr "Kein Bild hochgeladen oder Fehler beim Hochladen."
 
-#: includes/features/media-image-opt.php:1931
+#: includes/features/media-image-opt.php:2154
 msgid "No images to optimize. Please scan first."
 msgstr "Keine Bilder zu optimieren. Bitte zuerst scannen."
 
-#: includes/features/media-image-opt.php:2358
+#: includes/features/media-image-opt.php:2591
 msgid "No images to restore."
 msgstr "Keine Bilder zum Wiederherstellen."
 
-#: includes/features/media-image-opt.php:2029
-#: includes/features/media-image-opt.php:2373
+#: includes/features/media-image-opt.php:2262
+#: includes/features/media-image-opt.php:2606
 msgid "No optimized images found."
 msgstr "Keine optimierten Bilder gefunden."
 
@@ -3083,7 +3120,7 @@ msgstr "Es wurden keine Revisionen für „%s“ gelöscht."
 msgid "No scripts are currently blocked."
 msgstr "Aktuell sind keine Skripte blockiert."
 
-#: includes/features/media-image-opt.php:1468
+#: includes/features/media-image-opt.php:1669
 msgid "No unoptimized JPG or PNG images found."
 msgstr "Keine unoptimierten JPG- oder PNG-Bilder gefunden."
 
@@ -3096,15 +3133,7 @@ msgstr "Nonce-Verifizierung fehlgeschlagen."
 msgid "None"
 msgstr "Keine (None)"
 
-#: includes/features/security-page.php:190
-msgid "None (Disabled)"
-msgstr "Keine (Deaktiviert)"
-
-#: includes/features/security-page.php:252
-msgid "Normal (300px)"
-msgstr "Normal (300px)"
-
-#: includes/features/media-image-opt.php:2540
+#: includes/features/media-image-opt.php:2773
 msgid "Not an image file."
 msgstr "Keine Bilddatei."
 
@@ -3160,31 +3189,31 @@ msgstr "Deckkraft Ende"
 msgid "Opacity Start"
 msgstr "Deckkraft Start"
 
-#: includes/features/media-image-opt.php:1963
+#: includes/features/media-image-opt.php:2196
 msgid "Optimization History & Rollback"
 msgstr "Optimierungsverlauf & Wiederherstellung"
 
-#: includes/features/media-image-opt.php:1086
+#: includes/features/media-image-opt.php:1274
 msgid "Optimization Settings"
 msgstr "Optimierungseinstellungen"
 
-#: includes/features/media-image-opt.php:2462
+#: includes/features/media-image-opt.php:2695
 msgid "Optimization metadata preserved. Images cannot be restored to original format."
 msgstr "Optimierungsmetadaten wurden beibehalten. Bilder können nicht auf das Originalformat zurückgesetzt werden."
 
-#: includes/features/media-image-opt.php:1764
+#: includes/features/media-image-opt.php:1987
 msgid "Optimize"
 msgstr "Optimieren"
 
-#: includes/features/media-image-opt.php:1937
+#: includes/features/media-image-opt.php:2160
 msgid "Optimize ALL"
 msgstr "ALLE optimieren"
 
-#: includes/features/media-image-opt.php:1173
+#: includes/features/media-image-opt.php:1373
 msgid "Optimize All Unoptimized"
 msgstr "Alle unoptimierten optimieren"
 
-#: includes/features/media-image-opt.php:37
+#: includes/features/media-image-opt.php:225
 msgid "Optimize Existing Media"
 msgstr "Vorhandene Medien optimieren"
 
@@ -3193,7 +3222,7 @@ msgstr "Vorhandene Medien optimieren"
 msgid "Optimize Media"
 msgstr "Medien optimieren"
 
-#: includes/features/media-image-opt.php:1176
+#: includes/features/media-image-opt.php:1376
 msgid "Optimize Only Selected Images"
 msgstr "Nur ausgewählte Bilder optimieren"
 
@@ -3201,16 +3230,16 @@ msgstr "Nur ausgewählte Bilder optimieren"
 msgid "Optimize or Convert or Resize gigantic images. Fast. It uses your cpu to optimize images. If img count is more than 5 it will create .zip download."
 msgstr "Gigantische Bilder optimieren oder konvertieren oder in der Größe ändern. Schnell. Verwendet deine CPU zur Bildoptimierung. Wenn die Bildanzahl mehr als 5 beträgt, wird ein .zip-Download erstellt."
 
-#: includes/features/media-image-opt.php:55
+#: includes/features/media-image-opt.php:243
 msgid "Optimize, convert, and resize images before adding them to your media library."
 msgstr "Bilder optimieren, konvertieren und in der Größe ändern, bevor sie deiner Medienbibliothek hinzugefügt werden."
 
-#: includes/features/media-image-opt.php:1505
-#: includes/features/media-image-opt.php:2559
+#: includes/features/media-image-opt.php:1706
+#: includes/features/media-image-opt.php:2792
 msgid "Optimized"
 msgstr "Optimiert"
 
-#: includes/features/media-image-opt.php:2566
+#: includes/features/media-image-opt.php:2799
 msgid "Optimized:"
 msgstr "Optimiert:"
 
@@ -3227,40 +3256,40 @@ msgstr "Reihenfolge (Order)"
 msgid "Orientation"
 msgstr "Ausrichtung"
 
-#: includes/features/media-image-opt.php:2575
+#: includes/features/media-image-opt.php:2808
 msgid "Original Deleted (Space Saved)"
 msgstr "Original gelöscht (Speicherplatz gespart)"
 
-#: includes/features/media-image-opt.php:2574
+#: includes/features/media-image-opt.php:2807
 msgid "Original Status:"
 msgstr "Originalstatus:"
 
-#: includes/features/media-image-opt.php:2019
+#: includes/features/media-image-opt.php:2252
 msgid "Original URL"
 msgstr "Original-URL"
 
-#: includes/features/media-image-opt.php:2583
+#: includes/features/media-image-opt.php:2816
 msgid "Original URL:"
 msgstr "Original-URL:"
 
-#: includes/features/media-image-opt.php:3405
+#: includes/features/media-image-opt.php:3651
 msgid "Original file does not exist: "
 msgstr "Originaldatei existiert nicht: "
 
-#: includes/features/media-image-opt.php:2927
+#: includes/features/media-image-opt.php:3172
 msgid "Original file not found."
 msgstr "Originaldatei nicht gefunden."
 
-#: includes/features/media-image-opt.php:3108
-#: includes/features/media-image-opt.php:3367
+#: includes/features/media-image-opt.php:3354
+#: includes/features/media-image-opt.php:3613
 msgid "Original file path not found in metadata."
 msgstr "Pfad zur Originaldatei wurde in den Metadaten nicht gefunden."
 
-#: includes/features/media-image-opt.php:3294
+#: includes/features/media-image-opt.php:3540
 msgid "Original file was already deleted or missing. Marked as deleted."
 msgstr "Originaldatei wurde bereits gelöscht oder fehlt. Als gelöscht markiert."
 
-#: includes/features/media-image-opt.php:3115
+#: includes/features/media-image-opt.php:3361
 msgid "Original files were already deleted previously."
 msgstr "Originaldateien wurden bereits zuvor gelöscht."
 
@@ -3272,11 +3301,11 @@ msgstr "Original-Beitrags-ID nicht gefunden"
 msgid "Original post not found"
 msgstr "Original-Beitrag nicht gefunden"
 
-#: includes/features/media-image-opt.php:2231
+#: includes/features/media-image-opt.php:2464
 msgid "Original was deleted"
 msgstr "Original wurde gelöscht"
 
-#: includes/features/media-image-opt.php:2565
+#: includes/features/media-image-opt.php:2798
 msgid "Original:"
 msgstr "Original:"
 
@@ -3284,6 +3313,10 @@ msgstr "Original:"
 #: includes/features/other-settings.php:41
 msgid "Other Settings"
 msgstr "Andere Einstellungen"
+
+#: includes/features/media-image-opt.php:1280
+msgid "Output Format:"
+msgstr "Ausgabeformat:"
 
 #: includes/features/cookie-banner.php:1023
 msgid "Overlay Color"
@@ -3386,7 +3419,7 @@ msgstr "Hervorlugen raus rechts"
 msgid "Peek Out Up"
 msgstr "Hervorlugen raus oben"
 
-#: includes/features/media-image-opt.php:1505
+#: includes/features/media-image-opt.php:1706
 msgid "Pending"
 msgstr "Ausstehend"
 
@@ -3403,12 +3436,12 @@ msgid "Permission denied to manage options."
 msgstr "Berechtigung zur Verwaltung von Optionen verweigert."
 
 #: includes/features/custom-code-snippets.php:1329
-#: includes/features/media-image-opt.php:2771
-#: includes/features/media-image-opt.php:2821
-#: includes/features/media-image-opt.php:2909
-#: includes/features/media-image-opt.php:3031
-#: includes/features/media-image-opt.php:3099
-#: includes/features/media-image-opt.php:3352
+#: includes/features/media-image-opt.php:3004
+#: includes/features/media-image-opt.php:3054
+#: includes/features/media-image-opt.php:3142
+#: includes/features/media-image-opt.php:3277
+#: includes/features/media-image-opt.php:3345
+#: includes/features/media-image-opt.php:3598
 msgid "Permission denied."
 msgstr "Berechtigung verweigert."
 
@@ -3436,11 +3469,11 @@ msgstr "Bitte akzeptiere Cookies, um den Inhalt dieses iFrames zu sehen."
 msgid "Please review the <a href=\"%s\">Error Logs tab</a> for more details, identify and fix the problematic snippet. Once fixed, you can re-enable \"Global Snippet Execution\" on the custom code settings page and save."
 msgstr "Bitte überprüfe den Tab „<a href=\"%s\">Fehlerprotokolle</a>“ für weitere Details, identifiziere und behebe das problematische Snippet. Sobald dies behoben ist, kannst du „Globale Snippet-Ausführung“ auf der Seite für benutzerdefinierte Code-Einstellungen wieder aktivieren und speichern."
 
-#: includes/features/media-image-opt.php:2344
+#: includes/features/media-image-opt.php:2577
 msgid "Please select at least one image to restore."
 msgstr "Bitte wähle mindestens ein Bild zum Wiederherstellen aus."
 
-#: includes/features/media-image-opt.php:1758
+#: includes/features/media-image-opt.php:1981
 msgid "Please select at least one image."
 msgstr "Bitte wähle mindestens ein Bild aus."
 
@@ -3452,9 +3485,13 @@ msgstr "Bitte wähle mindestens ein Skript zum Blockieren aus"
 msgid "Please select or enter a page URL"
 msgstr "Bitte wähle oder gib eine Seiten-URL ein"
 
-#: includes/features/media-image-opt.php:2715
+#: includes/features/media-image-opt.php:2948
 msgid "Please use the Bulk Optimizer page for re-optimization."
 msgstr "Bitte verwende die Seite „Bulk-Optimierer“ für die erneute Optimierung."
+
+#: includes/features/two-factor-auth.php:209
+msgid "Please wait a minute before requesting a new code."
+msgstr "Bitte warte eine Minute, bevor du einen neuen Code anforderst."
 
 #: includes/elements/gsap-multi-element-register.php:331
 msgid "Pop In Z"
@@ -3538,11 +3575,11 @@ msgstr "Datenschutzerklärung"
 msgid "Private"
 msgstr "Privat"
 
-#: includes/features/media-image-opt.php:1799
+#: includes/features/media-image-opt.php:2022
 msgid "Processing"
 msgstr "Verarbeitung"
 
-#: includes/features/media-image-opt.php:1816
+#: includes/features/media-image-opt.php:2039
 msgid "Processing..."
 msgstr "Wird verarbeitet …"
 
@@ -3558,7 +3595,11 @@ msgstr "Puff raus"
 msgid "Pulse"
 msgstr "Puls"
 
-#: includes/features/media-image-opt.php:1092
+#: includes/features/media-image-opt.php:58
+msgid "Quality (0-100)"
+msgstr "Qualität (0-100)"
+
+#: includes/features/media-image-opt.php:1292
 msgid "Quality (0-100):"
 msgstr "Qualität (0–100):"
 
@@ -3589,7 +3630,7 @@ msgstr "Zufälliges Mosaik-Peeling (versetzte Kacheln)"
 msgid "Random True"
 msgstr "Zufällig Wahr"
 
-#: includes/features/media-image-opt.php:2592
+#: includes/features/media-image-opt.php:2825
 msgid "Re-optimize"
 msgstr "Erneut optimieren"
 
@@ -3617,11 +3658,11 @@ msgstr "Weiterleitungs-URL nach Login"
 msgid "Refresh Editor After Save"
 msgstr "Editor nach Speichern aktualisieren"
 
-#: includes/features/media-image-opt.php:2000
+#: includes/features/media-image-opt.php:2233
 msgid "Refresh List"
 msgstr "Liste aktualisieren"
 
-#: includes/features/media-image-opt.php:2739
+#: includes/features/media-image-opt.php:2972
 msgid "Refreshing page..."
 msgstr "Seite wird aktualisiert …"
 
@@ -3685,6 +3726,10 @@ msgstr "Repeater"
 msgid "Require Login to Comment"
 msgstr "Login zum Kommentieren erforderlich"
 
+#: includes/features/security-page.php:161
+msgid "Require a one-time code sent by email to complete login, for every user account."
+msgstr "Erfordert für jedes Benutzerkonto einen per E-Mail gesendeten Einmalcode zum Abschluss der Anmeldung."
+
 #: includes/features/other-settings.php:226
 msgid "Require users to be registered and logged in to comment"
 msgstr "Nutzer müssen registriert und eingeloggt sein, um zu kommentieren"
@@ -3693,52 +3738,56 @@ msgstr "Nutzer müssen registriert und eingeloggt sein, um zu kommentieren"
 msgid "Required when your SMTP username is not an email address (API-based providers). This address appears in the From header of sent emails."
 msgstr "Erforderlich, wenn dein SMTP-Benutzername keine E-Mail-Adresse ist (bei API-basierten Anbietern). Diese Adresse erscheint im Von-Header der gesendeten E-Mails."
 
-#: includes/features/security-page.php:159
+#: includes/features/two-factor-auth.php:275
+msgid "Resend code"
+msgstr "Code erneut senden"
+
+#: includes/features/security-page.php:93
 msgid "Reset Failed Attempts After (hours)"
 msgstr "Fehlgeschlagene Versuche zurücksetzen nach (Stunden)"
 
-#: includes/features/media-image-opt.php:2236
-#: includes/features/media-image-opt.php:2328
-#: includes/features/media-image-opt.php:2333
+#: includes/features/media-image-opt.php:2469
+#: includes/features/media-image-opt.php:2561
+#: includes/features/media-image-opt.php:2566
 msgid "Restore"
 msgstr "Wiederherstellen"
 
-#: includes/features/media-image-opt.php:1975
+#: includes/features/media-image-opt.php:2208
 msgid "Restore All Originals"
 msgstr "Alle Originale wiederherstellen"
 
-#: includes/features/media-image-opt.php:2588
-#: includes/features/media-image-opt.php:2702
-#: includes/features/media-image-opt.php:2707
+#: includes/features/media-image-opt.php:2821
+#: includes/features/media-image-opt.php:2935
+#: includes/features/media-image-opt.php:2940
 msgid "Restore Original"
 msgstr "Original wiederherstellen"
 
-#: includes/features/media-image-opt.php:1972
+#: includes/features/media-image-opt.php:2205
 msgid "Restore Selected"
 msgstr "Ausgewählte wiederherstellen"
 
-#: includes/features/media-image-opt.php:2510
+#: includes/features/media-image-opt.php:2743
 msgid "Restore complete:"
 msgstr "Wiederherstellung abgeschlossen:"
 
-#: includes/features/media-image-opt.php:2703
+#: includes/features/media-image-opt.php:2936
 msgid "Restore failed."
 msgstr "Wiederherstellung fehlgeschlagen."
 
-#: includes/features/media-image-opt.php:1968
+#: includes/features/media-image-opt.php:2201
 msgid "Restore selected or all images back to their original state."
 msgstr "Stelle ausgewählte oder alle Bilder wieder in ihren Originalzustand zurück."
 
-#: includes/features/media-image-opt.php:2681
+#: includes/features/media-image-opt.php:2914
 msgid "Restore this image to its original? The WebP version will be deleted."
 msgstr "Dieses Bild auf das Original zurücksetzen? Die WebP-Version wird gelöscht."
 
-#: includes/features/media-image-opt.php:2478
+#: includes/features/media-image-opt.php:2711
 msgid "Restoring"
 msgstr "Wird wiederhergestellt"
 
-#: includes/features/media-image-opt.php:2305
-#: includes/features/media-image-opt.php:2685
+#: includes/features/media-image-opt.php:2538
+#: includes/features/media-image-opt.php:2918
 msgid "Restoring..."
 msgstr "Wird wiederhergestellt …"
 
@@ -3985,6 +4034,10 @@ msgstr "SSL"
 msgid "Save All Snippets & Settings"
 msgstr "Alle Snippets & Einstellungen speichern"
 
+#: includes/features/media-image-opt.php:2191
+msgid "Save Automatic Optimization Settings"
+msgstr "Einstellungen für automatische Optimierung speichern"
+
 #: includes/features/custom-field-settings.php:243
 msgid "Save Custom Fields"
 msgstr "Benutzerdefinierte Felder speichern"
@@ -4005,11 +4058,11 @@ msgstr "Taxonomien speichern"
 msgid "Save this snippet to start tracking revisions."
 msgstr "Dieses Snippet speichern, um Revisionen zu verfolgen."
 
-#: includes/features/media-image-opt.php:1219
+#: includes/features/media-image-opt.php:1419
 msgid "Saved"
 msgstr "Gespeichert"
 
-#: includes/features/media-image-opt.php:1923
+#: includes/features/media-image-opt.php:2146
 msgid "Saved:"
 msgstr "Gespeichert:"
 
@@ -4040,8 +4093,8 @@ msgstr "Skalieren Start"
 msgid "Scan Page"
 msgstr "Seite scannen"
 
-#: includes/features/media-image-opt.php:1170
-#: includes/features/media-image-opt.php:1452
+#: includes/features/media-image-opt.php:1370
+#: includes/features/media-image-opt.php:1653
 msgid "Scan for Unoptimized Images"
 msgstr "Nach unoptimierten Bildern suchen"
 
@@ -4049,7 +4102,7 @@ msgstr "Nach unoptimierten Bildern suchen"
 msgid "Scanning page..."
 msgstr "Seite wird gescannt …"
 
-#: includes/features/media-image-opt.php:1447
+#: includes/features/media-image-opt.php:1648
 msgid "Scanning..."
 msgstr "Wird gescannt …"
 
@@ -4156,7 +4209,7 @@ msgstr "Nach einem Ort suchen (Stadt, Land, Adresse …)"
 msgid "Search icons…"
 msgstr "Icons durchsuchen …"
 
-#: includes/features/security-page.php:32
+#: includes/features/security-page.php:31
 #: includes/features/settings-page.php:31
 msgid "Security Settings"
 msgstr "Sicherheitseinstellungen"
@@ -4165,6 +4218,10 @@ msgstr "Sicherheitseinstellungen"
 #: includes/features/draft-revision.php:214
 msgid "Security check failed"
 msgstr "Sicherheitsprüfung fehlgeschlagen"
+
+#: includes/features/two-factor-auth.php:161
+msgid "Security check failed. Please log in again."
+msgstr "Sicherheitsprüfung fehlgeschlagen. Bitte melde dich erneut an."
 
 #: includes/features/smtp-settings.php:859
 msgid "Security check failed. Please refresh the page and try again."
@@ -4197,8 +4254,8 @@ msgstr "Auswählen"
 msgid "Select All"
 msgstr "Alle auswählen"
 
-#: includes/features/media-image-opt.php:1193
-#: includes/features/media-image-opt.php:1997
+#: includes/features/media-image-opt.php:1393
+#: includes/features/media-image-opt.php:2230
 msgid "Select All on This Page"
 msgstr "Alle auf dieser Seite auswählen"
 
@@ -4423,15 +4480,11 @@ msgstr "In REST anzeigen"
 msgid "Similar to CSS overscroll-behavior. Default: enabled"
 msgstr "Ähnlich wie das CSS-overscroll-behavior. Standard: aktiviert"
 
-#: includes/features/security-page.php:191
-msgid "Simple Math Captcha"
-msgstr "Einfaches Mathe-Captcha"
-
 #: includes/features/smtp-settings.php:106
 msgid "Simple SMTP Settings for bypassing PHP mailler or eliminating falling to spam issues."
 msgstr "Einfache SMTP-Einstellungen zum Umgehen des PHP-Mailers oder zur Vermeidung von Spam-Problemen."
 
-#: includes/features/media-image-opt.php:1217
+#: includes/features/media-image-opt.php:1417
 msgid "Size"
 msgstr "Größe"
 
@@ -4443,12 +4496,12 @@ msgstr "Schräg rein (Skew In)"
 msgid "Skew Out"
 msgstr "Schräg raus (Skew Out)"
 
-#: includes/features/media-image-opt.php:1158
+#: includes/features/media-image-opt.php:1358
 msgid "Skip if WebP would be larger than original"
 msgstr "Überspringen, wenn WebP größer als das Original wäre"
 
-#: includes/features/media-image-opt.php:1492
-#: includes/features/media-image-opt.php:1849
+#: includes/features/media-image-opt.php:1693
+#: includes/features/media-image-opt.php:2072
 msgid "Skipped"
 msgstr "Übersprungen"
 
@@ -4595,11 +4648,16 @@ msgstr "Snippet-Ausführung ist derzeit deaktiviert. Dieses Kästchen aktivieren
 msgid "Some snippets could not be saved. Please check messages above."
 msgstr "Einige Snippets konnten nicht gespeichert werden. Bitte überprüfe die Nachrichten oben."
 
+#: includes/features/two-factor-auth.php:178
+#: includes/features/two-factor-auth.php:214
+msgid "Something went wrong. Please log in again."
+msgstr "Etwas ist schiefgelaufen. Bitte melde dich erneut an."
+
 #: includes/elements/gsap-text-animations.php:58
 msgid "Span"
 msgstr "Spanne (Span)"
 
-#: includes/features/security-page.php:278
+#: includes/features/security-page.php:141
 msgid "Specify the number of failed login attempts before an IP address is blocked. Default: 5"
 msgstr "Gib die Anzahl fehlgeschlagener Login-Versuche an, bevor eine IP-Adresse blockiert wird. Standard: 5"
 
@@ -4777,7 +4835,7 @@ msgstr "Start 90%"
 msgid "Start typing page title..."
 msgstr "Seitentitel eingeben …"
 
-#: includes/features/media-image-opt.php:1220
+#: includes/features/media-image-opt.php:1420
 msgid "Status"
 msgstr "Status"
 
@@ -4797,11 +4855,11 @@ msgstr "Stil Start (Benutzerdefiniertes CSS)"
 msgid "Styles and Layout"
 msgstr "Stile und Layout"
 
-#: includes/features/media-image-opt.php:2739
+#: includes/features/media-image-opt.php:2972
 msgid "Success!"
 msgstr "Erfolgreich!"
 
-#: includes/features/media-image-opt.php:3321
+#: includes/features/media-image-opt.php:3567
 msgid "Successfully deleted %d file(s) and freed %s of disk space."
 msgstr "%d Datei(en) erfolgreich gelöscht und %s Speicherplatz freigegeben."
 
@@ -4844,6 +4902,10 @@ msgstr "Tablet Falsch"
 #: includes/elements/gsap-multi-element-register.php:195
 msgid "Tada"
 msgstr "Tada"
+
+#: includes/features/media-image-opt.php:50
+msgid "Target Format"
+msgstr "Zielformat"
 
 #: includes/features/custom-field-settings.php:182
 #: includes/features/custom-field-settings.php:437
@@ -4968,7 +5030,7 @@ msgstr "Dieser Feldtyp kann nicht der Optionsseite zugewiesen werden"
 msgid "This helps in decluttering the dashboard and focusing on the essential information."
 msgstr "Dies hilft, das Dashboard aufzuräumen und sich auf die wesentlichen Informationen zu konzentrieren."
 
-#: includes/features/media-image-opt.php:2594
+#: includes/features/media-image-opt.php:2827
 msgid "This image is not optimized."
 msgstr "Dieses Bild ist nicht optimiert."
 
@@ -4993,6 +5055,10 @@ msgstr "Dieses Theme wurde entwickelt, um dir die Werkzeuge und Lösungen für"
 msgid "This tool helps you scan any page on your website to detect scripts and iframes. You can then select which scripts to block until users accept cookies."
 msgstr "Mit diesem Tool kannst du jede Seite deiner Website scannen, um Skripte und iFrames zu erkennen. Anschließend kannst du auswählen, welche Skripte blockiert werden sollen, bis Nutzer Cookies akzeptieren."
 
+#: includes/features/two-factor-auth.php:153
+msgid "This verification link has expired or is invalid. Please log in again."
+msgstr "Dieser Bestätigungslink ist abgelaufen oder ungültig. Bitte melde dich erneut an."
+
 #: includes/features/cookie-banner.php:243
 msgid "This website uses cookies for analytics and functionality."
 msgstr "Diese Website verwendet Cookies für Analytik und Funktionalität."
@@ -5001,11 +5067,11 @@ msgstr "Diese Website verwendet Cookies für Analytik und Funktionalität."
 msgid "This will permanently delete all revisions for this snippet. Cannot be undone."
 msgstr "Dadurch werden alle Revisionen für dieses Snippet dauerhaft gelöscht. Kann nicht rückgängig gemacht werden."
 
-#: includes/features/media-image-opt.php:1213
+#: includes/features/media-image-opt.php:1413
 msgid "Thumb"
 msgstr "Vorschau"
 
-#: includes/features/media-image-opt.php:2017
+#: includes/features/media-image-opt.php:2250
 #: includes/features/other-settings.php:458
 #: includes/features/post-types-settings.php:28
 #: includes/features/post-types-settings.php:182
@@ -5025,7 +5091,7 @@ msgstr "Diagonal kippen raus (Tilt Out Diagonal)"
 msgid "Time"
 msgstr "Uhrzeit"
 
-#: includes/features/security-page.php:289
+#: includes/features/security-page.php:152
 msgid "Time in hours after which failed login attempts count is reset to 0 and blocked IPs are unblocked. Default: 24 hours (1 day)"
 msgstr "Zeit in Stunden, nach der die Anzahl fehlgeschlagener Login-Versuche auf 0 zurückgesetzt und blockierte IPs entsperrt werden. Standard: 24 Stunden (1 Tag)"
 
@@ -5037,6 +5103,10 @@ msgstr "Zeitstempel (Timestamp)"
 #: includes/features/post-types-settings.php:179
 msgid "Title"
 msgstr "Titel"
+
+#: includes/features/two-factor-auth.php:192
+msgid "Too many incorrect attempts. Please log in again."
+msgstr "Zu viele falsche Versuche. Bitte melde dich erneut an."
 
 #: includes/features/cookie-banner.php:1017
 msgid "Top"
@@ -5103,24 +5173,8 @@ msgstr "Tunnel rein"
 msgid "Tunnel Out"
 msgstr "Tunnel raus"
 
-#: includes/features/security-page.php:118
-msgid "Turnstile Secret Key"
-msgstr "Turnstile Secret Key"
-
-#: includes/features/security-page.php:110
-msgid "Turnstile Site Key"
-msgstr "Turnstile Site Key"
-
-#: includes/features/security-page.php:126
-msgid "Turnstile Theme"
-msgstr "Turnstile-Design"
-
-#: includes/features/security-page.php:134
-msgid "Turnstile Widget Size"
-msgstr "Turnstile-Widget-Größe"
-
 #: includes/features/custom-code-snippets.php:1049
-#: includes/features/media-image-opt.php:1216
+#: includes/features/media-image-opt.php:1416
 msgid "Type"
 msgstr "Typ"
 
@@ -5141,7 +5195,7 @@ msgstr "URL zum Umgehen des Coming-Soon-Modus"
 msgid "Unknown Author"
 msgstr "Unbekannter Autor"
 
-#: includes/features/media-image-opt.php:2745
+#: includes/features/media-image-opt.php:2978
 msgid "Unknown error"
 msgstr "Unbekannter Fehler"
 
@@ -5153,7 +5207,7 @@ msgstr "Alle abwählen"
 msgid "Update Mode"
 msgstr "Update-Modus"
 
-#: includes/features/media-image-opt.php:34
+#: includes/features/media-image-opt.php:222
 msgid "Upload Optimized Media"
 msgstr "Optimierte Medien hochladen"
 
@@ -5190,20 +5244,17 @@ msgstr "Benutzerrollen (mehrere erlaubt)"
 msgid "Valid SMTP port is required. Please configure your SMTP settings."
 msgstr "Ein gültiger SMTP-Port ist erforderlich. Bitte konfiguriere deine SMTP-Einstellungen."
 
-#: includes/features/login-math-captcha.php:207
-#: includes/features/login-math-captcha.php:225
-#: includes/features/login-math-captcha.php:241
-#: includes/features/login-math-captcha.php:267
-msgid "Verification failed. Please solve the math equation."
-msgstr "Verifizierung fehlgeschlagen. Bitte löse die Rechenaufgabe."
+#: includes/features/two-factor-auth.php:263
+msgid "Verification Code"
+msgstr "Bestätigungscode"
 
-#: includes/features/login-math-captcha.php:45
-msgid "Verified!"
-msgstr "Verifiziert!"
+#: includes/features/two-factor-auth.php:245
+msgid "Verification Required"
+msgstr "Bestätigung erforderlich"
 
-#: includes/features/login-math-captcha.php:42
-msgid "Verify you are human:"
-msgstr "Bestätige, dass du ein Mensch bist:"
+#: includes/features/two-factor-auth.php:268
+msgid "Verify"
+msgstr "Bestätigen"
 
 #: includes/features/interactions.php:297
 msgid "Vertical Shutters"
@@ -5217,7 +5268,7 @@ msgstr "Code anzeigen"
 msgid "View Code Snippet"
 msgstr "Code-Snippet ansehen"
 
-#: includes/features/media-image-opt.php:1964
+#: includes/features/media-image-opt.php:2197
 msgid "View all optimized images and restore originals if needed."
 msgstr "Zeige alle optimierten Bilder an und stelle bei Bedarf die Originale wieder her."
 
@@ -5229,10 +5280,6 @@ msgstr "Vollen Vergleich in neuem Tab anzeigen"
 msgid "Visit <code>/?key=YOUR_SLUG</code> to set the bypass cookie (valid 24 h)."
 msgstr "Rufe <code>/?key=YOUR_SLUG</code> auf, um das Umgehungs-Cookie zu setzen (24 Std. gültig)."
 
-#: includes/features/security-page.php:239
-msgid "Visual color theme for the Turnstile widget. Auto follows the user's system preference."
-msgstr "Visuelles Farbschema für das Turnstile-Widget. „Auto“ folgt der Systemeinstellung des Nutzers."
-
 #: includes/features/custom-code-snippets.php:1217
 msgid "WARNING: Enabling this feature allows for direct, unsanitized code execution. This is extremely dangerous and should only be used by expert developers."
 msgstr "WARNUNG: Die Aktivierung dieser Funktion erlaubt die direkte, unbereinigte Code-Ausführung. Dies ist extrem gefährlich und sollte nur von erfahrenen Entwicklern verwendet werden."
@@ -5241,6 +5288,15 @@ msgstr "WARNUNG: Die Aktivierung dieser Funktion erlaubt die direkte, unbereinig
 #: includes/features/smtp-settings.php:121
 msgid "Warning:"
 msgstr "Warnung:"
+
+#: includes/features/two-factor-auth.php:259
+msgid "We sent a verification code to your email address. Enter it below to finish signing in."
+msgstr "Wir haben einen Bestätigungscode an deine E-Mail-Adresse gesendet. Gib ihn unten ein, um die Anmeldung abzuschließen."
+
+#: includes/features/media-image-opt.php:108
+#: includes/features/media-image-opt.php:1283
+msgid "WebP"
+msgstr "WebP"
 
 #: includes/features/other-settings.php:502
 msgid "Welcome"
@@ -5254,6 +5310,10 @@ msgstr "Mausrad-Multiplikator"
 msgid "When enabled, a menu icon appears as the very first item in the admin bar on both frontend and backend. Hovering it reveals all WordPress admin menus and submenus dynamically."
 msgstr "Wenn aktiviert, erscheint ein Menüsymbol als allererstes Element in der Admin-Leiste – sowohl im Frontend als auch im Backend. Beim Darüberfahren werden alle WordPress-Admin-Menüs und Untermenüs dynamisch angezeigt."
 
+#: includes/features/media-image-opt.php:89
+msgid "When enabled, every newly uploaded JPG or PNG image is automatically converted in the background (server-side) and replaces the original in place — same attachment, same URL. The original file is kept and can be restored from the history below."
+msgstr "Wenn aktiviert, wird jedes neu hochgeladene JPG- oder PNG-Bild automatisch im Hintergrund (serverseitig) konvertiert und ersetzt das Original direkt — gleicher Anhang, gleiche URL. Die Originaldatei bleibt erhalten und kann über die Historie unten wiederhergestellt werden."
+
 #: includes/features/cookie-banner.php:429
 msgid "Where on the page the script should be inserted (Head, Body Top, or Body Bottom)."
 msgstr "Wo auf der Seite das Skript eingefügt werden soll (Head, Body Top oder Body Bottom)."
@@ -5261,10 +5321,6 @@ msgstr "Wo auf der Seite das Skript eingefügt werden soll (Head, Body Top oder 
 #: includes/features/settings-page.php:162
 msgid "White Label Name"
 msgstr "White Label Name"
-
-#: includes/features/security-page.php:259
-msgid "Widget size. Use Compact if the widget overflows narrow form containers."
-msgstr "Widget-Größe. Verwende „Kompakt“, wenn das Widget schmale Formularcontainer überläuft."
 
 #: includes/features/custom-field-settings.php:135
 #: includes/features/custom-field-settings.php:404
@@ -5388,14 +5444,6 @@ msgstr "Dein SMTP-Benutzername unterscheidet sich von der in den WordPress-Websi
 msgid "Your SMTP username. Usually a full email address (you@yourdomain.com), but some API-based providers use a plain username (e.g. \"emailit\" or \"apiuser\")."
 msgstr "Dein SMTP-Benutzername. Normalerweise eine vollständige E-Mail-Adresse (you@yourdomain.com), aber manche API-basierten Anbieter verwenden einen einfachen Benutzernamen (z. B. \"emailit\" oder \"apiuser\")."
 
-#: includes/features/security-page.php:215
-msgid "Your Turnstile secret key. Keep this private — it is used for server-side validation."
-msgstr "Dein Turnstile Secret Key. Halte ihn geheim – er wird für die serverseitige Validierung verwendet."
-
-#: includes/features/security-page.php:204
-msgid "Your Turnstile site key from the Cloudflare dashboard. Used for the front-end widget."
-msgstr "Dein Turnstile Site Key aus dem Cloudflare-Dashboard. Wird für das Frontend-Widget verwendet."
-
 #: includes/features/login-url-security.php:285
 msgid "Your current login URL:"
 msgstr "Deine aktuelle Login-URL:"
@@ -5472,7 +5520,7 @@ msgstr "Zoom raus oben"
 msgid "ago"
 msgstr "vor"
 
-#: includes/features/media-image-opt.php:2460
+#: includes/features/media-image-opt.php:2693
 msgid "already deleted"
 msgstr "bereits gelöscht"
 
@@ -5480,12 +5528,12 @@ msgstr "bereits gelöscht"
 msgid "and"
 msgstr "und"
 
-#: includes/features/media-image-opt.php:2459
+#: includes/features/media-image-opt.php:2692
 msgid "deleted"
 msgstr "gelöscht"
 
-#: includes/features/media-image-opt.php:1803
-#: includes/features/media-image-opt.php:1916
+#: includes/features/media-image-opt.php:2026
+#: includes/features/media-image-opt.php:2139
 msgid "done"
 msgstr "fertig"
 
@@ -5503,11 +5551,11 @@ msgstr "z. B. Google Analytics"
 msgid "endpoints"
 msgstr "Endpunkte"
 
-#: includes/features/media-image-opt.php:1803
-#: includes/features/media-image-opt.php:1916
-#: includes/features/media-image-opt.php:1923
-#: includes/features/media-image-opt.php:2461
-#: includes/features/media-image-opt.php:2510
+#: includes/features/media-image-opt.php:2026
+#: includes/features/media-image-opt.php:2139
+#: includes/features/media-image-opt.php:2146
+#: includes/features/media-image-opt.php:2694
+#: includes/features/media-image-opt.php:2743
 msgid "failed"
 msgstr "fehlgeschlagen"
 
@@ -5532,23 +5580,23 @@ msgstr "https://example.com/redirect-path"
 msgid "https://yourwebsite.com"
 msgstr "https://yourwebsite.com"
 
-#: includes/features/media-image-opt.php:2348
+#: includes/features/media-image-opt.php:2581
 msgid "image(s) to their originals?"
 msgstr "Bild(er) auf ihre Originale zurücksetzen?"
 
-#: includes/features/media-image-opt.php:2362
+#: includes/features/media-image-opt.php:2595
 msgid "image(s) to their originals? This cannot be undone."
 msgstr "Bild(er) auf ihre Originale zurücksetzen? Dies kann nicht rückgängig gemacht werden."
 
-#: includes/features/media-image-opt.php:1764
+#: includes/features/media-image-opt.php:1987
 msgid "image(s) using your browser?"
 msgstr "Bild(er) über deinen Browser?"
 
-#: includes/features/media-image-opt.php:1464
+#: includes/features/media-image-opt.php:1665
 msgid "images"
 msgstr "Bilder"
 
-#: includes/features/media-image-opt.php:1923
+#: includes/features/media-image-opt.php:2146
 msgid "optimized"
 msgstr "optimiert"
 
@@ -5557,23 +5605,23 @@ msgstr "optimiert"
 msgid "post-slug"
 msgstr "Beitrags-Slug"
 
-#: includes/features/media-image-opt.php:1803
-#: includes/features/media-image-opt.php:1916
+#: includes/features/media-image-opt.php:2026
+#: includes/features/media-image-opt.php:2139
 msgid "saved"
 msgstr "gespeichert"
 
-#: includes/features/media-image-opt.php:1334
-#: includes/features/media-image-opt.php:2104
+#: includes/features/media-image-opt.php:1535
+#: includes/features/media-image-opt.php:2337
 msgid "selected"
 msgstr "ausgewählt"
 
-#: includes/features/media-image-opt.php:1803
-#: includes/features/media-image-opt.php:1916
-#: includes/features/media-image-opt.php:1923
+#: includes/features/media-image-opt.php:2026
+#: includes/features/media-image-opt.php:2139
+#: includes/features/media-image-opt.php:2146
 msgid "skipped"
 msgstr "übersprungen"
 
-#: includes/features/media-image-opt.php:2510
+#: includes/features/media-image-opt.php:2743
 msgid "succeeded"
 msgstr "erfolgreich"
 
@@ -5581,7 +5629,7 @@ msgstr "erfolgreich"
 msgid "to any button or link on your website. When clicked, it will reopen the cookie banner allowing users to modify their preferences."
 msgstr "zu jedem Button oder Link auf deiner Website hinzu. Beim Klicken wird das Cookie-Banner erneut geöffnet, sodass Nutzer ihre Einstellungen ändern können."
 
-#: includes/features/media-image-opt.php:1345
+#: includes/features/media-image-opt.php:1546
 msgid "total"
 msgstr "gesamt"
 
@@ -5589,7 +5637,7 @@ msgstr "gesamt"
 msgid "true, 1, 2"
 msgstr "wahr, 1, 2"
 
-#: includes/features/media-image-opt.php:1937
+#: includes/features/media-image-opt.php:2160
 msgid "unoptimized image(s) using your browser? This may take a while."
 msgstr "unoptimierte(s) Bild(er) über deinen Browser? Dies kann eine Weile dauern."
 
@@ -5606,7 +5654,7 @@ msgstr "du@beispiel.com"
 msgid "⚠ WARNING – You can assign multiple roles, but overlapping capabilities can clash. Grant the minimum required and test thoroughly."
 msgstr "⚠ WARNUNG – Du kannst mehrere Rollen zuweisen, aber sich überlappende Berechtigungen können zu Konflikten führen. Erteile das Minimum Erforderliche und teste gründlich."
 
-#: includes/features/media-image-opt.php:2608
+#: includes/features/media-image-opt.php:2841
 msgid "🔍 Debug: Raw Metadata"
 msgstr "🔍 Debug: Rohe Metadaten"
 
