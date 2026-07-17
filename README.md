@@ -7,6 +7,10 @@ Dieses Child-Theme ist ein Fork des snn brx Themes. Die Codebasis wurde gezielt 
 Basiert auf [SNN-BRX](https://github.com/sinanisler/snn-brx-child-theme) von [sinanisler](https://github.com/sinanisler). Vielen Dank für die großartige Grundlage. Lizenziert unter der [GNU General Public License (GPL)](https://github.com/sinanisler/snn-brx-child-theme/blob/main/license.txt), wie im Original.
 
 
+## Neue Features
+
+*   **Automatische Bildoptimierung bei Upload:** Neu hochgeladene JPG/PNG-Bilder werden automatisch im Hintergrund zu WebP oder AVIF konvertiert und ersetzen das Original in-place (gleiche URL, gleiche Attachment-ID) — funktioniert unabhängig vom Upload-Weg (Mediathek, Block-Editor, REST-API, Bricks Builder). Ersetzt das Plugin [CompressX](https://de.wordpress.org/plugins/compressx/). Standardmäßig deaktiviert, einstellbar unter *Medien → Optimize Media → History & Settings*. Original bleibt für Restore erhalten.
+
 ## Key Features (Stripped)
 
 
