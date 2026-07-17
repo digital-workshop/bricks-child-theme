@@ -32,7 +32,6 @@ function snn_settings_page_callback() {
                 array('slug' => 'snn-custom-post-types',      'label' => __('Post Types', 'snn'),                       'dashicon' => 'dashicons-admin-post'),
                 array('slug' => 'snn-custom-fields',          'label' => __('Custom Fields', 'snn'),                    'dashicon' => 'dashicons-admin-page'),
                 array('slug' => 'snn-taxonomies',             'label' => __('Taxonomies', 'snn'),                       'dashicon' => 'dashicons-category'),
-                array('slug' => 'snn-seo-settings',           'label' => __('SEO Settings', 'snn'),                     'dashicon' => 'dashicons-editor-textcolor'),
                 array('slug' => 'snn-login-settings',         'label' => __('Login Settings', 'snn'),                   'dashicon' => 'dashicons-admin-users'),
                 array('slug' => 'snn-smtp-settings',          'label' => __('Mail SMTP Settings', 'snn'),               'dashicon' => 'dashicons-email'),
                 array('slug' => 'snn-mail-logs',              'label' => __('Mail Logs', 'snn'),                        'dashicon' => 'dashicons-email-alt'),
