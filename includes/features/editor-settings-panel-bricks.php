@@ -3,7 +3,6 @@
 // Include functionality files
 require_once SNN_PATH . 'includes/features/editor-settings-panel-image-opt.php';
 require_once SNN_PATH . 'includes/features/editor-settings-panel-clamp.php';
-require_once SNN_PATH . 'includes/features/editor-settings-panel-color-sync.php';
 
 function snn_panel_custom_inline_styles_and_scripts_improved() {
     $options = get_option('snn_editor_settings');
@@ -37,9 +36,8 @@ function snn_panel_custom_inline_styles_and_scripts_improved() {
                         if (popup) {
                             popup.classList.add("active");
                             // Set initial tab class if not already set
-                            if (!popup.classList.contains("snn-tab-image-opt-active") && 
-                                !popup.classList.contains("snn-tab-clamp-active") && 
-                                !popup.classList.contains("snn-tab-color-sync-active")) {
+                            if (!popup.classList.contains("snn-tab-image-opt-active") &&
+                                !popup.classList.contains("snn-tab-clamp-active")) {
                                 popup.classList.add("snn-tab-image-opt-active");
                             }
                         }
@@ -137,7 +135,7 @@ function snn_panel_custom_inline_styles_and_scripts_improved() {
                         var popup = document.getElementById("snn-popup");
                         if (popup) {
                             // Remove all tab-specific classes
-                            popup.classList.remove("snn-tab-image-opt-active", "snn-tab-clamp-active", "snn-tab-color-sync-active");
+                            popup.classList.remove("snn-tab-image-opt-active", "snn-tab-clamp-active");
                             // Add current tab class
                             popup.classList.add("snn-tab-" + targetTab + "-active");
                         }
@@ -177,7 +175,6 @@ function snn_panel_custom_inline_styles_and_scripts_improved() {
         
         /* Hide save button for specific tabs */
         .snn-panel-button{display:none;}
-        .snn-tab-color-sync-active .snn-panel-button{display:flex;}
         </style>
  
         <?php
@@ -206,7 +203,6 @@ function snn_popup_container_improved() {
                         <div class="snn-tab-buttons">
                             <button class="snn-tab-button active" data-tab="image-opt"><?php _e('Image Optimization', 'snn'); ?></button>
                             <button class="snn-tab-button" data-tab="clamp"><?php _e('Clamp Generator', 'snn'); ?></button>
-                            <button class="snn-tab-button" data-tab="color-sync"><?php _e('Color Sync', 'snn'); ?></button>
                         </div>
                         
                         <div id="snn-tab-image-opt" class="snn-tab-content active">
@@ -225,13 +221,6 @@ function snn_popup_container_improved() {
                             ?>
                         </div>
                         
-                        <div id="snn-tab-color-sync" class="snn-tab-content">
-                            <?php 
-                            if (function_exists('snn_render_color_section')) {
-                                snn_render_color_section();
-                            }
-                            ?>
-                        </div>
                     </div>
                 </div>
                 
