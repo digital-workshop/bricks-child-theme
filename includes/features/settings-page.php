@@ -35,7 +35,6 @@ function snn_settings_page_callback() {
                 array('slug' => 'snn-smtp-settings',          'label' => __('Mail SMTP Settings', 'snn'),               'dashicon' => 'dashicons-email'),
                 array('slug' => 'snn-cookie-settings',        'label' => __('Cookie Settings', 'snn'),                  'dashicon' => 'dashicons-admin-site'),
                 array('slug' => 'snn-interactions',           'label' => __('Interactions', 'snn'),                     'dashicon' => 'dashicons-table-col-after'),
-                array('slug' => 'snn-activity-log',           'label' => __('Activity Logs', 'snn'),                    'dashicon' => 'dashicons-text'),
                 array('slug' => 'snn-custom-codes-snippets',  'label' => __('Code Snippets', 'snn'),                    'dashicon' => 'dashicons-editor-code'),
                 array('slug' => 'snn-block-editor-settings',  'label' => __('Block Editor Settings', 'snn'),            'dashicon' => 'dashicons-admin-customizer'),
             );
