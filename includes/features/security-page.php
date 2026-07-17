@@ -13,6 +13,7 @@ require_once SNN_PATH . 'includes/features/remove-wp-version.php';
 require_once SNN_PATH . 'includes/features/disable-bundled-theme-install.php';
 require_once SNN_PATH . 'includes/features/limit-login-attempts.php';
 require_once SNN_PATH . 'includes/features/login-url-security.php';
+require_once SNN_PATH . 'includes/features/two-factor-auth.php';
 
 function snn_add_security_submenu() {
     add_submenu_page(
@@ -161,6 +162,15 @@ function snn_security_settings_init() {
         'snn-security',
         'snn_security_main_section'
     );
+
+    // Two-Factor Authentication
+    add_settings_field(
+        'enable_2fa',
+        __( 'Enable Two-Factor Authentication', 'snn' ),
+        'snn_2fa_enable_callback',
+        'snn-security',
+        'snn_security_main_section'
+    );
 }
 add_action( 'admin_init', 'snn_security_settings_init' );
 
@@ -288,6 +298,15 @@ function snn_reset_time_callback() {
         <input type="number" name="snn_security_options[login_reset_time]" value="<?php echo esc_attr($reset_time); ?>" min="1" max="720" step="1">
         <p><?php esc_html_e( 'Time in hours after which failed login attempts count is reset to 0 and blocked IPs are unblocked. Default: 24 hours (1 day)', 'snn' ); ?></p>
     </div>
+    <?php
+}
+
+function snn_2fa_enable_callback() {
+    $options = get_option('snn_security_options');
+    ?>
+    <input type="checkbox" name="snn_security_options[enable_2fa]" value="1" <?php checked(isset($options['enable_2fa']) && $options['enable_2fa'], 1); ?>>
+    <p><?php esc_html_e( 'Require a one-time code sent by email to complete login, for every user account.', 'snn' ); ?></p>
+    <p class="description"><?php esc_html_e( 'Exception: users whose only role(s) are WooCommerce "Customer" and/or "Subscriber" are exempt. Any account with an additional role (Administrator, Editor, Author, Shop Manager, ...) is always required to use two-factor authentication, even if it also has the Customer role.', 'snn' ); ?></p>
     <?php
 }
 
