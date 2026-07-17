@@ -16,6 +16,7 @@ Basiert auf [SNN-BRX](https://github.com/sinanisler/snn-brx-child-theme) von [si
         ```php
         define( 'SNN_2FA_DISABLE', true );
         ```
+*   **Code Snippets neu gebaut (FluentSnippets-Stil):** Ersetzt das bisherige starre 4-Slot-Modell (Frontend Head/Footer, Admin Head, "Sofort") durch eine beliebige Anzahl benannter, einzeln umschaltbarer Snippets in einer durchsuchbaren Tabelle — mit Ein/Aus-Schalter pro Zeile, Typ (PHP/CSS/JS/HTML, farbige Badges), Ort, Tags, Priorität und "Aktualisiert am". CSS/JS/HTML werden ohne `eval()` als reine `<style>`/`<script>`/HTML-Ausgabe gerendert (kein PHP-Risiko). Verursacht ein PHP-Snippet einen fatalen Fehler, wird **nur dieses eine** Snippet automatisch deaktiviert (nicht mehr die ganze Funktion wie zuvor). Inklusive JSON-Export/Import, Revisionsverlauf pro Snippet und Download-Link. Bestehende Snippets werden beim ersten Laden automatisch ins neue Modell übernommen. `SNN_CODE_DISABLE`-Notausschalter für die wp-config.php bleibt bestehen.
 
 ## Key Features (Stripped)
 

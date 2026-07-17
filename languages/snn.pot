@@ -17,12 +17,12 @@ msgstr ""
 msgid " Settings"
 msgstr ""
 
-#: includes/features/media-image-opt.php:3573
-msgid "%d file(s) could not be deleted."
+#: includes/features/custom-code-snippets.php:1428
+msgid "%1$s ago by %2$s"
 msgstr ""
 
-#: includes/features/custom-code-snippets.php:818
-msgid "%d revision(s) for \"%s\" cleared successfully."
+#: includes/features/media-image-opt.php:3573
+msgid "%d file(s) could not be deleted."
 msgstr ""
 
 #: includes/features/two-factor-auth.php:368
@@ -94,10 +94,6 @@ msgstr ""
 msgid "<strong>ERROR</strong>: Your IP address has been temporarily blocked due to too many failed login attempts. Please try again in %d hours."
 msgstr ""
 
-#: includes/features/custom-code-snippets.php:789
-msgid "<strong>EXTREME DANGER:</strong> This code is executed directly. There are no safeguards.  Use this only if you are an expert and understand the risks of breaking your entire site. Revisions are NOT available for this snippet.<br> This code runs directly like it runs in functions.php and with no sanitization regex safe."
-msgstr ""
-
 #: includes/features/other-settings.php:283
 msgid "<strong>Important:</strong> Once hidden, you can only show it again using the Ctrl+I keyboard shortcut, so make sure to remember it!"
 msgstr ""
@@ -106,20 +102,28 @@ msgstr ""
 msgid "<strong>Note:</strong> Administrators are always excluded and cannot be blocked."
 msgstr ""
 
+#: includes/features/custom-code-snippets.php:994
+msgid "A code snippet was automatically disabled"
+msgstr ""
+
 #: includes/features/two-factor-auth.php:313
 msgid "A new code has been sent."
+msgstr ""
+
+#: includes/features/custom-code-snippets.php:995
+msgid "A snippet caused a fatal PHP error, so it was switched off automatically to keep the rest of the site running. All other snippets are unaffected."
 msgstr ""
 
 #: includes/features/media-image-opt.php:2984
 msgid "AJAX Error:"
 msgstr ""
 
-#: includes/features/custom-code-snippets.php:137
+#: includes/features/custom-code-snippets.php:278
 msgid "AJAX error fetching revision."
 msgstr ""
 
-#: includes/features/custom-code-snippets.php:977
-msgid "ATTENTION PLEASE! These settings are not for normal users! If you don’t have at least some basic knowledge of HTML, CSS, and FTP login, DO NOT USE IT!"
+#: includes/features/custom-code-snippets.php:1352
+msgid "ATTENTION PLEASE! These settings are not for normal users! If you don't have at least some basic knowledge of HTML, CSS, and FTP login, DO NOT USE IT!"
 msgstr ""
 
 #: includes/features/media-image-opt.php:109
@@ -160,7 +164,7 @@ msgstr ""
 msgid "Actions"
 msgstr ""
 
-#: includes/features/security-page.php:218
+#: includes/features/security-page.php:250
 msgid "Add IP Address"
 msgstr ""
 
@@ -195,7 +199,7 @@ msgstr ""
 msgid "Add a mega menu icon as the first item in the admin bar (admins only)"
 msgstr ""
 
-#: includes/features/security-page.php:203
+#: includes/features/security-page.php:235
 msgid "Add my IP"
 msgstr ""
 
@@ -215,20 +219,12 @@ msgstr ""
 msgid "Adds a floating CodeMirror CSS editor at the bottom of the Bricks builder. Click the <code>&lt;/&gt;</code> button in the panel header to toggle it. Syncs with the selected element's CSS or the page CSS when no element is selected."
 msgstr ""
 
-#: includes/features/custom-code-snippets.php:771
-msgid "Admin Head PHP/HTML"
+#: includes/features/custom-code-snippets.php:87
+msgid "Admin Head"
 msgstr ""
 
 #: includes/features/other-settings.php:151
 msgid "Admin Mega Menu Position Priority"
-msgstr ""
-
-#: includes/features/custom-code-snippets.php:786
-msgid "Advance Code (functions.php)"
-msgstr ""
-
-#: includes/features/custom-code-snippets.php:1210
-msgid "Advanced Raw Code"
 msgstr ""
 
 #: includes/features/interactions.php:256
@@ -236,8 +232,12 @@ msgstr ""
 msgid "Advanced Settings"
 msgstr ""
 
-#: includes/features/custom-code-snippets.php:23
+#: includes/features/custom-code-snippets.php:26
 msgid "All Code Snippets"
+msgstr ""
+
+#: includes/features/custom-code-snippets.php:1181
+msgid "All Snippets"
 msgstr ""
 
 #: includes/features/limit-login-attempts.php:230
@@ -248,7 +248,7 @@ msgstr ""
 msgid "All changes from the draft have been applied to this post. The draft has been moved to trash."
 msgstr ""
 
-#: includes/features/custom-code-snippets.php:801
+#: includes/features/custom-code-snippets.php:1076
 msgid "All error logs have been cleared."
 msgstr ""
 
@@ -256,12 +256,8 @@ msgstr ""
 msgid "All originals have already been deleted."
 msgstr ""
 
-#: includes/features/custom-code-snippets.php:968
-msgid "All snippet execution is currently disabled by the %s constant. To re-enable execution, you must remove or set this constant to false."
-msgstr ""
-
-#: includes/features/custom-code-snippets.php:919
-msgid "All snippets and settings saved."
+#: includes/features/custom-code-snippets.php:1128
+msgid "All snippet execution is currently disabled by the %s constant. To re-enable execution, remove it from wp-config.php."
 msgstr ""
 
 #: includes/features/custom-field-settings.php:106
@@ -298,11 +294,11 @@ msgstr ""
 msgid "Animation duration in seconds. Default: 0.7"
 msgstr ""
 
-#: includes/features/custom-code-snippets.php:140
+#: includes/features/custom-code-snippets.php:281
 msgid "Are you absolutely sure you want to delete all error logs? This action cannot be undone."
 msgstr ""
 
-#: includes/features/custom-code-snippets.php:139
+#: includes/features/custom-code-snippets.php:280
 msgid "Are you absolutely sure you want to delete all revisions for this snippet? This action cannot be undone."
 msgstr ""
 
@@ -326,7 +322,7 @@ msgstr ""
 msgid "Are you sure you want to restore this image to its original?"
 msgstr ""
 
-#: includes/features/custom-code-snippets.php:138
+#: includes/features/custom-code-snippets.php:279
 msgid "Are you sure you want to restore this revision and save? The current content in the editor will be overwritten, saved, and then executed. This could break your site if the revision contains errors."
 msgstr ""
 
@@ -379,6 +375,11 @@ msgstr ""
 
 #: includes/features/interactions.php:250
 msgid "Automatically run requestAnimationFrame loop. Keep this enabled for best performance."
+msgstr ""
+
+#: includes/features/custom-code-snippets.php:1348
+#: includes/features/custom-code-snippets.php:1496
+msgid "Back to all snippets"
 msgstr ""
 
 #: includes/features/login-settings.php:47
@@ -707,8 +708,8 @@ msgstr ""
 msgid "Bypass Key (URL slug)"
 msgstr ""
 
-#: includes/features/custom-code-snippets.php:1469
-msgid "CRITICAL: Custom Code Snippets Disabled!"
+#: includes/features/custom-code-snippets.php:78
+msgid "CSS"
 msgstr ""
 
 #: includes/features/interactions.php:355
@@ -823,12 +824,12 @@ msgstr ""
 msgid "Clear All Blocked IPs"
 msgstr ""
 
-#: includes/features/custom-code-snippets.php:1084
+#: includes/features/custom-code-snippets.php:1546
 msgid "Clear All Error Logs"
 msgstr ""
 
-#: includes/features/custom-code-snippets.php:1185
-msgid "Clear All Revisions for this Snippet"
+#: includes/features/custom-code-snippets.php:1444
+msgid "Clear All Revisions"
 msgstr ""
 
 #: includes/features/cookie-banner.php:628
@@ -924,28 +925,29 @@ msgstr ""
 msgid "Clip Triangle Right Reveal"
 msgstr ""
 
-#: includes/features/custom-code-snippets.php:1054
+#: includes/features/custom-code-snippets.php:1244
+msgid "Close"
+msgstr ""
+
+#: includes/features/custom-code-snippets.php:1517
 msgid "Code Context"
 msgstr ""
 
-#: includes/features/custom-code-snippets.php:22
+#: includes/features/custom-code-snippets.php:25
 msgctxt "post type singular name"
 msgid "Code Snippet"
 msgstr ""
 
-#: includes/features/custom-code-snippets.php:21
+#: includes/features/custom-code-snippets.php:24
 msgctxt "post type general name"
 msgid "Code Snippets"
 msgstr ""
 
-#: includes/features/custom-code-snippets.php:58
-#: includes/features/custom-code-snippets.php:59
+#: includes/features/custom-code-snippets.php:61
+#: includes/features/custom-code-snippets.php:62
+#: includes/features/custom-code-snippets.php:1170
 #: includes/features/settings-page.php:39
 msgid "Code Snippets"
-msgstr ""
-
-#: includes/features/custom-code-snippets.php:1132
-msgid "Code in this section runs like functions.php. Errors here can easily break your site. Test thoroughly!"
 msgstr ""
 
 #: includes/features/custom-field-settings.php:154
@@ -956,10 +958,6 @@ msgstr ""
 #: includes/features/post-types-settings.php:31
 #: includes/features/post-types-settings.php:185
 msgid "Comments"
-msgstr ""
-
-#: includes/features/custom-code-snippets.php:1169
-msgid "Compare"
 msgstr ""
 
 #: includes/features/media-image-opt.php:2139
@@ -1300,6 +1298,11 @@ msgstr ""
 msgid "Delay 9"
 msgstr ""
 
+#: includes/features/custom-code-snippets.php:1222
+#: includes/features/custom-code-snippets.php:1460
+msgid "Delete"
+msgstr ""
+
 #: includes/features/media-image-opt.php:2977
 #: includes/features/media-image-opt.php:2983
 msgid "Delete Original Files Now (Debug)"
@@ -1307,6 +1310,11 @@ msgstr ""
 
 #: includes/features/media-image-opt.php:2213
 msgid "Delete Originals to Save Space"
+msgstr ""
+
+#: includes/features/custom-code-snippets.php:1269
+#: includes/features/custom-code-snippets.php:1477
+msgid "Delete this snippet? This cannot be undone."
 msgstr ""
 
 #: includes/features/media-image-opt.php:2457
@@ -1344,6 +1352,11 @@ msgstr ""
 
 #: includes/elements/gsap-multi-element-register.php:309
 msgid "Desaturate In"
+msgstr ""
+
+#: includes/features/custom-code-snippets.php:1192
+#: includes/features/custom-code-snippets.php:1369
+msgid "Description"
 msgstr ""
 
 #: includes/elements/gsap-multi-element-register.php:600
@@ -1442,7 +1455,7 @@ msgstr ""
 msgid "Disable for Logged-In Users"
 msgstr ""
 
-#: includes/features/custom-code-snippets.php:1493
+#: includes/features/custom-code-snippets.php:1013
 msgid "Dismiss This Notice"
 msgstr ""
 
@@ -1471,6 +1484,11 @@ msgstr ""
 #: includes/features/custom-field-settings.php:148
 #: includes/features/custom-field-settings.php:412
 msgid "Double Textarea"
+msgstr ""
+
+#: includes/features/custom-code-snippets.php:1223
+#: includes/features/custom-code-snippets.php:1459
+msgid "Download"
 msgstr ""
 
 #: includes/features/draft-revision.php:226
@@ -1736,8 +1754,16 @@ msgstr ""
 msgid "Easing: Sine Out"
 msgstr ""
 
-#: includes/features/custom-code-snippets.php:24
+#: includes/features/custom-code-snippets.php:1221
+msgid "Edit"
+msgstr ""
+
+#: includes/features/custom-code-snippets.php:27
 msgid "Edit Code Snippet"
+msgstr ""
+
+#: includes/features/custom-code-snippets.php:1349
+msgid "Edit Snippet"
 msgstr ""
 
 #: includes/features/post-types-settings.php:26
@@ -1771,10 +1797,6 @@ msgstr ""
 
 #: includes/features/other-settings.php:143
 msgid "Enable Admin Mega Menu in Admin Bar"
-msgstr ""
-
-#: includes/features/custom-code-snippets.php:1215
-msgid "Enable Advance Raw Code"
 msgstr ""
 
 #: includes/features/cookie-banner.php:307
@@ -1874,10 +1896,6 @@ msgstr ""
 
 #: includes/features/other-settings.php:264
 msgid "Enable draft revision system for all post types"
-msgstr ""
-
-#: includes/features/custom-code-snippets.php:999
-msgid "Enable execution of all custom PHP snippets"
 msgstr ""
 
 #: includes/features/interactions.php:264
@@ -2058,38 +2076,30 @@ msgstr ""
 msgid "Enter your GSAP data-animate string. It will be output as the data-animate attribute."
 msgstr ""
 
-#: includes/features/custom-code-snippets.php:1139
-msgid "Enter your PHP code or HTML here..."
-msgstr ""
-
 #: includes/features/login-settings.php:130
 msgid "Enter your custom text here. HTML tags are allowed."
-msgstr ""
-
-#: includes/features/custom-code-snippets.php:1102
-msgid "Enter your raw, unsanitized PHP code here..."
 msgstr ""
 
 #: includes/elements/gsap-text-animations.php:44
 msgid "Enter your text content here"
 msgstr ""
 
-#: includes/features/custom-code-snippets.php:136
+#: includes/features/custom-code-snippets.php:277
 #: includes/features/custom-field-settings.php:2894
 #: includes/features/media-image-opt.php:1699
 #: includes/features/media-image-opt.php:2115
 msgid "Error"
 msgstr ""
 
-#: includes/features/custom-code-snippets.php:1473
+#: includes/features/custom-code-snippets.php:996
 msgid "Error Details:"
 msgstr ""
 
-#: includes/features/custom-code-snippets.php:1032
+#: includes/features/custom-code-snippets.php:1176
 msgid "Error Logs"
 msgstr ""
 
-#: includes/features/custom-code-snippets.php:1053
+#: includes/features/custom-code-snippets.php:1516
 msgid "Error Message"
 msgstr ""
 
@@ -2122,6 +2132,10 @@ msgstr ""
 msgid "Est. time remaining:"
 msgstr ""
 
+#: includes/features/custom-code-snippets.php:88
+msgid "Everywhere (Immediate)"
+msgstr ""
+
 #: includes/features/cookie-banner.php:413
 msgid "Examples:"
 msgstr ""
@@ -2135,12 +2149,8 @@ msgstr ""
 msgid "Excerpt"
 msgstr ""
 
-#: includes/features/custom-code-snippets.php:964
+#: includes/features/custom-code-snippets.php:1125
 msgid "Execution Disabled by Constant:"
-msgstr ""
-
-#: includes/features/custom-code-snippets.php:1003
-msgid "Execution was automatically disabled due to a fatal error. Please check the Error Logs tab, resolve the issue, then re-check this box and save settings to re-enable."
 msgstr ""
 
 #: includes/elements/gsap-multi-element-register.php:160
@@ -2149,6 +2159,14 @@ msgstr ""
 
 #: includes/elements/gsap-multi-element-register.php:161
 msgid "Explode Out"
+msgstr ""
+
+#: includes/features/custom-code-snippets.php:1174
+msgid "Export"
+msgstr ""
+
+#: includes/features/custom-code-snippets.php:1298
+msgid "Export Snippets"
 msgstr ""
 
 #: includes/features/media-image-opt.php:2633
@@ -2233,14 +2251,6 @@ msgstr ""
 msgid "Fade in and Fade out"
 msgstr ""
 
-#: includes/features/custom-code-snippets.php:822
-msgid "Failed to clear revisions. Invalid snippet or insufficient permissions."
-msgstr ""
-
-#: includes/features/custom-code-snippets.php:894
-msgid "Failed to create snippet: %s - %s"
-msgstr ""
-
 #: includes/features/media-image-opt.php:3587
 msgid "Failed to delete original files. Check file permissions."
 msgstr ""
@@ -2253,12 +2263,12 @@ msgstr ""
 msgid "Failed to rename original file."
 msgstr ""
 
-#: includes/features/custom-code-snippets.php:847
-msgid "Failed to restore revision. Invalid ID or permissions."
-msgstr ""
-
 #: includes/features/media-image-opt.php:3230
 msgid "Failed to save optimized file."
+msgstr ""
+
+#: includes/features/custom-code-snippets.php:1061
+msgid "Failed to save snippet: %s"
 msgstr ""
 
 #: includes/features/cookie-banner.php:755
@@ -2275,10 +2285,6 @@ msgstr ""
 
 #: includes/features/media-image-opt.php:3682
 msgid "Failed to update attachment: "
-msgstr ""
-
-#: includes/features/custom-code-snippets.php:888
-msgid "Failed to update snippet: %s - %s"
 msgstr ""
 
 #: includes/elements/gsap-text-animations.php:260
@@ -2332,6 +2338,10 @@ msgstr ""
 
 #: includes/elements/gsap-multi-element-register.php:167
 msgid "Firework Out"
+msgstr ""
+
+#: includes/features/custom-code-snippets.php:1010
+msgid "Fix this snippet"
 msgstr ""
 
 #: includes/elements/gsap-multi-element-register.php:187
@@ -2422,19 +2432,19 @@ msgstr ""
 msgid "Freed: %s"
 msgstr ""
 
-#: includes/features/custom-code-snippets.php:765
-msgid "Frontend Footer PHP/HTML"
+#: includes/features/custom-code-snippets.php:86
+msgid "Frontend Footer"
 msgstr ""
 
-#: includes/features/custom-code-snippets.php:759
-msgid "Frontend Head PHP/HTML"
+#: includes/features/custom-code-snippets.php:85
+msgid "Frontend Head"
 msgstr ""
 
 #: includes/features/interactions.php:335
 msgid "Full Page Replace"
 msgstr ""
 
-#: includes/features/custom-code-snippets.php:1052
+#: includes/features/custom-code-snippets.php:1515
 msgid "Function/Context"
 msgstr ""
 
@@ -2484,11 +2494,6 @@ msgstr ""
 
 #: includes/features/interactions.php:259
 msgid "Gesture Orientation"
-msgstr ""
-
-#: includes/features/custom-code-snippets.php:991
-#: includes/features/custom-code-snippets.php:994
-msgid "Global Snippet Execution"
 msgstr ""
 
 #: includes/features/media-image-opt.php:2833
@@ -2548,6 +2553,10 @@ msgstr ""
 
 #: includes/elements/gsap-text-animations.php:56
 msgid "H4"
+msgstr ""
+
+#: includes/features/custom-code-snippets.php:77
+msgid "HTML"
 msgstr ""
 
 #: includes/features/interactions.php:296
@@ -2633,6 +2642,10 @@ msgstr ""
 msgid "Hue Rotate"
 msgstr ""
 
+#: includes/features/custom-code-snippets.php:1354
+msgid "INFO:"
+msgstr ""
+
 #: includes/elements/custom-maps.php:59
 msgid "Icon"
 msgstr ""
@@ -2649,8 +2662,8 @@ msgstr ""
 msgid "If checked, this service will always be active and cannot be disabled by the user."
 msgstr ""
 
-#: includes/features/custom-code-snippets.php:978
-msgid "If needed use define( ‘SNN_CODE_DISABLE’, true ); in functions.php file to disable the code snippets feature temporarly. "
+#: includes/features/custom-code-snippets.php:1355
+msgid "If needed use define( %s, true ); in wp-config.php to disable the code snippets feature temporarily."
 msgstr ""
 
 #: includes/features/login-url-security.php:289
@@ -2690,6 +2703,23 @@ msgstr ""
 
 #: includes/features/media-image-opt.php:244
 msgid "Images are optimized directly in your browser using your CPU. Keep this tab open during processing for best performance. Even thousands of images will be processed quickly!"
+msgstr ""
+
+#: includes/features/custom-code-snippets.php:1175
+#: includes/features/custom-code-snippets.php:1243
+msgid "Import"
+msgstr ""
+
+#: includes/features/custom-code-snippets.php:1307
+msgid "Import Snippets"
+msgstr ""
+
+#: includes/features/custom-code-snippets.php:1319
+msgid "Imported"
+msgstr ""
+
+#: includes/features/custom-code-snippets.php:840
+msgid "Imported Snippet"
 msgstr ""
 
 #: includes/features/cookie-banner.php:244
@@ -2738,12 +2768,20 @@ msgstr ""
 msgid "Interactions & Animations"
 msgstr ""
 
+#: includes/features/custom-code-snippets.php:826
+msgid "Invalid JSON."
+msgstr ""
+
 #: includes/features/interactions.php:300
 msgid "Iris Circle"
 msgstr ""
 
 #: includes/features/media-image-opt.php:3651
 msgid "It may have been deleted or moved."
+msgstr ""
+
+#: includes/features/custom-code-snippets.php:79
+msgid "JS"
 msgstr ""
 
 #: includes/elements/gsap-multi-element-register.php:157
@@ -2814,7 +2852,7 @@ msgstr ""
 msgid "Limit Post Revisions (Per Post)"
 msgstr ""
 
-#: includes/features/custom-code-snippets.php:1051
+#: includes/features/custom-code-snippets.php:1514
 msgid "Line"
 msgstr ""
 
@@ -2827,12 +2865,17 @@ msgstr ""
 msgid "Link Post Types"
 msgstr ""
 
-#: includes/features/custom-code-snippets.php:1175
+#: includes/features/custom-code-snippets.php:1436
 msgid "Load Revision & Save"
 msgstr ""
 
-#: includes/features/custom-code-snippets.php:134
+#: includes/features/custom-code-snippets.php:276
 msgid "Loading..."
+msgstr ""
+
+#: includes/features/custom-code-snippets.php:1194
+#: includes/features/custom-code-snippets.php:1383
+msgid "Location"
 msgstr ""
 
 #: includes/features/security-page.php:175
@@ -2891,6 +2934,10 @@ msgstr ""
 msgid "Lossy (photos)"
 msgstr ""
 
+#: includes/features/custom-code-snippets.php:1401
+msgid "Lower numbers run first among snippets at the same location. Default: 10."
+msgstr ""
+
 #: includes/features/settings-page.php:36
 #: includes/features/smtp-settings.php:8
 #: includes/features/smtp-settings.php:9
@@ -2917,10 +2964,6 @@ msgstr ""
 #: includes/features/editor-settings-bricks.php:64
 #: includes/features/editor-settings-bricks.php:179
 msgid "Make Elements Wide on Bricks Editor"
-msgstr ""
-
-#: includes/features/custom-code-snippets.php:959
-msgid "Manage Code Snippets"
 msgstr ""
 
 #: includes/features/custom-field-settings.php:90
@@ -2999,7 +3042,7 @@ msgstr ""
 msgid "Mimic touch device scroll (can be unstable on iOS<16). Default: disabled"
 msgstr ""
 
-#: includes/features/custom-code-snippets.php:1304
+#: includes/features/custom-code-snippets.php:717
 msgid "Missing revision ID."
 msgstr ""
 
@@ -3041,7 +3084,7 @@ msgstr ""
 msgid "Move Up"
 msgstr ""
 
-#: includes/features/custom-code-snippets.php:1074
+#: includes/features/custom-code-snippets.php:1537
 msgid "N/A"
 msgstr ""
 
@@ -3053,12 +3096,17 @@ msgstr ""
 msgid "Near-Lossless (0-100):"
 msgstr ""
 
-#: includes/features/custom-code-snippets.php:25
+#: includes/features/custom-code-snippets.php:28
 msgid "New Code Snippet"
 msgstr ""
 
 #: includes/features/media-image-opt.php:1418
 msgid "New Size"
+msgstr ""
+
+#: includes/features/custom-code-snippets.php:1173
+#: includes/features/custom-code-snippets.php:1349
+msgid "New Snippet"
 msgstr ""
 
 #: includes/elements/gsap-animations.php:174
@@ -3073,15 +3121,15 @@ msgstr ""
 msgid "No choices defined."
 msgstr ""
 
-#: includes/features/custom-code-snippets.php:28
+#: includes/features/custom-code-snippets.php:31
 msgid "No code snippets found"
 msgstr ""
 
-#: includes/features/custom-code-snippets.php:29
+#: includes/features/custom-code-snippets.php:32
 msgid "No code snippets found in Trash"
 msgstr ""
 
-#: includes/features/custom-code-snippets.php:1088
+#: includes/features/custom-code-snippets.php:1550
 msgid "No errors logged yet."
 msgstr ""
 
@@ -3115,16 +3163,8 @@ msgstr ""
 msgid "No page URL provided"
 msgstr ""
 
-#: includes/features/custom-code-snippets.php:1190
-msgid "No past revisions found. Save changes to create revisions."
-msgstr ""
-
-#: includes/features/custom-code-snippets.php:820
-msgid "No revisions found to clear for \"%s\"."
-msgstr ""
-
-#: includes/features/custom-code-snippets.php:819
-msgid "No revisions were deleted for \"%s\"."
+#: includes/features/custom-code-snippets.php:1447
+msgid "No past revisions yet. Save changes to start tracking revisions."
 msgstr ""
 
 #: includes/features/cookie-banner.php:707
@@ -3132,12 +3172,16 @@ msgstr ""
 msgid "No scripts are currently blocked."
 msgstr ""
 
+#: includes/features/custom-code-snippets.php:1203
+msgid "No snippets yet. Click \"New Snippet\" to create one."
+msgstr ""
+
 #: includes/features/media-image-opt.php:1669
 msgid "No unoptimized JPG or PNG images found."
 msgstr ""
 
-#: includes/features/custom-code-snippets.php:1295
-#: includes/features/custom-code-snippets.php:1325
+#: includes/features/custom-code-snippets.php:708
+#: includes/features/custom-code-snippets.php:739
 msgid "Nonce verification failed."
 msgstr ""
 
@@ -3342,24 +3386,8 @@ msgstr ""
 msgid "Overscroll"
 msgstr ""
 
-#: includes/features/custom-code-snippets.php:777
-msgid "PHP (functions.php)"
-msgstr ""
-
-#: includes/features/custom-code-snippets.php:768
-msgid "PHP code or HTML executed before the <code>&lt;/body&gt;</code> tag on the frontend. Use for late-loading dynamic content, analytics, etc. You can use <code>&lt;?php ?&gt;</code> tags for PHP code."
-msgstr ""
-
-#: includes/features/custom-code-snippets.php:774
-msgid "PHP code or HTML executed within the <code>&lt;head&gt;</code> of WordPress admin pages. Use for conditional admin CSS/JS, admin modifications, etc. You can use <code>&lt;?php ?&gt;</code> tags for PHP code."
-msgstr ""
-
-#: includes/features/custom-code-snippets.php:762
-msgid "PHP code or HTML executed within the <code>&lt;head&gt;</code> tags on the frontend. Use for dynamic meta tags, conditional CSS/JS links, etc. You can use <code>&lt;?php ?&gt;</code> tags for PHP code."
-msgstr ""
-
-#: includes/features/custom-code-snippets.php:780
-msgid "PHP executed immediately when this code feature loads (no hook) – similar to putting code in <code>functions.php</code>. Use for hooks, filters, and functions. Avoid direct output here unless intended. Errors can break your site."
+#: includes/features/custom-code-snippets.php:76
+msgid "PHP"
 msgstr ""
 
 #: includes/features/smtp-settings.php:972
@@ -3439,15 +3467,19 @@ msgstr ""
 msgid "Permission denied"
 msgstr ""
 
-#: includes/features/custom-code-snippets.php:1313
+#: includes/features/custom-code-snippets.php:726
 msgid "Permission denied for accessing this revision content."
 msgstr ""
 
-#: includes/features/custom-code-snippets.php:1299
+#: includes/features/custom-code-snippets.php:712
 msgid "Permission denied to manage options."
 msgstr ""
 
-#: includes/features/custom-code-snippets.php:1329
+#: includes/features/custom-code-snippets.php:743
+#: includes/features/custom-code-snippets.php:758
+#: includes/features/custom-code-snippets.php:777
+#: includes/features/custom-code-snippets.php:792
+#: includes/features/custom-code-snippets.php:821
 #: includes/features/media-image-opt.php:3004
 #: includes/features/media-image-opt.php:3054
 #: includes/features/media-image-opt.php:3142
@@ -3475,10 +3507,6 @@ msgstr ""
 #: includes/features/cookie-banner.php:716
 #: includes/features/cookie-banner.php:1305
 msgid "Please accept cookies to see the contents of this iframe."
-msgstr ""
-
-#: includes/features/custom-code-snippets.php:1488
-msgid "Please review the <a href=\"%s\">Error Logs tab</a> for more details, identify and fix the problematic snippet. Once fixed, you can re-enable \"Global Snippet Execution\" on the custom code settings page and save."
 msgstr ""
 
 #: includes/features/media-image-opt.php:2577
@@ -3569,13 +3597,17 @@ msgstr ""
 msgid "Press CTRL/CMD to select multiple or remove selection."
 msgstr ""
 
-#: includes/features/custom-code-snippets.php:135
-#: includes/features/custom-code-snippets.php:1164
+#: includes/features/custom-code-snippets.php:1435
 msgid "Preview in Editor"
 msgstr ""
 
 #: includes/features/editor-settings-bricks.php:293
 msgid "Preview link:"
+msgstr ""
+
+#: includes/features/custom-code-snippets.php:1197
+#: includes/features/custom-code-snippets.php:1398
+msgid "Priority"
 msgstr ""
 
 #: includes/features/cookie-banner.php:244
@@ -3710,8 +3742,8 @@ msgstr ""
 #: includes/features/custom-field-settings.php:3017
 #: includes/features/post-types-settings.php:123
 #: includes/features/post-types-settings.php:276
-#: includes/features/security-page.php:210
-#: includes/features/security-page.php:246
+#: includes/features/security-page.php:242
+#: includes/features/security-page.php:278
 #: includes/features/taxonomy-settings.php:91
 #: includes/features/taxonomy-settings.php:195
 msgid "Remove"
@@ -3736,7 +3768,7 @@ msgstr ""
 msgid "Repeater"
 msgstr ""
 
-#: includes/features/security-page.php:220
+#: includes/features/security-page.php:252
 msgid "Requests from these IP addresses skip two-factor authentication entirely, for every account -- useful for a trusted office or VPN IP. One address or CIDR range (e.g. 203.0.113.0/24) per field."
 msgstr ""
 
@@ -3822,22 +3854,23 @@ msgstr ""
 msgid "Review the detected scripts and select which ones to block"
 msgstr ""
 
-#: includes/features/custom-code-snippets.php:845
-msgid "Revision for \"%s\" has been loaded into the editor. Click \"Save All Snippets & Settings\" to make it live."
-msgstr ""
-
-#: includes/features/custom-code-snippets.php:1309
+#: includes/features/custom-code-snippets.php:722
 msgid "Revision not found."
 msgstr ""
 
-#: includes/features/custom-code-snippets.php:30
+#: includes/features/custom-code-snippets.php:1104
+msgid "Revision restored."
+msgstr ""
+
+#: includes/features/custom-code-snippets.php:33
+#: includes/features/custom-code-snippets.php:1412
 #: includes/features/post-types-settings.php:33
 #: includes/features/post-types-settings.php:187
 msgid "Revisions"
 msgstr ""
 
-#: includes/features/custom-code-snippets.php:1145
-msgid "Revisions for %s"
+#: includes/features/custom-code-snippets.php:1090
+msgid "Revisions cleared."
 msgstr ""
 
 #: includes/features/custom-field-settings.php:149
@@ -4048,10 +4081,6 @@ msgstr ""
 msgid "SSL"
 msgstr ""
 
-#: includes/features/custom-code-snippets.php:1200
-msgid "Save All Snippets & Settings"
-msgstr ""
-
 #: includes/features/media-image-opt.php:2191
 msgid "Save Automatic Optimization Settings"
 msgstr ""
@@ -4068,12 +4097,12 @@ msgstr ""
 msgid "Save Settings"
 msgstr ""
 
-#: includes/features/taxonomy-settings.php:129
-msgid "Save Taxonomies"
+#: includes/features/custom-code-snippets.php:1455
+msgid "Save Snippet"
 msgstr ""
 
-#: includes/features/custom-code-snippets.php:1192
-msgid "Save this snippet to start tracking revisions."
+#: includes/features/taxonomy-settings.php:129
+msgid "Save Taxonomies"
 msgstr ""
 
 #: includes/features/media-image-opt.php:1419
@@ -4215,7 +4244,7 @@ msgstr ""
 msgid "Scrub True"
 msgstr ""
 
-#: includes/features/custom-code-snippets.php:27
+#: includes/features/custom-code-snippets.php:30
 msgid "Search Code Snippets"
 msgstr ""
 
@@ -4225,6 +4254,10 @@ msgstr ""
 
 #: includes/features/post-types-settings.php:346
 msgid "Search icons…"
+msgstr ""
+
+#: includes/features/custom-code-snippets.php:1172
+msgid "Search…"
 msgstr ""
 
 #: includes/features/security-page.php:31
@@ -4455,10 +4488,6 @@ msgstr ""
 msgid "Shake Y"
 msgstr ""
 
-#: includes/features/custom-code-snippets.php:1206
-msgid "Show Advanced Settings"
-msgstr ""
-
 #: includes/features/block-editor-settings.php:119
 #: includes/features/block-editor-settings.php:153
 msgid "Show Blocks"
@@ -4654,16 +4683,22 @@ msgstr ""
 msgid "Smooth the scroll initiated by wheel events. Default: enabled"
 msgstr ""
 
-#: includes/features/custom-code-snippets.php:1038
+#: includes/features/custom-code-snippets.php:1513
+msgid "Snippet"
+msgstr ""
+
+#: includes/features/custom-code-snippets.php:1497
 msgid "Snippet Execution Error Logs"
 msgstr ""
 
-#: includes/features/custom-code-snippets.php:1007
-msgid "Snippet execution is currently disabled. Check this box and save settings to enable."
+#: includes/features/custom-code-snippets.php:763
+#: includes/features/custom-code-snippets.php:782
+#: includes/features/custom-code-snippets.php:1339
+msgid "Snippet not found."
 msgstr ""
 
-#: includes/features/custom-code-snippets.php:921
-msgid "Some snippets could not be saved. Please check messages above."
+#: includes/features/custom-code-snippets.php:1065
+msgid "Snippet saved."
 msgstr ""
 
 #: includes/features/two-factor-auth.php:267
@@ -4909,16 +4944,17 @@ msgstr ""
 msgid "TLS Error: Server does not support STARTTLS or rejected the request. Response: %s"
 msgstr ""
 
-#: includes/features/custom-code-snippets.php:1050
-msgid "Tab/Snippet"
-msgstr ""
-
 #: includes/elements/gsap-multi-element-register.php:601
 msgid "Tablet False"
 msgstr ""
 
 #: includes/elements/gsap-multi-element-register.php:195
 msgid "Tada"
+msgstr ""
+
+#: includes/features/custom-code-snippets.php:1195
+#: includes/features/custom-code-snippets.php:1394
+msgid "Tags"
 msgstr ""
 
 #: includes/features/media-image-opt.php:50
@@ -4971,10 +5007,6 @@ msgstr ""
 
 #: includes/features/custom-field-settings.php:1428
 msgid "Textarea 2"
-msgstr ""
-
-#: includes/features/custom-code-snippets.php:1471
-msgid "The \"SNN Custom Codes\" feature automatically disabled all snippet executions due to a fatal PHP error. This is a safety measure to prevent your site from breaking further."
 msgstr ""
 
 #: includes/features/interactions.php:282
@@ -5057,8 +5089,8 @@ msgstr ""
 msgid "This is a test email sent via your SMTP settings."
 msgstr ""
 
-#: includes/features/custom-code-snippets.php:1039
-msgid "This log shows the last %d errors recorded from snippet executions. If a fatal error occurs, snippet execution will be globally disabled."
+#: includes/features/custom-code-snippets.php:1498
+msgid "This log shows the last %d errors recorded from snippet executions. A fatal error automatically disables only the snippet that caused it."
 msgstr ""
 
 #: includes/features/cookie-banner.php:717
@@ -5079,10 +5111,6 @@ msgstr ""
 
 #: includes/features/cookie-banner.php:243
 msgid "This website uses cookies for analytics and functionality."
-msgstr ""
-
-#: includes/features/custom-code-snippets.php:1187
-msgid "This will permanently delete all revisions for this snippet. Cannot be undone."
 msgstr ""
 
 #: includes/features/media-image-opt.php:1413
@@ -5113,10 +5141,12 @@ msgstr ""
 msgid "Time in hours after which failed login attempts count is reset to 0 and blocked IPs are unblocked. Default: 24 hours (1 day)"
 msgstr ""
 
-#: includes/features/custom-code-snippets.php:1048
+#: includes/features/custom-code-snippets.php:1511
 msgid "Timestamp"
 msgstr ""
 
+#: includes/features/custom-code-snippets.php:1191
+#: includes/features/custom-code-snippets.php:1365
 #: includes/features/post-types-settings.php:25
 #: includes/features/post-types-settings.php:179
 msgid "Title"
@@ -5130,7 +5160,7 @@ msgstr ""
 msgid "Top"
 msgstr ""
 
-#: includes/features/custom-code-snippets.php:1068
+#: includes/features/custom-code-snippets.php:1531
 msgid "Top-level"
 msgstr ""
 
@@ -5195,7 +5225,9 @@ msgstr ""
 msgid "Two-Factor IP Whitelist"
 msgstr ""
 
-#: includes/features/custom-code-snippets.php:1049
+#: includes/features/custom-code-snippets.php:1193
+#: includes/features/custom-code-snippets.php:1373
+#: includes/features/custom-code-snippets.php:1512
 #: includes/features/media-image-opt.php:1416
 msgid "Type"
 msgstr ""
@@ -5213,20 +5245,33 @@ msgstr ""
 msgid "URL Coming Soon Bypass"
 msgstr ""
 
-#: includes/features/custom-code-snippets.php:1152
-msgid "Unknown Author"
+#: includes/features/custom-code-snippets.php:1430
+#: includes/features/custom-code-snippets.php:1522
+msgid "Unknown"
 msgstr ""
 
 #: includes/features/media-image-opt.php:2978
 msgid "Unknown error"
 msgstr ""
 
+#: includes/features/custom-code-snippets.php:933
+msgid "Unknown snippet"
+msgstr ""
+
 #: includes/features/block-editor-settings.php:161
 msgid "Unselect All"
 msgstr ""
 
+#: includes/features/custom-code-snippets.php:1042
+msgid "Untitled Snippet"
+msgstr ""
+
 #: includes/features/interactions.php:332
 msgid "Update Mode"
+msgstr ""
+
+#: includes/features/custom-code-snippets.php:1196
+msgid "Updated At"
 msgstr ""
 
 #: includes/features/media-image-opt.php:222
@@ -5282,31 +5327,27 @@ msgstr ""
 msgid "Vertical Shutters"
 msgstr ""
 
-#: includes/features/custom-code-snippets.php:1072
+#: includes/features/custom-code-snippets.php:1535
 msgid "View Code"
 msgstr ""
 
-#: includes/features/custom-code-snippets.php:26
+#: includes/features/custom-code-snippets.php:29
 msgid "View Code Snippet"
+msgstr ""
+
+#: includes/features/custom-code-snippets.php:1012
+msgid "View Error Logs"
 msgstr ""
 
 #: includes/features/media-image-opt.php:2197
 msgid "View all optimized images and restore originals if needed."
 msgstr ""
 
-#: includes/features/custom-code-snippets.php:1168
-msgid "View full comparison in new tab"
-msgstr ""
-
 #: includes/features/editor-settings-bricks.php:299
 msgid "Visit <code>/?key=YOUR_SLUG</code> to set the bypass cookie (valid 24 h)."
 msgstr ""
 
-#: includes/features/custom-code-snippets.php:1217
-msgid "WARNING: Enabling this feature allows for direct, unsanitized code execution. This is extremely dangerous and should only be used by expert developers."
-msgstr ""
-
-#: includes/features/custom-code-snippets.php:1132
+#: includes/features/custom-code-snippets.php:1352
 #: includes/features/smtp-settings.php:121
 msgid "Warning:"
 msgstr ""
@@ -5334,6 +5375,10 @@ msgstr ""
 
 #: includes/features/media-image-opt.php:89
 msgid "When enabled, every newly uploaded JPG or PNG image is automatically converted in the background (server-side) and replaces the original in place — same attachment, same URL. The original file is kept and can be restored from the history below."
+msgstr ""
+
+#: includes/features/custom-code-snippets.php:1390
+msgid "Where and when this snippet runs."
 msgstr ""
 
 #: includes/features/cookie-banner.php:429
@@ -5450,7 +5495,7 @@ msgid "You do not have permission to edit the original post"
 msgstr ""
 
 #: includes/features/cookie-banner.php:126
-#: includes/features/custom-code-snippets.php:750
+#: includes/features/custom-code-snippets.php:1114
 msgid "You do not have sufficient permissions to access this page."
 msgstr ""
 
@@ -5466,7 +5511,7 @@ msgstr ""
 msgid "Your SMTP username. Usually a full email address (you@yourdomain.com), but some API-based providers use a plain username (e.g. \"emailit\" or \"apiuser\")."
 msgstr ""
 
-#: includes/features/security-page.php:197
+#: includes/features/security-page.php:229
 msgid "Your current IP address is %s."
 msgstr ""
 
@@ -5542,7 +5587,7 @@ msgstr ""
 msgid "Zoom Out Up"
 msgstr ""
 
-#: includes/features/custom-code-snippets.php:1157
+#: includes/features/custom-code-snippets.php:1230
 msgid "ago"
 msgstr ""
 
@@ -5552,6 +5597,10 @@ msgstr ""
 
 #: includes/features/settings-page.php:60
 msgid "and"
+msgstr ""
+
+#: includes/features/custom-code-snippets.php:1395
+msgid "comma, separated, tags"
 msgstr ""
 
 #: includes/features/media-image-opt.php:2692
@@ -5626,8 +5675,8 @@ msgstr ""
 msgid "optimized"
 msgstr ""
 
-#: includes/features/security-page.php:209
-#: includes/features/security-page.php:245
+#: includes/features/security-page.php:241
+#: includes/features/security-page.php:277
 msgid "or"
 msgstr ""
 
@@ -5650,6 +5699,10 @@ msgstr ""
 #: includes/features/media-image-opt.php:2139
 #: includes/features/media-image-opt.php:2146
 msgid "skipped"
+msgstr ""
+
+#: includes/features/custom-code-snippets.php:1319
+msgid "snippet(s)."
 msgstr ""
 
 #: includes/features/media-image-opt.php:2743
