@@ -15,6 +15,7 @@ require_once SNN_PATH . 'includes/features/other-settings.php';
 require_once SNN_PATH . 'includes/features/security-page.php';
 require_once SNN_PATH . 'includes/features/post-types-settings.php';
 require_once SNN_PATH . 'includes/features/custom-field-settings.php';
+require_once SNN_PATH . 'includes/features/taxonomy-settings.php';
 require_once SNN_PATH . 'includes/features/login-settings.php';
 require_once SNN_PATH . 'includes/features/remove-wp-version.php';
 require_once SNN_PATH . 'includes/features/disable-xmlrpc.php';
