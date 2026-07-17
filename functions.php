@@ -25,7 +25,6 @@ require_once SNN_PATH . 'includes/features/disable-wp-json-if-not-logged-in.php'
 require_once SNN_PATH . 'includes/features/login-logo-change-url-change.php';
 require_once SNN_PATH . 'includes/features/enqueue-scripts.php';
 require_once SNN_PATH . 'includes/features/file-size-column-media.php';
-require_once SNN_PATH . 'includes/features/search-loggins.php';
 require_once SNN_PATH . 'includes/features/smtp-settings.php';
 require_once SNN_PATH . 'includes/features/mail-logging.php';
 require_once SNN_PATH . 'includes/features/disable-emojis.php';
