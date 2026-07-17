@@ -586,8 +586,8 @@ function snn_execute_php_snippet( $code_to_execute, $snippet_id, $snippet_title 
     snn_snippet_set_executing_marker( $snippet_id );
 
     try {
-        // The leading "?>" makes mixed PHP/HTML work: content outside <?php ?>
-        // tags is treated as raw HTML/output, exactly like a normal .php file.
+        // The leading close-tag prefix makes mixed PHP/HTML work: content
+        // outside PHP tags is treated as raw HTML/output, like a normal .php file.
         @eval( "?>" . $code_to_execute );
         snn_snippet_clear_executing_marker();
     } catch ( ParseError $e ) {
