@@ -10,6 +10,7 @@ Basiert auf [SNN-BRX](https://github.com/sinanisler/snn-brx-child-theme) von [si
 ## Neue Features
 
 *   **Automatische Bildoptimierung bei Upload:** Neu hochgeladene JPG/PNG-Bilder werden automatisch im Hintergrund zu WebP oder AVIF konvertiert und ersetzen das Original in-place (gleiche URL, gleiche Attachment-ID) — funktioniert unabhängig vom Upload-Weg (Mediathek, Block-Editor, REST-API, Bricks Builder). Ersetzt das Plugin [CompressX](https://de.wordpress.org/plugins/compressx/). Standardmäßig deaktiviert, einstellbar unter *Medien → Optimize Media → History & Settings*. Original bleibt für Restore erhalten.
+*   **Zwei-Faktor-Authentifizierung (E-Mail-Code):** Ersetzt das Plugin [Two-Factor](https://wordpress.org/plugins/two-factor/). Anders als das Original ist es kein Opt-in pro Nutzer, sondern ein globaler Schalter unter *Security Settings*, der 2FA für alle Benutzerkonten erzwingt (per E-Mail zugestellter Einmalcode, 15 Minuten gültig). Ausnahme: Konten, deren einzige Rolle(n) WooCommerce „Customer" und/oder „Subscriber" sind, bleiben ausgenommen — jede zusätzliche Rolle (Administrator, Redakteur, Autor, Shop-Manager, ...) erzwingt 2FA trotzdem. Standardmäßig deaktiviert. Das bisherige Captcha-Schutz-Setting (Math-Captcha / Cloudflare Turnstile) wurde dafür entfernt.
 
 ## Key Features (Stripped)
 

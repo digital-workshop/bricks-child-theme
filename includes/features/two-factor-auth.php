@@ -280,4 +280,9 @@ function snn_2fa_render_challenge_form( $token, $notice = '' ) {
     </p>
     <?php
     login_footer();
+    // WordPress core's wp-login.php falls through to rendering the default
+    // username/password form after firing login_form_{$action} unless the
+    // handler exits -- without this, the standard login form would render a
+    // second time underneath this one.
+    exit;
 }
