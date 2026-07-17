@@ -206,8 +206,8 @@ function snn_2fa_ip_whitelist_callback() {
     <div id="snn_2fa_ip_whitelist_rows">
         <?php foreach ( $whitelist as $ip ) : ?>
             <div class="snn-2fa-ip-row" style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
-                <input type="text" name="snn_security_options[2fa_ip_whitelist][]" value="<?php echo esc_attr( $ip ); ?>" placeholder="203.0.113.5 <?php esc_attr_e( 'or', 'snn' ); ?> 203.0.113.0/24" style="width:280px;">
-                <button type="button" class="button snn-2fa-ip-remove" aria-label="<?php esc_attr_e( 'Remove', 'snn' ); ?>">
+                <input type="text" name="snn_security_options[2fa_ip_whitelist][]" value="<?php echo esc_attr( $ip ); ?>" placeholder="203.0.113.5 <?php esc_attr_e( 'or', 'snn' ); ?> 203.0.113.0/24" style="width:280px; height:30px; padding:0 8px; box-sizing:border-box; line-height:28px;">
+                <button type="button" class="button snn-2fa-ip-remove" aria-label="<?php esc_attr_e( 'Remove', 'snn' ); ?>" style="height:30px; box-sizing:border-box; display:inline-flex; align-items:center; justify-content:center; padding:0 8px; flex-shrink:0;">
                     <span class="dashicons dashicons-no-alt" style="vertical-align:middle;"></span>
                 </button>
             </div>
@@ -242,8 +242,8 @@ function snn_2fa_ip_whitelist_callback() {
             const row = document.createElement('div');
             row.className = 'snn-2fa-ip-row';
             row.style.cssText = 'display:flex; align-items:center; gap:8px; margin-bottom:8px;';
-            row.innerHTML = '<input type="text" name="snn_security_options[2fa_ip_whitelist][]" value="" placeholder="203.0.113.5 <?php echo esc_js( __( 'or', 'snn' ) ); ?> 203.0.113.0/24" style="width:280px;">' +
-                '<button type="button" class="button snn-2fa-ip-remove" aria-label="<?php echo esc_js( __( 'Remove', 'snn' ) ); ?>"><span class="dashicons dashicons-no-alt" style="vertical-align:middle;"></span></button>';
+            row.innerHTML = '<input type="text" name="snn_security_options[2fa_ip_whitelist][]" value="" placeholder="203.0.113.5 <?php echo esc_js( __( 'or', 'snn' ) ); ?> 203.0.113.0/24" style="width:280px; height:30px; padding:0 8px; box-sizing:border-box; line-height:28px;">' +
+                '<button type="button" class="button snn-2fa-ip-remove" aria-label="<?php echo esc_js( __( 'Remove', 'snn' ) ); ?>" style="height:30px; box-sizing:border-box; display:inline-flex; align-items:center; justify-content:center; padding:0 8px; flex-shrink:0;"><span class="dashicons dashicons-no-alt" style="vertical-align:middle;"></span></button>';
             if (value) {
                 row.querySelector('input').value = value;
             }
