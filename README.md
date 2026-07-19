@@ -28,7 +28,6 @@ Basiert auf [SNN-BRX](https://github.com/sinanisler/snn-brx-child-theme) von [si
 *   **Custom Fields & Repeaters:** Build custom fields and repeater fields with an intuitive interface.
 *   **Custom Taxonomies:** Register and manage custom taxonomies like categories and tags.
 *   **Security Settings:** Enhance your website's security.
-*   **Block Editor Settings:** Optimize the WordPress Block Editor.
 *   **Disable File Editing:** Prevent direct file editing in the WordPress dashboard.
 *   **Disable WP JSON (if not logged in):** Improve security by disabling JSON endpoints for non-logged-in users.
 *   **SMTP Settings & Mail Logs:** Configure transactional emails and track mail activity.

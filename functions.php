@@ -32,7 +32,6 @@ require_once SNN_PATH . 'includes/features/custom-code-snippets.php';
 require_once SNN_PATH . 'includes/features/analytics.php';
 require_once SNN_PATH . 'includes/features/cookie-banner.php';
 require_once SNN_PATH . 'includes/features/interactions.php';
-require_once SNN_PATH . 'includes/features/draft-revision.php';
 
 
 // Utils
@@ -59,12 +58,10 @@ add_action('after_setup_theme', function() {
 // Bricks Features
 // ------------------------------------------------------------------------------
 
-require_once SNN_PATH . 'includes/features/editor-settings-bricks.php'; 
-require_once SNN_PATH . 'includes/features/editor-settings-panel-bricks.php';
+require_once SNN_PATH . 'includes/features/editor-settings-bricks.php';
 require_once SNN_PATH . 'includes/features/editor-class-generator.php';
 require_once SNN_PATH . 'includes/features/editor-custom-css.php';
 
-require_once SNN_PATH . 'includes/features/block-editor-settings.php';
 require_once SNN_PATH . 'includes/features/media-image-opt.php';
 require_once SNN_PATH . 'includes/features/wp-admin-dashboard-widgets.php';
 

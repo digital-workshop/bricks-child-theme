@@ -68,14 +68,6 @@ function snn_register_editor_settings() {
     );
 
     add_settings_field(
-        'snn_bricks_builder_color_fix_field',
-        __('Enable SNN-BRX Panel. Image Optimizer, Clamp Generator and old Global Colors', 'snn'),
-        'snn_render_checkbox_field',
-        'snn-editor-settings',
-        'snn_editor_settings_section'
-    );
-
-    add_settings_field(
         'snn_custom_css_overlay_field',
         __('Enable Custom CSS Overlay in Bricks Builder', 'snn'),
         'snn_custom_css_overlay_field_callback',
@@ -96,7 +88,6 @@ function snn_sanitize_editor_settings($input) {
     $sanitized = array();
 
     // Sanitize existing settings
-    $sanitized['snn_bricks_builder_color_fix'] = isset($input['snn_bricks_builder_color_fix']) && $input['snn_bricks_builder_color_fix'] ? 1 : 0;
     $sanitized['snn_custom_css_overlay_enabled'] = isset($input['snn_custom_css_overlay_enabled']) && $input['snn_custom_css_overlay_enabled'] ? 1 : 0;
 
     // Sanitize the three other settings
@@ -122,17 +113,6 @@ function snn_editor_settings_section_callback() {
         );
         ?>
     </p>
-    <?php
-}
-
-function snn_render_checkbox_field() {
-    $options = get_option('snn_editor_settings');
-    $checked = isset($options['snn_bricks_builder_color_fix']) ? $options['snn_bricks_builder_color_fix'] : 0;
-    ?>
-    <input type="checkbox" id="snn_bricks_builder_color_fix" name="snn_editor_settings[snn_bricks_builder_color_fix]" value="1" <?php checked(1, $checked, true); ?> />
-    <label for="snn_bricks_builder_color_fix">
-        <?php _e('Enable SNN-BRX Editor Panel', 'snn'); ?><br>
-    </label>
     <?php
 }
 
