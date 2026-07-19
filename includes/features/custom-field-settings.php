@@ -192,34 +192,44 @@ function snn_custom_fields_page_callback() {
                             </div>
                             <div class="field-group snn-admin-toggle-field">
                                 <label><?php esc_html_e('Author', 'snn'); ?></label>
+                                <label class="snn-admin-toggle">
                                 <input type="checkbox" class="author-checkbox" name="custom_fields[<?php echo $index; ?>][author]" value="1"
                                        <?php checked(!empty($field['author']));
                                        echo (in_array($field_type, ['double_text', 'double_textarea'])) ? ' disabled' : ''; ?>
-                                       title="<?php echo (in_array($field_type, ['double_text', 'double_textarea'])) ? esc_attr__('This field type cannot be assigned to Author', 'snn') : ''; ?>" />
+                                       title="<?php echo (in_array($field_type, ['double_text', 'double_textarea'])) ? esc_attr__('This field type cannot be assigned to Author', 'snn') : ''; ?>" /><span class="snn-admin-toggle-slider"></span>
+                                </label>
                             </div>
                              <div class="field-group snn-admin-toggle-field">
                                 <label><?php esc_html_e('Options Page', 'snn'); ?></label>
+                                <label class="snn-admin-toggle">
                                 <input type="checkbox" class="options-page-checkbox" name="custom_fields[<?php echo $index; ?>][options_page]" value="1"
                                        <?php checked(!empty($field['options_page']));
                                        echo (in_array($field_type, ['double_text', 'double_textarea'])) ? ' disabled' : ''; ?>
-                                       title="<?php echo (in_array($field_type, ['double_text', 'double_textarea'])) ? esc_attr__('This field type cannot be assigned to Options Page', 'snn') : ''; ?>" />
+                                       title="<?php echo (in_array($field_type, ['double_text', 'double_textarea'])) ? esc_attr__('This field type cannot be assigned to Options Page', 'snn') : ''; ?>" /><span class="snn-admin-toggle-slider"></span>
+                                </label>
                             </div>
                             <div class="field-group snn-admin-toggle-field">
                                 <label><?php esc_html_e('Repeater', 'snn'); ?></label>
+                                <label class="snn-admin-toggle">
                                 <input type="checkbox" class="repeater-checkbox" name="custom_fields[<?php echo $index; ?>][repeater]" value="1"
                                        <?php checked(!empty($field['repeater'])); echo $is_repeater_disabled_type ? ' disabled' : ''; ?>
-                                       title="<?php echo esc_attr($repeater_title); ?>" />
+                                       title="<?php echo esc_attr($repeater_title); ?>" /><span class="snn-admin-toggle-slider"></span>
+                                </label>
                             </div>
                             <div class="field-group quick-edit-group snn-admin-toggle-field" style="<?php echo $show_quick_edit ? '' : 'display:none;'; ?>">
                                 <label><?php esc_html_e('Quick Edit', 'snn'); ?></label>
+                                <label class="snn-admin-toggle">
                                 <input type="checkbox" class="quick-edit-checkbox" name="custom_fields[<?php echo $index; ?>][quick_edit]" value="1"
                                        <?php checked(!empty($field['quick_edit'])); ?>
-                                       title="<?php esc_attr_e('Enable Quick Edit for this field', 'snn'); ?>" />
+                                       title="<?php esc_attr_e('Enable Quick Edit for this field', 'snn'); ?>" /><span class="snn-admin-toggle-slider"></span>
+                                </label>
                             </div>
                             <?php if ($field_type === 'media') : ?>
                             <div class="field-group media-return-url-group snn-admin-toggle-field">
                                 <label><?php esc_html_e('Return URL', 'snn'); ?></label>
-                                <input type="checkbox" class="cf-return-url" name="custom_fields[<?php echo $index; ?>][return_full_url]" value="1" <?php checked(!empty($field['return_full_url'])); ?> />
+                                <label class="snn-admin-toggle">
+                                <input type="checkbox" class="cf-return-url" name="custom_fields[<?php echo $index; ?>][return_full_url]" value="1" <?php checked(!empty($field['return_full_url'])); ?> /><span class="snn-admin-toggle-slider"></span>
+                                </label>
                             </div>
                             <?php endif; ?>
                             <?php if ($field_type === 'date') : ?>
@@ -345,7 +355,7 @@ function snn_custom_fields_page_callback() {
                         const newIndex = row.dataset.index;
                         const div = document.createElement('div');
                         div.classList.add('field-group', 'media-return-url-group', 'snn-admin-toggle-field');
-                        div.innerHTML = `<label><?php esc_html_e('Return Full URL', 'snn'); ?></label><input type="checkbox" name="custom_fields[${newIndex}][return_full_url]" value="1">`;
+                        div.innerHTML = `<label><?php esc_html_e('Return Full URL', 'snn'); ?></label><label class="snn-admin-toggle"><input type="checkbox" name="custom_fields[${newIndex}][return_full_url]" value="1"><span class="snn-admin-toggle-slider"></span></label>`;
                         const repeaterDiv = row.querySelector('input[name*="[repeater]"]');
                         if (repeaterDiv && repeaterDiv.closest('.field-group')) {
                             repeaterDiv.closest('.field-group').insertAdjacentElement('afterend', div);
@@ -442,11 +452,11 @@ function snn_custom_fields_page_callback() {
                             <option value="<?php echo esc_js($tax->name); ?>"><?php echo esc_js($tax->label); ?></option>
                         <?php endforeach; ?>
                     </select></div>
-                    <div class="field-group snn-admin-toggle-field"><label><?php esc_html_e('Author', 'snn'); ?></label><input type="checkbox" class="author-checkbox" name="custom_fields[${newIndex}][author]" value="1"></div>
-                    <div class="field-group snn-admin-toggle-field"><label><?php esc_html_e('Options Page', 'snn'); ?></label><input type="checkbox" class="options-page-checkbox" name="custom_fields[${newIndex}][options_page]" value="1"></div>
-                    <div class="field-group snn-admin-toggle-field"><label><?php esc_html_e('Repeater', 'snn'); ?></label><input type="checkbox" class="repeater-checkbox" name="custom_fields[${newIndex}][repeater]" value="1"></div>
-                    <div class="field-group quick-edit-group snn-admin-toggle-field"><label><?php esc_html_e('Quick Edit', 'snn'); ?></label><input type="checkbox" class="quick-edit-checkbox" name="custom_fields[${newIndex}][quick_edit]" value="1" title="<?php esc_attr_e('Enable Quick Edit for this field', 'snn'); ?>"></div>
-                    <div class="field-group media-return-url-group snn-admin-toggle-field" style="display:none;"><label><?php esc_html_e('Return Full URL', 'snn'); ?></label><input type="checkbox" class="cf-return-url" name="custom_fields[${newIndex}][return_full_url]" value="1"></div>
+                    <div class="field-group snn-admin-toggle-field"><label><?php esc_html_e('Author', 'snn'); ?></label><label class="snn-admin-toggle"><input type="checkbox" class="author-checkbox" name="custom_fields[${newIndex}][author]" value="1"><span class="snn-admin-toggle-slider"></span></label></div>
+                    <div class="field-group snn-admin-toggle-field"><label><?php esc_html_e('Options Page', 'snn'); ?></label><label class="snn-admin-toggle"><input type="checkbox" class="options-page-checkbox" name="custom_fields[${newIndex}][options_page]" value="1"><span class="snn-admin-toggle-slider"></span></label></div>
+                    <div class="field-group snn-admin-toggle-field"><label><?php esc_html_e('Repeater', 'snn'); ?></label><label class="snn-admin-toggle"><input type="checkbox" class="repeater-checkbox" name="custom_fields[${newIndex}][repeater]" value="1"><span class="snn-admin-toggle-slider"></span></label></div>
+                    <div class="field-group quick-edit-group snn-admin-toggle-field"><label><?php esc_html_e('Quick Edit', 'snn'); ?></label><label class="snn-admin-toggle"><input type="checkbox" class="quick-edit-checkbox" name="custom_fields[${newIndex}][quick_edit]" value="1" title="<?php esc_attr_e('Enable Quick Edit for this field', 'snn'); ?>"><span class="snn-admin-toggle-slider"></span></label></div>
+                    <div class="field-group media-return-url-group snn-admin-toggle-field" style="display:none;"><label><?php esc_html_e('Return Full URL', 'snn'); ?></label><label class="snn-admin-toggle"><input type="checkbox" class="cf-return-url" name="custom_fields[${newIndex}][return_full_url]" value="1"><span class="snn-admin-toggle-slider"></span></label></div>
                     <div class="field-group date-format-group snn-admin-field" style="display:none;"><label><?php esc_html_e('Date Format', 'snn'); ?></label><select class="cf-date-format" name="custom_fields[${newIndex}][date_format]" style="width:140px"><option value="YYYY-MM-DD">YYYY-MM-DD</option><option value="DD-MM-YYYY">DD-MM-YYYY</option><option value="DD.MM.YYYY">DD.MM.YYYY</option><option value="MM.DD.YYYY">MM.DD.YYYY</option></select></div>
                 `;
                 fieldContainer.appendChild(newRow);

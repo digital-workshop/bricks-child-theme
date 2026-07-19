@@ -147,19 +147,19 @@ function snn_render_custom_post_types_page() {
                             <div class="supports-section" style="display:none;">
                                 <?php foreach ( $available_supports as $key => $label ) : ?>
                                     <label class="snn-admin-check-label">
-                                        <input type="checkbox" name="custom_post_types[<?php echo esc_attr( $index ); ?>][supports][<?php echo esc_attr( $key ); ?>]" <?php checked( in_array( $key, $post_type['supports'], true ), true ); ?> />
+                                        <input type="checkbox" name="custom_post_types[<?php echo esc_attr( $index ); ?>][supports][<?php echo esc_attr( $key ); ?>]" <?php checked( in_array( $key, $post_type['supports'], true ), true ); ?> /><span class="snn-admin-toggle-slider"></span>
                                         <?php echo esc_html( $label ); ?>
                                     </label>
                                 <?php endforeach; ?>
 
                                 <?php foreach ( $additional_options as $opt_key => $opt_label ) : ?>
                                     <label class="snn-admin-check-label">
-                                        <input type="checkbox" name="custom_post_types[<?php echo esc_attr( $index ); ?>][<?php echo esc_attr( $opt_key ); ?>]" <?php checked( $opt_key === 'show_order' ? (isset($post_type[$opt_key]) && $post_type[$opt_key]) : (!isset($post_type[$opt_key]) || $post_type[$opt_key]), 1 ); ?> />
+                                        <input type="checkbox" name="custom_post_types[<?php echo esc_attr( $index ); ?>][<?php echo esc_attr( $opt_key ); ?>]" <?php checked( $opt_key === 'show_order' ? (isset($post_type[$opt_key]) && $post_type[$opt_key]) : (!isset($post_type[$opt_key]) || $post_type[$opt_key]), 1 ); ?> /><span class="snn-admin-toggle-slider"></span>
                                         <?php echo esc_html( $opt_label ); ?>
                                     </label>
                                 <?php endforeach; ?>
                                 <label class="snn-admin-check-label">
-                                    <input type="checkbox" name="custom_post_types[<?php echo esc_attr( $index ); ?>][private]" <?php checked( isset($post_type['private']) && $post_type['private'], 1 ); ?> />
+                                    <input type="checkbox" name="custom_post_types[<?php echo esc_attr( $index ); ?>][private]" <?php checked( isset($post_type['private']) && $post_type['private'], 1 ); ?> /><span class="snn-admin-toggle-slider"></span>
                                     <?php echo esc_html__( 'Private', 'snn' ); ?>
                                 </label>
                             </div>
@@ -240,7 +240,7 @@ function snn_render_custom_post_types_page() {
                     const isChecked = key !== 'comments';
                     inner += `
                         <label class="snn-admin-check-label">
-                            <input type="checkbox" name="custom_post_types[${index}][supports][${key}]" ${isChecked ? 'checked' : ''} />
+                            <input type="checkbox" name="custom_post_types[${index}][supports][${key}]" ${isChecked ? 'checked' : ''} /><span class="snn-admin-toggle-slider"></span>
                             ${label}
                         </label>
                     `;
@@ -249,14 +249,14 @@ function snn_render_custom_post_types_page() {
                             const isChecked = optKey !== 'show_order';
                             inner += `
                                 <label class="snn-admin-check-label">
-                                    <input type="checkbox" name="custom_post_types[${index}][${optKey}]" ${isChecked ? 'checked' : ''} />
+                                    <input type="checkbox" name="custom_post_types[${index}][${optKey}]" ${isChecked ? 'checked' : ''} /><span class="snn-admin-toggle-slider"></span>
                                     ${optLabel}
                                 </label>
                             `;
                         }
                         inner += `
                             <label class="snn-admin-check-label">
-                                <input type="checkbox" name="custom_post_types[${index}][private]" />
+                                <input type="checkbox" name="custom_post_types[${index}][private]" /><span class="snn-admin-toggle-slider"></span>
                                 <?php echo esc_html__( 'Private', 'snn' ); ?>
                             </label>
                         `;

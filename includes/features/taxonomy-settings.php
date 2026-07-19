@@ -114,14 +114,16 @@ function snn_render_taxonomies_page() {
 
                         <div class="field-group snn-admin-toggle-field">
                         <label><?php esc_html_e( 'Hierarchical', 'snn' ); ?></label>
-                        <div class="checkbox-container">
-                            <input type="checkbox" name="taxonomies[<?php echo esc_attr( $index ); ?>][hierarchical]" <?php checked( $taxonomy['hierarchical'], 1 ); ?> />
-                        </div>
+                        <label class="checkbox-container">
+                            <input type="checkbox" name="taxonomies[<?php echo esc_attr( $index ); ?>][hierarchical]" <?php checked( $taxonomy['hierarchical'], 1 ); ?> /><span class="snn-admin-toggle-slider"></span>
+                        </label>
                         </div>
 
                         <div class="field-group snn-admin-toggle-field">
                             <label><?php esc_html_e( 'Show Columns', 'snn' ); ?></label>
-                            <input type="checkbox" name="taxonomies[<?php echo esc_attr( $index ); ?>][add_columns]" <?php checked( isset( $taxonomy['add_columns'] ) ? $taxonomy['add_columns'] : 0, 1 ); ?> />
+                            <label class="checkbox-container">
+                                <input type="checkbox" name="taxonomies[<?php echo esc_attr( $index ); ?>][add_columns]" <?php checked( isset( $taxonomy['add_columns'] ) ? $taxonomy['add_columns'] : 0, 1 ); ?> /><span class="snn-admin-toggle-slider"></span>
+                            </label>
                         </div>
                         </div>
                     </div>
@@ -220,13 +222,15 @@ function snn_render_taxonomies_page() {
                     </div>
                     <div class="field-group snn-admin-toggle-field">
                         <label><?php esc_html_e( 'Hierarchical', 'snn' ); ?></label>
-                        <div class="checkbox-container">
-                            <input type="checkbox" name="taxonomies[${newIndex}][hierarchical]" />
-                        </div>
+                        <label class="checkbox-container">
+                            <input type="checkbox" name="taxonomies[${newIndex}][hierarchical]" /><span class="snn-admin-toggle-slider"></span>
+                        </label>
                     </div>
                     <div class="field-group snn-admin-toggle-field">
                         <label><?php esc_html_e( 'Show Columns', 'snn' ); ?></label>
-                        <input type="checkbox" name="taxonomies[${newIndex}][add_columns]" />
+                        <label class="checkbox-container">
+                            <input type="checkbox" name="taxonomies[${newIndex}][add_columns]" /><span class="snn-admin-toggle-slider"></span>
+                        </label>
                     </div>
                     </div>
                 `;
