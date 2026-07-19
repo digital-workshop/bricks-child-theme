@@ -9,17 +9,20 @@ if ( ! defined( 'ABSPATH' ) ) {
  * top of the existing functional markup those pages already render. See
  * includes/features/admin-ui-design.css.
  */
-function snn_admin_ui_design_screen_ids() {
+function snn_admin_ui_design_page_slugs() {
     return array(
-        'snn-settings_page_snn-custom-post-types',
-        'snn-settings_page_snn-custom-fields',
-        'snn-settings_page_snn-taxonomies',
+        'snn-custom-post-types',
+        'snn-custom-fields',
+        'snn-taxonomies',
     );
 }
 
 function snn_enqueue_admin_ui_design() {
-    $current_screen = get_current_screen();
-    if ( ! $current_screen || ! in_array( $current_screen->id, snn_admin_ui_design_screen_ids(), true ) ) {
+    // Matched against the admin.php?page=... query var directly rather than
+    // get_current_screen()->id, since predicting WP's internal hook-suffix
+    // naming for a submenu registered under a custom parent slug is fragile.
+    $page = isset( $_GET['page'] ) ? sanitize_key( wp_unslash( $_GET['page'] ) ) : '';
+    if ( ! in_array( $page, snn_admin_ui_design_page_slugs(), true ) ) {
         return;
     }
 
