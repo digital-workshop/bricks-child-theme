@@ -10,16 +10,30 @@ Basiert auf [SNN-BRX](https://github.com/sinanisler/snn-brx-child-theme) von [si
 ## Neue Features
 
 *   **Automatische Bildoptimierung bei Upload:** Neu hochgeladene JPG/PNG-Bilder werden automatisch im Hintergrund zu WebP oder AVIF konvertiert und ersetzen das Original in-place (gleiche URL, gleiche Attachment-ID) — funktioniert unabhängig vom Upload-Weg (Mediathek, Block-Editor, REST-API, Bricks Builder). Ersetzt das Plugin [CompressX](https://de.wordpress.org/plugins/compressx/). Standardmäßig deaktiviert, einstellbar unter *Medien → Optimize Media → History & Settings*. Original bleibt für Restore erhalten.
+
+    ![Automatische Bildoptimierung](docs/screenshots/media-optimization.png)
+
 *   **Zwei-Faktor-Authentifizierung (E-Mail-Code):** Ersetzt das Plugin [Two-Factor](https://wordpress.org/plugins/two-factor/). Anders als das Original ist es kein Opt-in pro Nutzer, sondern ein globaler Schalter unter *Security Settings*, der 2FA für alle Benutzerkonten erzwingt (per E-Mail zugestellter Einmalcode, 15 Minuten gültig). Ausnahme: Konten, deren einzige Rolle(n) WooCommerce „Customer" und/oder „Subscriber" sind, bleiben ausgenommen — jede zusätzliche Rolle (Administrator, Redakteur, Autor, Shop-Manager, ...) erzwingt 2FA trotzdem. Standardmäßig deaktiviert. Das bisherige Captcha-Schutz-Setting (Math-Captcha / Cloudflare Turnstile) wurde dafür entfernt.
     *   **IP-Whitelist:** Im selben Settings-Bereich können IP-Adressen oder CIDR-Bereiche (z. B. `203.0.113.0/24`) hinterlegt werden, die 2FA komplett überspringen — z. B. für Büro- oder VPN-IPs. Die Seite zeigt die eigene aktuelle IP an und fügt sie per Klick hinzu.
     *   **Notausschalter:** Falls man sich mal aussperrt (z. B. weil die Code-Mail nicht ankommt), schaltet folgende Zeile in der `wp-config.php` die 2FA-Pflicht sofort aus, ganz ohne Datenbank- oder Admin-Zugriff:
         ```php
         define( 'SNN_2FA_DISABLE', true );
         ```
+
+    ![Zwei-Faktor-Authentifizierung Settings](docs/screenshots/security-2fa.png)
+
 *   **Code Snippets neu gebaut (FluentSnippets-Stil):** Ersetzt das bisherige starre 4-Slot-Modell (Frontend Head/Footer, Admin Head, "Sofort") durch eine beliebige Anzahl benannter, einzeln umschaltbarer Snippets in einer durchsuchbaren Tabelle — mit Ein/Aus-Schalter pro Zeile, Typ (PHP/CSS/JS/HTML, farbige Badges), Ort, Tags, Priorität und "Aktualisiert am". CSS/JS/HTML werden ohne `eval()` als reine `<style>`/`<script>`/HTML-Ausgabe gerendert (kein PHP-Risiko). Verursacht ein PHP-Snippet einen fatalen Fehler, wird **nur dieses eine** Snippet automatisch deaktiviert (nicht mehr die ganze Funktion wie zuvor). Inklusive JSON-Export/Import, Revisionsverlauf pro Snippet und Download-Link. Bestehende Snippets werden beim ersten Laden automatisch ins neue Modell übernommen. `SNN_CODE_DISABLE`-Notausschalter für die wp-config.php bleibt bestehen.
     *   **Datei-basierte Ausführung (wie FluentSnippets):** Aktive Snippets werden bei jeder Änderung zusätzlich als reine PHP-Dateien unter `wp-content/uploads/snn-code-snippets/` kompiliert (geschützt per `.htaccess`). Normale Seitenaufrufe laden diese Dateien nur noch per `include()` — **keine Datenbank-Abfrage mehr** zur Laufzeit. Jedes PHP-Snippet wird vor dem Kompilieren einzeln validiert; ein fehlerhaftes Snippet wird automatisch deaktiviert und **nicht** in die Datei aufgenommen, sodass ein kaputtes Snippet nie die anderen an diesem Ort mit ausschalten kann. Ist das Verzeichnis nicht beschreibbar, greift automatisch die bisherige Datenbank-Logik als Fallback.
+
+    ![Code Snippets Tabelle](docs/screenshots/code-snippets.png)
+
 *   **Eigene Basic-Analytics:** Ersetzt das Plugin [Independent Analytics](https://independentwp.com/) für den grundlegenden Bedarf. Eigenes, schlankes Dashboard als eigener Top-Level-Menüpunkt *Analytics* (direkt unter Dashboard, vor Beiträge) mit Zeitraum-Auswahl (Heute/7 Tage/30 Tage/Dieses Jahr), Kennzahlen (Seitenaufrufe, Besucher), Liniendiagramm über Zeit sowie Top-10-Seiten und Top-10-Referrer. Die Einstellungen (Ein/Aus-Schalter, Rollen-/IP-Ausschluss, Aufbewahrungsfrist) liegen getrennt davon unter den SNN-Settings → *Analytics*. Tracking läuft rein serverseitig (kein JS-Beacon, kein Adblocker-Problem), erkennt gängige Bots und ignoriert automatisch Vorschau-/REST-/Cron-Aufrufe. Besucher werden datenschutzfreundlich über einen täglich rotierenden Hash aus IP, User-Agent und Datum gezählt — es wird keine rohe IP dauerhaft gespeichert. Rollen (z. B. Administrator) und einzelne IP-Adressen/CIDR-Bereiche lassen sich vom Tracking ausschließen (gleiche IP-Whitelist-Oberfläche wie beim 2FA). Alte Datensätze werden über einen täglichen Cron-Job automatisch bereinigt (konfigurierbare Aufbewahrungsfrist).
+
+    ![Analytics Dashboard](docs/screenshots/analytics-dashboard.png)
+
 *   **Eigenständiges Admin-UI für Beitragstypen, Benutzerdefinierte Felder & Taxonomien:** Die drei Verwaltungsseiten haben ein komplett neues, vom wp-admin-Standardlook losgelöstes Design bekommen (Karten statt nackter Formulartabellen, eigene Akzentfarbe, moderne Toggle-Switches) — rein visuell, alle bestehenden Funktionen (Hinzufügen/Entfernen/Sortieren, Dashicon-Picker, Bedingungs-Panels je Feldtyp) funktionieren unverändert. Gemeinsames Design-System in `includes/features/admin-ui-design.css`.
+
+    ![Eigenständiges Admin-UI](docs/screenshots/admin-ui-custom-fields.png)
 
 ## Key Features (Stripped)
 
