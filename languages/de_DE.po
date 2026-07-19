@@ -260,10 +260,18 @@ msgstr "Alle Originale wurden bereits gelöscht."
 msgid "All snippet execution is currently disabled by the %s constant. To re-enable execution, remove it from wp-config.php."
 msgstr "Die Ausführung aller Snippets ist aktuell durch die Konstante %s deaktiviert. Um die Ausführung wieder zu aktivieren, entferne sie aus der wp-config.php."
 
+#: includes/features/custom-code-snippets.php:1413
+msgid "Allow Direct Output"
+msgstr "Direktausgabe erlauben"
+
 #: includes/features/custom-field-settings.php:106
 #: includes/features/custom-field-settings.php:278
 msgid "Allow multiple values"
 msgstr "Mehrere Werte zulassen"
+
+#: includes/features/custom-code-snippets.php:1417
+msgid "Allow this snippet to output content directly"
+msgstr "Diesem Snippet erlauben, Inhalte direkt auszugeben"
 
 #: includes/features/cookie-banner.php:408
 msgid "Allow users to change their cookie preferences anytime (GDPR requirement)"
@@ -2847,6 +2855,10 @@ msgstr "Lichtgeschwindigkeit raus links"
 #: includes/elements/gsap-multi-element-register.php:149
 msgid "Light Speed Out Right"
 msgstr "Lichtgeschwindigkeit raus rechts"
+
+#: includes/features/custom-code-snippets.php:1419
+msgid "Like functions.php, \"Everywhere (Immediate)\" normally only defines functions and hooks and should not output anything directly -- any output is discarded to avoid \"headers already sent\" errors. Enable this only if the snippet intentionally echoes content."
+msgstr "Wie bei der functions.php sollte „Überall (Sofort)“ normalerweise nur Funktionen und Hooks definieren und nichts direkt ausgeben – jede Ausgabe wird verworfen, um „headers already sent“-Fehler zu vermeiden. Aktiviere dies nur, wenn das Snippet absichtlich Inhalte ausgibt."
 
 #: includes/features/other-settings.php:48
 msgid "Limit Post Revisions (Per Post)"

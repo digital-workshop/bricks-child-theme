@@ -109,12 +109,15 @@ function snn_snippet_get_meta( $post_id ) {
     $tags_raw = get_post_meta( $post_id, '_snn_snippet_tags', true );
     $tags     = $tags_raw ? array_filter( array_map( 'trim', explode( ',', $tags_raw ) ) ) : array();
 
+    $allow_output = (bool) get_post_meta( $post_id, '_snn_snippet_allow_output', true );
+
     return array(
-        'type'     => $type,
-        'location' => $location,
-        'priority' => $priority,
-        'tags'     => $tags,
-        'tags_raw' => $tags_raw,
+        'type'         => $type,
+        'location'     => $location,
+        'priority'     => $priority,
+        'tags'         => $tags,
+        'tags_raw'     => $tags_raw,
+        'allow_output' => $allow_output,
     );
 }
 
@@ -133,6 +136,8 @@ function snn_snippet_save_meta( $post_id, $data ) {
 
     $tags_raw = isset( $data['tags'] ) ? sanitize_text_field( $data['tags'] ) : '';
     update_post_meta( $post_id, '_snn_snippet_tags', $tags_raw );
+
+    update_post_meta( $post_id, '_snn_snippet_allow_output', ! empty( $data['allow_output'] ) ? 1 : 0 );
 }
 
 /**
@@ -525,7 +530,7 @@ function snn_snippet_clear_executing_marker() {
 // PHP execution (eval-based, unchanged core mechanism, now per-snippet-ID aware)
 // ----------------------------------------------------------------------
 
-function snn_execute_php_snippet( $code_to_execute, $snippet_id, $snippet_title ) {
+function snn_execute_php_snippet( $code_to_execute, $snippet_id, $snippet_title, $location = 'frontend_head' ) {
     if ( empty( trim( $code_to_execute ) ) ) {
         return '';
     }
@@ -586,9 +591,17 @@ function snn_execute_php_snippet( $code_to_execute, $snippet_id, $snippet_title 
     snn_snippet_set_executing_marker( $snippet_id );
 
     try {
-        // The leading close-tag prefix makes mixed PHP/HTML work: content
-        // outside PHP tags is treated as raw HTML/output, like a normal .php file.
-        @eval( "?>" . $code_to_execute );
+        if ( 'immediate' === $location ) {
+            // "Everywhere (Immediate)" is functions.php-style: the snippet is
+            // bare PHP statements with no surrounding tags (e.g. "add_action(...);"),
+            // exactly like code you'd paste directly into functions.php.
+            @eval( $code_to_execute );
+        } else {
+            // Other locations are template-style: content starts in HTML/output
+            // mode, like a normal .php file, and only runs as PHP inside explicit
+            // PHP tags. The leading close-tag prefix achieves that.
+            @eval( "?>" . $code_to_execute );
+        }
         snn_snippet_clear_executing_marker();
     } catch ( ParseError $e ) {
         snn_snippet_clear_executing_marker();
@@ -663,9 +676,273 @@ function snn_render_snippet_output( $post, $meta ) {
             return "\n" . $content . "\n";
         case 'php':
         default:
-            return snn_execute_php_snippet( $content, $post->ID, $post->post_title );
+            return snn_execute_php_snippet( $content, $post->ID, $post->post_title, $meta['location'] );
     }
 }
+
+// ----------------------------------------------------------------------
+// Compiled-file execution (file-based, like FluentSnippets): snippets are
+// compiled to plain PHP files on save and simply include()'d at runtime --
+// no database query on normal page loads. The CPT stays the source of
+// truth for the admin UI; these files are a disposable, auto-rebuilt cache.
+// ----------------------------------------------------------------------
+
+function snn_snippets_get_locations() {
+    return array_keys( snn_snippet_get_location_defs() );
+}
+
+function snn_snippets_compiled_dir() {
+    $upload_dir = wp_upload_dir();
+    return trailingslashit( $upload_dir['basedir'] ) . 'snn-code-snippets';
+}
+
+function snn_snippets_compiled_file_path( $location ) {
+    return snn_snippets_compiled_dir() . '/' . $location . '.php';
+}
+
+/**
+ * Creates the compiled-files directory and blocks direct web access to it.
+ * Returns false if the directory can't be created/written to on this host,
+ * in which case callers fall back to the live DB+eval() path.
+ */
+function snn_snippets_ensure_protected_dir() {
+    $dir = snn_snippets_compiled_dir();
+    if ( ! file_exists( $dir ) ) {
+        wp_mkdir_p( $dir );
+    }
+    if ( ! is_dir( $dir ) || ! wp_is_writable( $dir ) ) {
+        return false;
+    }
+
+    $index_file = $dir . '/index.php';
+    if ( ! file_exists( $index_file ) ) {
+        @file_put_contents( $index_file, "<?php\n// Silence is golden.\n" );
+    }
+
+    $htaccess_file = $dir . '/.htaccess';
+    if ( ! file_exists( $htaccess_file ) ) {
+        @file_put_contents( $htaccess_file, "Deny from all\n" );
+    }
+
+    return true;
+}
+
+/**
+ * Writes via a temp file + rename() in the same directory, so a request
+ * never sees a half-written compiled file mid-save.
+ */
+function snn_snippets_write_file_atomic( $path, $contents ) {
+    $dir  = trailingslashit( dirname( $path ) );
+    $temp = wp_tempnam( basename( $path ), $dir );
+    if ( ! $temp || false === @file_put_contents( $temp, $contents ) ) {
+        return false;
+    }
+    if ( ! @rename( $temp, $path ) ) {
+        @unlink( $temp );
+        return false;
+    }
+    return true;
+}
+
+/**
+ * Stronger-than-snn_validate_php_syntax() check used specifically as the
+ * compile-time gate: defines the snippet as a function (using the exact
+ * same tag-wrapping the compiled file will use) but never calls it, so a
+ * real PHP compile error -- e.g. a stray "?>" inside a comment, which a
+ * plain tokenizer pass does NOT catch -- throws a catchable ParseError
+ * instead of corrupting the whole compiled bundle for every other snippet
+ * at that location.
+ */
+function snn_snippets_validate_for_compile( $code, $location ) {
+    if ( trim( $code ) === '' ) {
+        return true;
+    }
+
+    $fn = 'snn_snippet_validate_' . str_replace( '.', '', uniqid( '', true ) );
+
+    if ( 'immediate' === $location ) {
+        $wrapped = "function {$fn}() {\n" . $code . "\n}";
+    } else {
+        $wrapped = "function {$fn}() {\n?>\n" . $code . "\n<?php\n}";
+    }
+
+    try {
+        eval( $wrapped );
+    } catch ( ParseError $e ) {
+        return array(
+            'message' => $e->getMessage(),
+            'line'    => $e->getLine(),
+        );
+    }
+
+    return true;
+}
+
+function snn_snippets_php_comment_safe( $title ) {
+    return preg_replace( '/[\r\n]+/', ' ', str_replace( '*/', '', (string) $title ) );
+}
+
+/**
+ * Builds the source for one PHP-type snippet inside the compiled bundle.
+ * Mirrors the eval()-based semantics of snn_execute_php_snippet(): bare
+ * statements for "immediate" (functions.php-style), tag-gated HTML/PHP mix
+ * for the other, template-style locations.
+ */
+function snn_snippets_build_php_block( $post, $code, $location, $suppress ) {
+    $id = (int) $post->ID;
+
+    $inner  = "try {\n";
+    $inner .= "\t( function () {\n";
+    if ( 'immediate' === $location ) {
+        $inner .= $code . "\n";
+    } else {
+        $inner .= "?>\n" . $code . "\n<?php\n";
+    }
+    $inner .= "\t} )();\n";
+    $inner .= "} catch ( Throwable \$snn_e ) {\n";
+    $inner .= "\tsnn_snippets_runtime_error( \$snn_e, {$id}, " . var_export( $post->post_title, true ) . ", " . var_export( $location, true ) . " );\n";
+    $inner .= "}\n";
+
+    if ( $suppress ) {
+        $inner = "ob_start();\n" . $inner . "ob_end_clean();\n";
+    }
+
+    return "// Snippet #{$id}: " . snn_snippets_php_comment_safe( $post->post_title ) . "\n" . $inner;
+}
+
+/**
+ * Catches genuine runtime Throwables (not parse errors -- those are already
+ * filtered out at compile time) from a snippet running inside a compiled
+ * file, e.g. a call to an undefined function. Only real Errors (not caught
+ * Exceptions) disable the snippet, matching the previous eval()-based
+ * behaviour. Line numbers here are relative to the compiled bundle, not the
+ * snippet's own source, so no per-snippet code context is shown.
+ */
+function snn_snippets_runtime_error( $e, $snippet_id, $snippet_title, $location ) {
+    snn_log_error_event(
+        get_class( $e ),
+        $e->getMessage(),
+        $snippet_title,
+        'compiled snippet (' . $location . ')',
+        $e->getLine()
+    );
+
+    if ( $e instanceof Error ) {
+        wp_update_post( array( 'ID' => $snippet_id, 'post_status' => 'draft' ) );
+
+        set_transient( SNN_FATAL_ERROR_NOTICE_TRANSIENT, array(
+            'message'    => $e->getMessage(),
+            'file'       => 'Snippet: ' . $snippet_title,
+            'line'       => 0,
+            'type'       => get_class( $e ),
+            'snippet_id' => $snippet_id,
+        ), DAY_IN_SECONDS );
+    }
+}
+
+function snn_snippets_disable_invalid_snippet( $post, $validation ) {
+    wp_update_post( array( 'ID' => $post->ID, 'post_status' => 'draft' ) );
+
+    snn_log_error_event(
+        'PHP Syntax Validation Error',
+        $validation['message'],
+        $post->post_title,
+        'Pre-compile validation',
+        $validation['line'],
+        snn_get_code_context( $post->post_content, $validation['line'] ),
+        snn_get_function_context( $post->post_content, $validation['line'] )
+    );
+
+    set_transient( SNN_FATAL_ERROR_NOTICE_TRANSIENT, array(
+        'message'    => $validation['message'],
+        'file'       => 'Snippet: ' . $post->post_title,
+        'line'       => $validation['line'],
+        'type'       => 'Syntax Validation Error',
+        'snippet_id' => $post->ID,
+    ), DAY_IN_SECONDS );
+}
+
+/**
+ * Compiles one location's active snippets into a single PHP file. Every
+ * PHP-type snippet is validated individually first (and excluded + disabled
+ * if invalid), then the whole assembled file is validated once more as a
+ * final safety net -- so the compiled file is only ever written if it's
+ * guaranteed syntactically valid, and one broken snippet can never take
+ * down the others at the same location.
+ */
+function snn_snippets_compile_location( $location ) {
+    if ( ! snn_snippets_ensure_protected_dir() ) {
+        return false;
+    }
+
+    $blocks = array();
+
+    foreach ( snn_snippets_query_by_location( $location ) as $post ) {
+        $meta = snn_snippet_get_meta( $post->ID );
+
+        if ( 'php' !== $meta['type'] ) {
+            $rendered = snn_render_snippet_output( $post, $meta );
+            if ( '' !== $rendered ) {
+                $blocks[] = "// Snippet #{$post->ID}: " . snn_snippets_php_comment_safe( $post->post_title ) . "\n"
+                    . 'echo ' . var_export( $rendered, true ) . ";\n";
+            }
+            continue;
+        }
+
+        $code = $post->post_content;
+        if ( trim( $code ) === '' ) {
+            continue;
+        }
+
+        $validation = snn_snippets_validate_for_compile( $code, $location );
+        if ( true !== $validation ) {
+            snn_snippets_disable_invalid_snippet( $post, $validation );
+            continue;
+        }
+
+        $suppress = ( 'immediate' === $location && empty( $meta['allow_output'] ) );
+        $blocks[] = snn_snippets_build_php_block( $post, $code, $location, $suppress );
+    }
+
+    $body = "if ( ! defined( 'ABSPATH' ) ) { exit; }\n"
+        . "// Auto-generated by SNN Code Snippets. Do not edit -- overwritten on every save.\n\n"
+        . implode( "\n", $blocks );
+
+    $final_check = snn_validate_php_syntax( $body );
+    if ( is_array( $final_check ) ) {
+        snn_log_error_event( 'Compile Error', $final_check['message'], 'Snippets Compiler', $location . '.php', $final_check['line'], $final_check['code_context'] );
+        return false; // Keep whatever compiled file was already there working.
+    }
+
+    return snn_snippets_write_file_atomic( snn_snippets_compiled_file_path( $location ), "<?php\n" . $body );
+}
+
+/**
+ * Recompiles all 4 locations. Guarded against re-entrancy: disabling an
+ * invalid snippet mid-compile fires wp_update_post(), which triggers the
+ * save_post hook below and would otherwise recurse.
+ */
+function snn_snippets_recompile_all() {
+    static $running = false;
+    if ( $running ) {
+        return;
+    }
+    $running = true;
+    foreach ( snn_snippets_get_locations() as $location ) {
+        snn_snippets_compile_location( $location );
+    }
+    $running = false;
+}
+// Covers save, toggle, migration and revision-restore -- all of them go
+// through wp_insert_post()/wp_update_post() on this post type already.
+add_action( 'save_post_snn_code_snippet', 'snn_snippets_recompile_all' );
+
+// wp_delete_post() doesn't fire save_post, so it needs its own trigger.
+add_action( 'before_delete_post', function( $post_id ) {
+    if ( get_post_type( $post_id ) === 'snn_code_snippet' ) {
+        snn_snippets_recompile_all();
+    }
+} );
 
 // ----------------------------------------------------------------------
 // Execution loop
@@ -675,8 +952,39 @@ function snn_custom_codes_snippets_run_location( $location ) {
     if ( defined( 'SNN_CODE_DISABLE' ) && SNN_CODE_DISABLE ) {
         return;
     }
+
+    $file = snn_snippets_compiled_file_path( $location );
+
+    if ( ! file_exists( $file ) ) {
+        // Self-heal: first run after deploy, or the cache was cleared.
+        // One DB-backed compile now, then every later request just includes it.
+        snn_snippets_compile_location( $location );
+    }
+
+    if ( file_exists( $file ) ) {
+        include $file;
+        return;
+    }
+
+    // Compiled directory isn't writable on this host -- fall back to the
+    // original DB query + eval() path so the feature still works.
+    snn_custom_codes_snippets_run_location_live( $location );
+}
+
+function snn_custom_codes_snippets_run_location_live( $location ) {
     foreach ( snn_snippets_query_by_location( $location ) as $post ) {
         $meta = snn_snippet_get_meta( $post->ID );
+
+        // "Everywhere (Immediate)" runs functions.php-style on every request,
+        // including wp-admin, before WordPress has sent any headers. Like a
+        // real functions.php, it must not output directly unless explicitly
+        // allowed -- otherwise stray output (even a leading blank line) causes
+        // "headers already sent" errors.
+        if ( 'immediate' === $location && empty( $meta['allow_output'] ) ) {
+            snn_render_snippet_output( $post, $meta );
+            continue;
+        }
+
         echo snn_render_snippet_output( $post, $meta );
     }
 }
@@ -809,6 +1117,7 @@ function snn_ajax_export_snippets_callback() {
             'location'    => $meta['location'],
             'priority'    => $meta['priority'],
             'tags'        => $meta['tags_raw'],
+            'allow_output' => $meta['allow_output'],
         );
     }
     wp_send_json_success( array( 'snippets' => $export ) );
@@ -852,6 +1161,7 @@ function snn_ajax_import_snippets_callback() {
             'location' => $location,
             'priority' => isset( $item['priority'] ) ? (int) $item['priority'] : 10,
             'tags'     => isset( $item['tags'] ) ? $item['tags'] : '',
+            'allow_output' => ! empty( $item['allow_output'] ),
         ) );
         $imported++;
     }
@@ -1037,6 +1347,7 @@ function snn_custom_codes_snippets_handle_form_submit() {
         $location    = isset( $_POST['snippet_location'] ) ? sanitize_key( $_POST['snippet_location'] ) : 'frontend_head';
         $priority    = isset( $_POST['snippet_priority'] ) ? absint( $_POST['snippet_priority'] ) : 10;
         $tags        = isset( $_POST['snippet_tags'] ) ? sanitize_text_field( wp_unslash( $_POST['snippet_tags'] ) ) : '';
+        $allow_output = isset( $_POST['snippet_allow_output'] ) ? 1 : 0;
 
         if ( $title === '' ) {
             $title = __( 'Untitled Snippet', 'snn' );
@@ -1061,7 +1372,7 @@ function snn_custom_codes_snippets_handle_form_submit() {
             add_settings_error( 'snn-custom-codes', 'save_failed', sprintf( __( 'Failed to save snippet: %s', 'snn' ), esc_html( $result->get_error_message() ) ), 'error' );
         } else {
             $id = $result;
-            snn_snippet_save_meta( $id, array( 'type' => $type, 'location' => $location, 'priority' => $priority, 'tags' => $tags ) );
+            snn_snippet_save_meta( $id, array( 'type' => $type, 'location' => $location, 'priority' => $priority, 'tags' => $tags, 'allow_output' => $allow_output ) );
             add_settings_error( 'snn-custom-codes', 'snippet_saved', __( 'Snippet saved.', 'snn' ), 'updated' );
             $_GET['view'] = 'edit';
             $_GET['id']   = $id;
@@ -1390,6 +1701,16 @@ function snn_render_snippet_edit_view( $snippet_id ) {
                     <p class="description"><?php esc_html_e( 'Where and when this snippet runs.', 'snn' ); ?></p>
                 </td>
             </tr>
+            <tr id="snippet_allow_output_row" style="display:none;">
+                <th><?php esc_html_e( 'Allow Direct Output', 'snn' ); ?></th>
+                <td>
+                    <label>
+                        <input type="checkbox" id="snippet_allow_output" name="snippet_allow_output" value="1" <?php checked( ! empty( $meta['allow_output'] ) ); ?>>
+                        <?php esc_html_e( 'Allow this snippet to output content directly', 'snn' ); ?>
+                    </label>
+                    <p class="description"><?php esc_html_e( 'Like functions.php, "Everywhere (Immediate)" normally only defines functions and hooks and should not output anything directly -- any output is discarded to avoid "headers already sent" errors. Enable this only if the snippet intentionally echoes content.', 'snn' ); ?></p>
+                </td>
+            </tr>
             <tr>
                 <th><label for="snippet_tags"><?php esc_html_e( 'Tags', 'snn' ); ?></label></th>
                 <td><input type="text" id="snippet_tags" name="snippet_tags" class="regular-text" value="<?php echo esc_attr( $meta['tags_raw'] ); ?>" placeholder="<?php esc_attr_e( 'comma, separated, tags', 'snn' ); ?>"></td>
@@ -1471,6 +1792,12 @@ function snn_render_snippet_edit_view( $snippet_id ) {
             var ta = document.getElementById('snn_snippet_code');
             if (ta && ta.CodeMirror && mode) { ta.CodeMirror.setOption('mode', mode); }
         });
+
+        function toggleAllowOutputRow(){
+            $('#snippet_allow_output_row').toggle($('#snippet_location').val() === 'immediate');
+        }
+        $('#snippet_location').on('change', toggleAllowOutputRow);
+        toggleAllowOutputRow();
 
         $('.snn-delete-snippet-inline').on('click', function(e){
             e.preventDefault();
