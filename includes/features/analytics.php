@@ -306,8 +306,10 @@ function snn_analytics_query_top( $column, $start, $end, $limit = 10 ) {
 // ----------------------------------------------------------------------
 
 function snn_analytics_add_submenu() {
+    // Under "Dashboard" (index.php), not the theme's own SNN Settings menu,
+    // so it's immediately visible without digging into theme settings.
     add_submenu_page(
-        'snn-settings',
+        'index.php',
         __( 'Analytics', 'snn' ),
         __( 'Analytics', 'snn' ),
         'manage_options',
