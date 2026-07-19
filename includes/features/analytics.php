@@ -20,6 +20,7 @@ function snn_analytics_table() {
 
 function snn_analytics_get_options() {
     $defaults = array(
+        'enabled'        => true,
         'excluded_roles' => array( 'administrator' ),
         'ip_exclusion'   => array(),
         'retention_days' => 400,
@@ -166,6 +167,9 @@ function snn_analytics_is_ip_excluded() {
 }
 
 function snn_analytics_should_track() {
+    if ( empty( snn_analytics_get_options()['enabled'] ) ) {
+        return false;
+    }
     if ( is_admin() || wp_doing_ajax() || wp_doing_cron() ) {
         return false;
     }
@@ -307,7 +311,7 @@ function snn_analytics_query_top( $column, $start, $end, $limit = 10 ) {
 
 function snn_analytics_add_submenu() {
     // Under "Dashboard" (index.php), not the theme's own SNN Settings menu,
-    // so it's immediately visible without digging into theme settings.
+    // so the stats are immediately visible without digging into theme settings.
     add_submenu_page(
         'index.php',
         __( 'Analytics', 'snn' ),
@@ -318,6 +322,20 @@ function snn_analytics_add_submenu() {
     );
 }
 add_action( 'admin_menu', 'snn_analytics_add_submenu' );
+
+function snn_analytics_add_settings_submenu() {
+    // Configuration (exclusions, retention, on/off) lives with the rest of
+    // the theme's settings, not next to the Dashboard stats page.
+    add_submenu_page(
+        'snn-settings',
+        __( 'Analytics', 'snn' ),
+        __( 'Analytics', 'snn' ),
+        'manage_options',
+        'snn-analytics-settings',
+        'snn_analytics_settings_page'
+    );
+}
+add_action( 'admin_menu', 'snn_analytics_add_settings_submenu' );
 
 function snn_analytics_handle_form_submit() {
     if ( $_SERVER['REQUEST_METHOD'] !== 'POST' || ! isset( $_POST['snn_analytics_save_settings'] ) ) {
@@ -346,14 +364,16 @@ function snn_analytics_handle_form_submit() {
     }
 
     $retention_days = isset( $_POST['retention_days'] ) ? max( 1, absint( $_POST['retention_days'] ) ) : 400;
+    $enabled        = isset( $_POST['enabled'] ) ? 1 : 0;
 
     update_option( SNN_ANALYTICS_OPTIONS_KEY, array(
+        'enabled'        => $enabled,
         'excluded_roles' => $excluded_roles,
         'ip_exclusion'   => $ip_exclusion,
         'retention_days' => $retention_days,
     ) );
 
-    add_settings_error( 'snn-analytics', 'settings_saved', __( 'Settings saved.', 'snn' ), 'updated' );
+    add_settings_error( 'snn-analytics-settings', 'settings_saved', __( 'Settings saved.', 'snn' ), 'updated' );
 }
 add_action( 'admin_init', 'snn_analytics_handle_form_submit' );
 
@@ -452,9 +472,14 @@ function snn_analytics_page() {
     $options = snn_analytics_get_options();
     ?>
     <div class="wrap">
-        <h1><?php esc_html_e( 'Analytics', 'snn' ); ?></h1>
+        <h1>
+            <?php esc_html_e( 'Analytics', 'snn' ); ?>
+            <a href="<?php echo esc_url( admin_url( 'admin.php?page=snn-analytics-settings' ) ); ?>" class="page-title-action"><?php esc_html_e( 'Settings', 'snn' ); ?></a>
+        </h1>
 
-        <?php settings_errors( 'snn-analytics' ); ?>
+        <?php if ( empty( $options['enabled'] ) ) : ?>
+            <div class="notice notice-warning"><p><?php esc_html_e( 'Tracking is currently disabled. Existing data below is still shown, but no new pageviews are being recorded.', 'snn' ); ?></p></div>
+        <?php endif; ?>
 
         <nav class="snn-analytics-range">
             <?php foreach ( $range_labels as $key => $label ) :
@@ -508,11 +533,37 @@ function snn_analytics_page() {
                 </table>
             </div>
         </div>
+    </div>
+    <?php
+}
 
-        <h2><?php esc_html_e( 'Settings', 'snn' ); ?></h2>
+function snn_analytics_settings_page() {
+    if ( ! current_user_can( 'manage_options' ) ) {
+        return;
+    }
+
+    snn_analytics_admin_styles();
+
+    $options = snn_analytics_get_options();
+    ?>
+    <div class="wrap">
+        <h1><?php esc_html_e( 'Analytics', 'snn' ); ?></h1>
+
+        <?php settings_errors( 'snn-analytics-settings' ); ?>
+
         <form method="post" class="snn-analytics-settings-wrap">
             <?php wp_nonce_field( 'snn_analytics_save_settings_action', 'snn_analytics_nonce' ); ?>
             <table class="form-table">
+                <tr>
+                    <th><?php esc_html_e( 'Enable Analytics', 'snn' ); ?></th>
+                    <td>
+                        <label>
+                            <input type="checkbox" name="enabled" value="1" <?php checked( ! empty( $options['enabled'] ) ); ?>>
+                            <?php esc_html_e( 'Track pageviews', 'snn' ); ?>
+                        </label>
+                        <p class="description"><?php esc_html_e( 'When disabled, no new pageviews are recorded. Previously collected data is kept and still shown on the Analytics dashboard.', 'snn' ); ?></p>
+                    </td>
+                </tr>
                 <tr>
                     <th><?php esc_html_e( 'Exclude Roles from Tracking', 'snn' ); ?></th>
                     <td>

@@ -1819,6 +1819,10 @@ msgstr "Admin-Leisten-Umschalter im Frontend aktivieren"
 msgid "Enable Admin Mega Menu in Admin Bar"
 msgstr "Admin-Mega-Menü in der Admin-Leiste aktivieren"
 
+#: includes/features/analytics.php
+msgid "Enable Analytics"
+msgstr "Analytics aktivieren"
+
 #: includes/features/cookie-banner.php:307
 msgid "Enable Cookie Banner"
 msgstr "Cookie-Banner aktivieren"
@@ -5272,6 +5276,14 @@ msgstr "Ausrichtung der Touch-Geste. Standard: vertikal"
 msgid "Touch scroll speed multiplier. Default: 1"
 msgstr "Multiplikator für die Touch-Scrollgeschwindigkeit. Standard: 1"
 
+#: includes/features/analytics.php
+msgid "Track pageviews"
+msgstr "Seitenaufrufe erfassen"
+
+#: includes/features/analytics.php
+msgid "Tracking is currently disabled. Existing data below is still shown, but no new pageviews are being recorded."
+msgstr "Das Tracking ist derzeit deaktiviert. Vorhandene Daten werden weiterhin unten angezeigt, es werden aber keine neuen Seitenaufrufe erfasst."
+
 #: includes/features/interactions.php:320
 msgid "Transition Duration (seconds)"
 msgstr "Übergangsdauer (Sekunden)"
@@ -5464,6 +5476,10 @@ msgstr "Willkommen"
 #: includes/features/interactions.php:253
 msgid "Wheel Multiplier"
 msgstr "Mausrad-Multiplikator"
+
+#: includes/features/analytics.php
+msgid "When disabled, no new pageviews are recorded. Previously collected data is kept and still shown on the Analytics dashboard."
+msgstr "Wenn deaktiviert, werden keine neuen Seitenaufrufe erfasst. Bereits gesammelte Daten bleiben erhalten und werden weiterhin im Analytics-Dashboard angezeigt."
 
 #: includes/features/other-settings.php:732
 msgid "When enabled, a menu icon appears as the very first item in the admin bar on both frontend and backend. Hovering it reveals all WordPress admin menus and submenus dynamically."
