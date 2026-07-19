@@ -135,15 +135,17 @@ function snn_revisions_limit_callback() {
 function snn_move_bricks_menu_callback() {
     $options = get_option('snn_other_settings');
     ?>
-    <input type="checkbox" name="snn_other_settings[move_bricks_menu]" value="1" <?php checked(1, isset($options['move_bricks_menu']) ? $options['move_bricks_menu'] : 0); ?>>
+    <label class="snn-admin-toggle">
+        <input type="checkbox" name="snn_other_settings[move_bricks_menu]" value="1" <?php checked(1, isset($options['move_bricks_menu']) ? $options['move_bricks_menu'] : 0); ?>><span class="snn-admin-toggle-slider"></span>
+    </label>
     <?php
 }
 
 function snn_disable_comments_completely_callback() {
     $options = get_option('snn_other_settings');
     ?>
-    <label>
-        <input type="checkbox" name="snn_other_settings[disable_comments_completely]" value="1" <?php checked(1, isset($options['disable_comments_completely']) ? $options['disable_comments_completely'] : 0); ?>>
+    <label class="snn-admin-check-label">
+        <input type="checkbox" name="snn_other_settings[disable_comments_completely]" value="1" <?php checked(1, isset($options['disable_comments_completely']) ? $options['disable_comments_completely'] : 0); ?>><span class="snn-admin-toggle-slider"></span>
         <?php _e('Disable all comments site-wide', 'snn'); ?>
     </label>
     <p>
@@ -155,7 +157,9 @@ function snn_disable_comments_completely_callback() {
 function snn_enable_thumbnail_column_callback() {
     $options = get_option('snn_other_settings');
     ?>
-    <input type="checkbox" name="snn_other_settings[enable_thumbnail_column]" value="1" <?php checked(1, isset($options['enable_thumbnail_column']) ? $options['enable_thumbnail_column'] : 0); ?>>
+    <label class="snn-admin-toggle">
+        <input type="checkbox" name="snn_other_settings[enable_thumbnail_column]" value="1" <?php checked(1, isset($options['enable_thumbnail_column']) ? $options['enable_thumbnail_column'] : 0); ?>><span class="snn-admin-toggle-slider"></span>
+    </label>
     <p>
         <?php _e('Enabling this setting will add a "Thumbnail" column to your post tables in the admin dashboard.', 'snn'); ?><br>
         <?php _e('This allows you to see the featured image of each post directly in the list view.', 'snn'); ?>
@@ -167,7 +171,9 @@ function snn_enable_thumbnail_column_callback() {
 function snn_disable_dashboard_widgets_callback() {
     $options = get_option('snn_other_settings');
     ?>
-    <input type="checkbox" name="snn_other_settings[disable_dashboard_widgets]" value="1" <?php checked(1, isset($options['disable_dashboard_widgets']) ? $options['disable_dashboard_widgets'] : 0); ?>>
+    <label class="snn-admin-toggle">
+        <input type="checkbox" name="snn_other_settings[disable_dashboard_widgets]" value="1" <?php checked(1, isset($options['disable_dashboard_widgets']) ? $options['disable_dashboard_widgets'] : 0); ?>><span class="snn-admin-toggle-slider"></span>
+    </label>
     <p>
         <?php _e('Enabling this setting will remove several default dashboard widgets from the WordPress admin dashboard.', 'snn'); ?><br>
         <?php _e('This helps in decluttering the dashboard and focusing on the essential information.', 'snn'); ?>

@@ -118,12 +118,6 @@ add_action( 'admin_init', 'snn_security_settings_init' );
 function snn_security_section_callback() {
     ?>
     <style>
-    [type="checkbox"]{
-        width: 18px !important;
-        height: 18px !important;
-        float: left;
-        margin-right: 10px !important;
-    }
     [type="number"]{
         width: 100px !important;
     }
@@ -135,7 +129,9 @@ function snn_security_section_callback() {
 function snn_limit_login_callback() {
     $options = get_option('snn_security_options');
     ?>
-    <input type="checkbox" name="snn_security_options[enable_limit_login]" value="1" <?php checked(isset($options['enable_limit_login']) && $options['enable_limit_login'], 1); ?>>
+    <label class="snn-admin-toggle">
+        <input type="checkbox" name="snn_security_options[enable_limit_login]" value="1" <?php checked(isset($options['enable_limit_login']) && $options['enable_limit_login'], 1); ?>><span class="snn-admin-toggle-slider"></span>
+    </label>
     <p><?php esc_html_e( 'Enable this setting to limit login attempts and automatically block IPs with too many failed logins.', 'snn' ); ?></p>
     <?php
 }
@@ -165,7 +161,9 @@ function snn_reset_time_callback() {
 function snn_2fa_enable_callback() {
     $options = get_option('snn_security_options');
     ?>
-    <input type="checkbox" name="snn_security_options[enable_2fa]" value="1" <?php checked(isset($options['enable_2fa']) && $options['enable_2fa'], 1); ?>>
+    <label class="snn-admin-toggle">
+        <input type="checkbox" name="snn_security_options[enable_2fa]" value="1" <?php checked(isset($options['enable_2fa']) && $options['enable_2fa'], 1); ?>><span class="snn-admin-toggle-slider"></span>
+    </label>
     <p><?php esc_html_e( 'Require a one-time code sent by email to complete login, for every user account.', 'snn' ); ?></p>
     <p class="description"><?php esc_html_e( 'Exception: users whose only role(s) are WooCommerce "Customer" and/or "Subscriber" are exempt. Any account with an additional role (Administrator, Editor, Author, Shop Manager, ...) is always required to use two-factor authentication, even if it also has the Customer role.', 'snn' ); ?></p>
     <p class="description">

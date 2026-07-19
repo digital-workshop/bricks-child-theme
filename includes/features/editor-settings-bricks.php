@@ -120,7 +120,9 @@ function snn_custom_css_overlay_field_callback() {
     $options = get_option('snn_editor_settings');
     $checked = isset($options['snn_custom_css_overlay_enabled']) ? $options['snn_custom_css_overlay_enabled'] : 0;
     ?>
-    <input type="checkbox" id="snn_custom_css_overlay_enabled" name="snn_editor_settings[snn_custom_css_overlay_enabled]" value="1" <?php checked(1, $checked, true); ?> />
+    <label class="snn-admin-toggle">
+        <input type="checkbox" id="snn_custom_css_overlay_enabled" name="snn_editor_settings[snn_custom_css_overlay_enabled]" value="1" <?php checked(1, $checked, true); ?> /><span class="snn-admin-toggle-slider"></span>
+    </label>
     <label for="snn_custom_css_overlay_enabled">
         <?php _e('Enable Custom CSS Overlay in Bricks Builder', 'snn'); ?><br>
     </label>
@@ -132,8 +134,8 @@ function snn_hide_element_icons_callback() {
     $options = get_option('snn_editor_settings');
     $checked = isset($options['hide_element_icons']) ? $options['hide_element_icons'] : 0;
     ?>
-    <label>
-        <input type="checkbox" name="snn_editor_settings[hide_element_icons]" value="1" <?php checked(1, $checked, true); ?>>
+    <label class="snn-admin-check-label">
+        <input type="checkbox" name="snn_editor_settings[hide_element_icons]" value="1" <?php checked(1, $checked, true); ?>><span class="snn-admin-toggle-slider"></span>
         <?php _e('Hide Elements Icons on Bricks Editor', 'snn'); ?>
     </label>
     <?php
@@ -143,8 +145,8 @@ function snn_make_compact_but_keep_icons_callback() {
     $options = get_option('snn_editor_settings');
     $checked = isset($options['make_compact_but_keep_icons']) ? $options['make_compact_but_keep_icons'] : 0;
     ?>
-    <label>
-        <input type="checkbox" name="snn_editor_settings[make_compact_but_keep_icons]" value="1" <?php checked(1, $checked, true); ?>>
+    <label class="snn-admin-check-label">
+        <input type="checkbox" name="snn_editor_settings[make_compact_but_keep_icons]" value="1" <?php checked(1, $checked, true); ?>><span class="snn-admin-toggle-slider"></span>
         <?php _e('Make Elements Compact But Keep Icons', 'snn'); ?>
     </label>
     <?php
@@ -154,8 +156,8 @@ function snn_make_elements_wide_callback() {
     $options = get_option('snn_editor_settings');
     $checked = isset($options['make_elements_wide']) ? $options['make_elements_wide'] : 0;
     ?>
-    <label>
-        <input type="checkbox" name="snn_editor_settings[make_elements_wide]" value="1" <?php checked(1, $checked, true); ?>>
+    <label class="snn-admin-check-label">
+        <input type="checkbox" name="snn_editor_settings[make_elements_wide]" value="1" <?php checked(1, $checked, true); ?>><span class="snn-admin-toggle-slider"></span>
         <?php _e('Make Elements Wide on Bricks Editor', 'snn'); ?>
     </label>
     <?php
@@ -252,8 +254,8 @@ function snn_comingsoon_bypass_callback() {
     $enabled = isset($options['comingsoon_bypass_enabled']) ? $options['comingsoon_bypass_enabled'] : 0;
     $slug    = isset($options['comingsoon_bypass_slug']) ? $options['comingsoon_bypass_slug'] : 'comingsoon_false';
     ?>
-    <label>
-        <input type="checkbox" name="snn_editor_settings[comingsoon_bypass_enabled]" value="1" <?php checked(1, $enabled, true); ?>>
+    <label class="snn-admin-check-label">
+        <input type="checkbox" name="snn_editor_settings[comingsoon_bypass_enabled]" value="1" <?php checked(1, $enabled, true); ?>><span class="snn-admin-toggle-slider"></span>
         <?php _e('Enable URL Coming Soon Bypass', 'snn'); ?>
     </label>
     <br><br>

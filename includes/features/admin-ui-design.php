@@ -4,16 +4,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Shared standalone-look design system for the SNN admin builder screens
- * (Post Types, Custom Fields, Taxonomies) -- additive CSS only, layered on
- * top of the existing functional markup those pages already render. See
- * includes/features/admin-ui-design.css.
+ * Shared standalone-look design system for the SNN admin settings screens --
+ * additive CSS only, layered on top of the existing functional markup those
+ * pages already render. See includes/features/admin-ui-design.css.
  */
 function snn_admin_ui_design_page_slugs() {
     return array(
         'snn-custom-post-types',
         'snn-custom-fields',
         'snn-taxonomies',
+        'snn-security',
+        'snn-interactions',
+        'snn-other-settings',
+        'editor-settings',
+        'snn-mail-customizer',
+        'snn-cookie-settings',
     );
 }
 

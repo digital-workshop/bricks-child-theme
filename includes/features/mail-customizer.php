@@ -165,8 +165,8 @@ function snn_mail_render_page() {
                 
                 <!-- Enable/Disable Toggle -->
                 <div class="snn-toggle">
-                    <label>
-                        <input type="checkbox" name="snn_mail_customizer_settings[enabled]" value="1" <?php checked($settings['enabled'], true); ?>>
+                    <label class="snn-admin-check-label">
+                        <input type="checkbox" name="snn_mail_customizer_settings[enabled]" value="1" <?php checked($settings['enabled'], true); ?>><span class="snn-admin-toggle-slider"></span>
                         <strong><?php _e('Enable Custom Email Templates', 'snn'); ?></strong>
                     </label>
                     <p class="snn-description">

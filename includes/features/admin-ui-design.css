@@ -214,7 +214,9 @@
 /* Wraps a bare checkbox + its slider span where there's no surrounding
    text label already doing that job (e.g. Author/Repeater/Hierarchical). */
 .snn-admin-ui label.snn-admin-toggle,
-.snn-admin-ui label.checkbox-container {
+.snn-admin-ui label.checkbox-container,
+label.snn-admin-toggle,
+label.checkbox-container {
     display: inline-flex;
     align-items: center;
     cursor: pointer;
@@ -236,17 +238,24 @@
 }
 
 /*
- * Toggle switch: the real checkbox is visually hidden (zero size) and a
- * sibling <span class="snn-admin-toggle-slider"> renders the track+knob.
- * More robust than styling the <input> itself -- an invisible, zero-size
- * element can't be thrown off by wp-admin's own default checkbox CSS
- * (borders/sizing), which a directly-styled appearance:none checkbox is
- * still subject to. Markup: checkbox immediately followed by the slider
- * span, both inside the same <label> so clicking the slider still toggles
- * the checkbox natively (see custom-code-snippets.php's .snn-toggle-switch
- * for the original, already-proven version of this exact pattern).
+ * Toggle switch component -- intentionally NOT scoped under .snn-admin-ui,
+ * so it can be dropped onto any admin page's existing layout (Security,
+ * Interactions, Cookie Settings, etc.) without pulling in the rest of the
+ * page-level design system (backgrounds, generic input styling) and
+ * clashing with that page's own CSS. The real checkbox is visually hidden
+ * (zero size) and a sibling <span class="snn-admin-toggle-slider"> renders
+ * the track+knob. More robust than styling the <input> itself -- an
+ * invisible, zero-size element can't be thrown off by wp-admin's own
+ * default checkbox CSS (borders/sizing), which a directly-styled
+ * appearance:none checkbox is still subject to. Markup: checkbox
+ * immediately followed by the slider span, both inside the same <label> so
+ * clicking the slider still toggles the checkbox natively (see
+ * custom-code-snippets.php's .snn-toggle-switch for the original,
+ * already-proven version of this exact pattern). The :has() guard means
+ * this only ever touches a checkbox that actually has our slider span next
+ * to it -- never any other checkbox on any other admin screen.
  */
-.snn-admin-ui input[type="checkbox"] {
+input[type="checkbox"]:has(+ .snn-admin-toggle-slider) {
     position: absolute;
     opacity: 0;
     width: 0;
@@ -256,19 +265,19 @@
     border: 0;
 }
 
-.snn-admin-ui .snn-admin-toggle-slider {
+.snn-admin-toggle-slider {
     position: relative;
     display: inline-block;
     width: 38px;
     height: 21px;
     border-radius: 999px;
-    background: var(--snn-border-strong);
+    background: var(--snn-border-strong, #d4d4d9);
     cursor: pointer;
     flex-shrink: 0;
     transition: background 150ms ease;
 }
 
-.snn-admin-ui .snn-admin-toggle-slider::before {
+.snn-admin-toggle-slider::before {
     content: "";
     position: absolute;
     top: 2px;
@@ -281,32 +290,34 @@
     transition: left 150ms ease;
 }
 
-.snn-admin-ui input[type="checkbox"]:checked + .snn-admin-toggle-slider {
-    background: var(--snn-accent);
+input[type="checkbox"]:checked + .snn-admin-toggle-slider {
+    background: var(--snn-accent, #4f46e5);
 }
 
-.snn-admin-ui input[type="checkbox"]:checked + .snn-admin-toggle-slider::before {
+input[type="checkbox"]:checked + .snn-admin-toggle-slider::before {
     left: 19px;
 }
 
-.snn-admin-ui input[type="checkbox"]:focus-visible + .snn-admin-toggle-slider {
-    outline: 2px solid var(--snn-accent);
+input[type="checkbox"]:focus-visible + .snn-admin-toggle-slider {
+    outline: 2px solid var(--snn-accent, #4f46e5);
     outline-offset: 2px;
 }
 
-.snn-admin-ui input[type="checkbox"]:disabled + .snn-admin-toggle-slider {
+input[type="checkbox"]:disabled + .snn-admin-toggle-slider {
     opacity: 0.4;
     cursor: not-allowed;
 }
 
-/* "label wraps checkbox + text" pattern (e.g. <label><input type=checkbox>Text</label>) */
-.snn-admin-ui .snn-admin-check-label {
+/* "label wraps checkbox + text" pattern (e.g. <label><input type=checkbox>Text</label>) --
+   also intentionally unscoped, see the toggle switch component note above. */
+.snn-admin-ui .snn-admin-check-label,
+.snn-admin-check-label {
     display: inline-flex;
     align-items: center;
-    gap: var(--snn-space-2);
+    gap: var(--snn-space-2, 8px);
     font-size: 13px;
     font-weight: 500;
-    color: var(--snn-text);
+    color: var(--snn-text, #18181b);
     cursor: pointer;
 }
 

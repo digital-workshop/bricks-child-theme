@@ -306,35 +306,35 @@ function snn_options_page() {
                     <tr valign="top">
                         <th scope="row"><?php _e('Enable Cookie Banner', 'snn'); ?></th>
                         <td>
-                            <input type="checkbox" name="snn_cookie_settings_enable_cookie_banner" value="yes" <?php checked((isset($options['snn_cookie_settings_enable_cookie_banner']) ? $options['snn_cookie_settings_enable_cookie_banner'] : 'no'), 'yes'); ?>>
+                            <label class="snn-admin-toggle"><input type="checkbox" name="snn_cookie_settings_enable_cookie_banner" value="yes" <?php checked((isset($options['snn_cookie_settings_enable_cookie_banner']) ? $options['snn_cookie_settings_enable_cookie_banner'] : 'no'), 'yes'); ?>><span class="snn-admin-toggle-slider"></span></label>
                             <span class="description"><?php _e('Check to enable the Cookie Banner on your site.', 'snn'); ?></span>
                         </td>
                     </tr>
                     <tr valign="top">
                         <th scope="row"><?php _e('Disable for Logged-In Users', 'snn'); ?></th>
                         <td>
-                            <input type="checkbox" name="snn_cookie_settings_disable_for_logged_in" value="yes" <?php checked((isset($options['snn_cookie_settings_disable_for_logged_in']) ? $options['snn_cookie_settings_disable_for_logged_in'] : 'no'), 'yes'); ?>>
+                            <label class="snn-admin-toggle"><input type="checkbox" name="snn_cookie_settings_disable_for_logged_in" value="yes" <?php checked((isset($options['snn_cookie_settings_disable_for_logged_in']) ? $options['snn_cookie_settings_disable_for_logged_in'] : 'no'), 'yes'); ?>><span class="snn-admin-toggle-slider"></span></label>
                             <span class="description"><?php _e('Check to disable the Cookie Banner for users who are logged in.', 'snn'); ?></span>
                         </td>
                     </tr>
                     <tr valign="top">
                         <th scope="row"><?php _e('Disable Scripts for Logged-In Users', 'snn'); ?></th>
                         <td>
-                            <input type="checkbox" name="snn_cookie_settings_disable_scripts_for_logged_in" value="yes" <?php checked((isset($options['snn_cookie_settings_disable_scripts_for_logged_in']) ? $options['snn_cookie_settings_disable_scripts_for_logged_in'] : 'no'), 'yes'); ?>>
+                            <label class="snn-admin-toggle"><input type="checkbox" name="snn_cookie_settings_disable_scripts_for_logged_in" value="yes" <?php checked((isset($options['snn_cookie_settings_disable_scripts_for_logged_in']) ? $options['snn_cookie_settings_disable_scripts_for_logged_in'] : 'no'), 'yes'); ?>><span class="snn-admin-toggle-slider"></span></label>
                             <span class="description"><?php _e('Check to disable the scripts loading for logged-in users.', 'snn'); ?></span>
                         </td>
                     </tr>
                     <tr valign="top">
                         <th scope="row"><?php _e('Enable Google Analytics Consent Mode', 'snn'); ?></th>
                         <td>
-                            <input type="checkbox" name="snn_cookie_settings_enable_ga_consent" value="yes" <?php checked((isset($options['snn_cookie_settings_enable_ga_consent']) ? $options['snn_cookie_settings_enable_ga_consent'] : 'no'), 'yes'); ?>>
+                            <label class="snn-admin-toggle"><input type="checkbox" name="snn_cookie_settings_enable_ga_consent" value="yes" <?php checked((isset($options['snn_cookie_settings_enable_ga_consent']) ? $options['snn_cookie_settings_enable_ga_consent'] : 'no'), 'yes'); ?>><span class="snn-admin-toggle-slider"></span></label>
                             <span class="description"><?php _e('Check to enable Google Analytics Consent Mode v2. This will automatically send consent status to Google Analytics when users accept/deny cookies.', 'snn'); ?></span>
                         </td>
                     </tr>
                     <tr valign="top">
                         <th scope="row"><?php _e('Enable Microsoft Clarity Consent Mode', 'snn'); ?></th>
                         <td>
-                            <input type="checkbox" name="snn_cookie_settings_enable_clarity_consent" value="yes" <?php checked((isset($options['snn_cookie_settings_enable_clarity_consent']) ? $options['snn_cookie_settings_enable_clarity_consent'] : 'no'), 'yes'); ?>>
+                            <label class="snn-admin-toggle"><input type="checkbox" name="snn_cookie_settings_enable_clarity_consent" value="yes" <?php checked((isset($options['snn_cookie_settings_enable_clarity_consent']) ? $options['snn_cookie_settings_enable_clarity_consent'] : 'no'), 'yes'); ?>><span class="snn-admin-toggle-slider"></span></label>
                             <span class="description"><?php _e('Check to enable Microsoft Clarity Consent Mode v2. This will automatically send consent status to Clarity when users accept/deny cookies.', 'snn'); ?></span>
                         </td>
                     </tr>
@@ -378,7 +378,7 @@ function snn_options_page() {
                     <tr valign="top">
                         <th scope="row"><?php _e('Enable Legal Text/Links', 'snn'); ?></th>
                         <td>
-                            <input type="checkbox" name="snn_cookie_settings_enable_legal_text" value="yes" <?php checked((isset($options['snn_cookie_settings_enable_legal_text']) ? $options['snn_cookie_settings_enable_legal_text'] : 'no'), 'yes'); ?>>
+                            <label class="snn-admin-toggle"><input type="checkbox" name="snn_cookie_settings_enable_legal_text" value="yes" <?php checked((isset($options['snn_cookie_settings_enable_legal_text']) ? $options['snn_cookie_settings_enable_legal_text'] : 'no'), 'yes'); ?>><span class="snn-admin-toggle-slider"></span></label>
                             <span class="description"><?php _e('Check to enable the legal text/links in the cookie banner.', 'snn'); ?></span>
                         </td>
                     </tr>
@@ -461,8 +461,8 @@ function snn_options_page() {
                                                 <label><input type="radio" name="snn_cookie_settings_services[<?php echo $service_index; ?>][position]" value="body_top" <?php checked((isset($service['position']) ? $service['position'] : ''), 'body_top'); ?>> <?php _e('Body Top', 'snn'); ?></label>
                                                 <label><input type="radio" name="snn_cookie_settings_services[<?php echo $service_index; ?>][position]" value="body_bottom" <?php checked((isset($service['position']) ? $service['position'] : ''), 'body_bottom'); ?>> <?php _e('Body Bottom', 'snn'); ?></label>
                                             </div>
-                                            <label>
-                                                <input type="checkbox" name="snn_cookie_settings_services[<?php echo $service_index; ?>][mandatory]" value="yes" <?php checked((isset($service['mandatory']) ? $service['mandatory'] : 'no'), 'yes'); ?>> <?php _e('Mandatory Feature', 'snn'); ?>
+                                            <label class="snn-admin-check-label">
+                                                <input type="checkbox" name="snn_cookie_settings_services[<?php echo $service_index; ?>][mandatory]" value="yes" <?php checked((isset($service['mandatory']) ? $service['mandatory'] : 'no'), 'yes'); ?>><span class="snn-admin-toggle-slider"></span> <?php _e('Mandatory Feature', 'snn'); ?>
                                             </label>
                                             <button class="remove-service snn-remove-service button"><?php _e('Remove', 'snn'); ?></button>
                                         </div>
@@ -491,8 +491,8 @@ function snn_options_page() {
                                             <label><input type="radio" name="snn_cookie_settings_services[0][position]" value="body_top"> <?php _e('Body Top', 'snn'); ?></label>
                                             <label><input type="radio" name="snn_cookie_settings_services[0][position]" value="body_bottom" checked> <?php _e('Body Bottom', 'snn'); ?></label>
                                         </div>
-                                        <label>
-                                            <input type="checkbox" name="snn_cookie_settings_services[0][mandatory]" value="yes"> <?php _e('Mandatory Feature', 'snn'); ?>
+                                        <label class="snn-admin-check-label">
+                                            <input type="checkbox" name="snn_cookie_settings_services[0][mandatory]" value="yes"><span class="snn-admin-toggle-slider"></span> <?php _e('Mandatory Feature', 'snn'); ?>
                                         </label>
                                         <button class="remove-service snn-remove-service button"><?php _e('Remove', 'snn'); ?></button>
                                     </div>
@@ -572,7 +572,7 @@ function snn_options_page() {
                                                 '<label><input type="radio" name="snn_cookie_settings_services[' + serviceIndex + '][position]" value="body_top"> <?php _e('Body Top', 'snn'); ?></label> ' +
                                                 '<label><input type="radio" name="snn_cookie_settings_services[' + serviceIndex + '][position]" value="body_bottom" checked> <?php _e('Body Bottom', 'snn'); ?></label>' +
                                             '</div>' +
-                                            '<label><input type="checkbox" name="snn_cookie_settings_services[' + serviceIndex + '][mandatory]" value="yes"> <?php _e('Mandatory Feature', 'snn'); ?></label>' +
+                                            '<label class="snn-admin-check-label"><input type="checkbox" name="snn_cookie_settings_services[' + serviceIndex + '][mandatory]" value="yes"><span class="snn-admin-toggle-slider"></span> <?php _e('Mandatory Feature', 'snn'); ?></label>' +
                                             '<button class="remove-service snn-remove-service button"><?php _e('Remove', 'snn'); ?></button>' +
                                             '</div>';
                                         $('#services-repeater').append(newService);
@@ -777,8 +777,8 @@ function snn_options_page() {
                                             });
                                         }
                                         html += '<li style="margin-bottom: 10px; padding: 10px; background: white; border: 1px solid #ddd;">';
-                                        html += '<label style="display: flex; align-items: center; gap: 10px;">';
-                                        html += '<input type="checkbox" class="snn-script-to-block" value="' + script + '" ' + (isBlocked ? 'checked disabled' : '') + '>';
+                                        html += '<label class="snn-admin-check-label" style="display: flex; align-items: center; gap: 10px;">';
+                                        html += '<input type="checkbox" class="snn-script-to-block" value="' + script + '" ' + (isBlocked ? 'checked disabled' : '') + '><span class="snn-admin-toggle-slider"></span>';
                                         html += '<code style="flex: 1; word-break: break-all; font-size: 11px;">' + script + '</code>';
                                         if (isBlocked) {
                                             html += '<span style="color: #d63638; font-weight: bold;">(<?php echo esc_js(__('Already Blocked', 'snn')); ?>)</span>';
@@ -803,8 +803,8 @@ function snn_options_page() {
                                             });
                                         }
                                         html += '<li style="margin-bottom: 10px; padding: 10px; background: white; border: 1px solid #ddd;">';
-                                        html += '<label style="display: flex; align-items: center; gap: 10px;">';
-                                        html += '<input type="checkbox" class="snn-script-to-block" value="' + iframe + '" ' + (isBlocked ? 'checked disabled' : '') + '>';
+                                        html += '<label class="snn-admin-check-label" style="display: flex; align-items: center; gap: 10px;">';
+                                        html += '<input type="checkbox" class="snn-script-to-block" value="' + iframe + '" ' + (isBlocked ? 'checked disabled' : '') + '><span class="snn-admin-toggle-slider"></span>';
                                         html += '<code style="flex: 1; word-break: break-all; font-size: 11px;">' + iframe + '</code>';
                                         if (isBlocked) {
                                             html += '<span style="color: #d63638; font-weight: bold;">(<?php echo esc_js(__('Already Blocked', 'snn')); ?>)</span>';
@@ -1035,7 +1035,7 @@ function snn_options_page() {
                     <tr valign="top">
                         <th scope="row"><?php _e('Enable Overlay', 'snn'); ?></th>
                         <td>
-                            <input type="checkbox" name="snn_cookie_settings_enable_overlay" value="yes" <?php checked((isset($options['snn_cookie_settings_enable_overlay']) ? $options['snn_cookie_settings_enable_overlay'] : 'no'), 'yes'); ?>>
+                            <label class="snn-admin-toggle"><input type="checkbox" name="snn_cookie_settings_enable_overlay" value="yes" <?php checked((isset($options['snn_cookie_settings_enable_overlay']) ? $options['snn_cookie_settings_enable_overlay'] : 'no'), 'yes'); ?>><span class="snn-admin-toggle-slider"></span></label>
                             <span class="description"><?php _e('Check to enable a full page overlay behind the cookie banner.', 'snn'); ?></span>
                         </td>
                     </tr>
