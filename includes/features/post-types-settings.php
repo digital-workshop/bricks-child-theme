@@ -531,6 +531,7 @@ function snn_render_custom_post_types_page() {
             }
             .snn-admin-ui .supports-section {
                 display: flex;
+                align-items: center;
                 gap: var(--snn-space-2) var(--snn-space-4);
                 flex-wrap: wrap;
                 padding: var(--snn-space-4);
