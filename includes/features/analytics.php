@@ -310,15 +310,17 @@ function snn_analytics_query_top( $column, $start, $end, $limit = 10 ) {
 // ----------------------------------------------------------------------
 
 function snn_analytics_add_submenu() {
-    // Under "Dashboard" (index.php), not the theme's own SNN Settings menu,
-    // so the stats are immediately visible without digging into theme settings.
-    add_submenu_page(
-        'index.php',
+    // Own top-level menu item, positioned right after "Dashboard" (position 2)
+    // and before "Posts" (position 5), so it's immediately visible without
+    // digging into theme settings or the Dashboard submenu flyout.
+    add_menu_page(
         __( 'Analytics', 'snn' ),
         __( 'Analytics', 'snn' ),
         'manage_options',
         'snn-analytics',
-        'snn_analytics_page'
+        'snn_analytics_page',
+        'dashicons-chart-line',
+        3
     );
 }
 add_action( 'admin_menu', 'snn_analytics_add_submenu' );
