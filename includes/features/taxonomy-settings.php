@@ -77,30 +77,32 @@ function snn_render_taxonomies_page() {
     // Retrieve all registered post types for association
     $registered_post_types = get_post_types( array( 'public' => true ), 'objects' );
     ?>
-    <div class="wrap">
+    <div class="wrap snn-admin-ui">
     <h1><?php esc_html_e( 'Manage Taxonomies', 'snn' ); ?></h1>
+    <p class="snn-admin-intro"><?php esc_html_e( 'Define custom taxonomies with name, slug, hierarchical setting, and associated post types:', 'snn' ); ?></p>
         <form method="post">
             <?php wp_nonce_field( 'snn_save_taxonomies', 'snn_taxonomies_nonce' ); ?>
             <div id="taxonomy-settings">
-                <p><?php esc_html_e( 'Define custom taxonomies with name, slug, hierarchical setting, and associated post types:', 'snn' ); ?></p>
                 <?php foreach ( $taxonomies as $index => $taxonomy ) : ?>
-                    <div class="taxonomy-row" data-index="<?php echo esc_attr( $index ); ?>">
-                        <div class="buttons">
-                            <button type="button" class="move-up" title="<?php esc_attr_e( 'Move Up', 'snn' ); ?>">▲</button>
-                            <button type="button" class="move-down" title="<?php esc_attr_e( 'Move Down', 'snn' ); ?>">▼</button>
-                            <button type="button" class="remove-taxonomy" title="<?php esc_attr_e( 'Remove Taxonomy', 'snn' ); ?>"><?php esc_html_e( 'Remove', 'snn' ); ?></button>
+                    <div class="taxonomy-row snn-admin-row-card" data-index="<?php echo esc_attr( $index ); ?>">
+                        <div class="buttons snn-admin-row-actions">
+                            <span class="snn-admin-row-index"><?php echo esc_html( $index + 1 ); ?></span>
+                            <button type="button" class="move-up snn-admin-icon-btn" title="<?php esc_attr_e( 'Move Up', 'snn' ); ?>">▲</button>
+                            <button type="button" class="move-down snn-admin-icon-btn" title="<?php esc_attr_e( 'Move Down', 'snn' ); ?>">▼</button>
+                            <button type="button" class="remove-taxonomy snn-admin-icon-btn snn-admin-danger-btn" title="<?php esc_attr_e( 'Remove Taxonomy', 'snn' ); ?>"><?php esc_html_e( 'Remove', 'snn' ); ?></button>
                         </div>
-                        <div class="field-group">
-                            <label><?php esc_html_e( 'Taxonomy Name', 'snn' ); ?></label><br>
+                        <div class="snn-admin-field-grid">
+                        <div class="field-group snn-admin-field">
+                            <label><?php esc_html_e( 'Taxonomy Name', 'snn' ); ?></label>
                             <input type="text" name="taxonomies[<?php echo esc_attr( $index ); ?>][name]" placeholder="Taxonomy Name" value="<?php echo esc_attr( $taxonomy['name'] ); ?>" />
                         </div>
-                        <div class="field-group">
-                            <label><?php esc_html_e( 'Taxonomy Slug', 'snn' ); ?></label><br>
+                        <div class="field-group snn-admin-field">
+                            <label><?php esc_html_e( 'Taxonomy Slug', 'snn' ); ?></label>
                             <input type="text" class="taxonomy-slug" name="taxonomies[<?php echo esc_attr( $index ); ?>][slug]" placeholder="taxonomy-slug" value="<?php echo esc_attr( $taxonomy['slug'] ); ?>" />
                         </div>
 
-                        <div class="field-group">
-                        <label><?php esc_html_e( 'Link Post Types', 'snn' ); ?></label><br>
+                        <div class="field-group snn-admin-field snn-admin-field-wide">
+                        <label><?php esc_html_e( 'Link Post Types', 'snn' ); ?></label>
                         <select name="taxonomies[<?php echo esc_attr( $index ); ?>][post_types][]" multiple>
                             <?php foreach ( $registered_post_types as $post_type ) : ?>
                                 <option value="<?php echo esc_attr( $post_type->name ); ?>" <?php echo in_array( $post_type->name, $taxonomy['post_types'] ) ? 'selected' : ''; ?>>
@@ -110,23 +112,25 @@ function snn_render_taxonomies_page() {
                         </select>
                         </div>
 
-                        <div class="field-group">
+                        <div class="field-group snn-admin-toggle-field">
                         <label><?php esc_html_e( 'Hierarchical', 'snn' ); ?></label>
                         <div class="checkbox-container">
                             <input type="checkbox" name="taxonomies[<?php echo esc_attr( $index ); ?>][hierarchical]" <?php checked( $taxonomy['hierarchical'], 1 ); ?> />
                         </div>
                         </div>
 
-                        <div class="field-group">
-                            <label><?php esc_html_e( 'Show Columns', 'snn' ); ?></label><br>
+                        <div class="field-group snn-admin-toggle-field">
+                            <label><?php esc_html_e( 'Show Columns', 'snn' ); ?></label>
                             <input type="checkbox" name="taxonomies[<?php echo esc_attr( $index ); ?>][add_columns]" <?php checked( isset( $taxonomy['add_columns'] ) ? $taxonomy['add_columns'] : 0, 1 ); ?> />
+                        </div>
                         </div>
                     </div>
                 <?php endforeach; ?>
             </div>
-            <button type="button" id="add-taxonomy-row" class="button"><?php esc_html_e( 'Add New Taxonomy', 'snn' ); ?></button>
-            <br><br>
+            <button type="button" id="add-taxonomy-row" class="button snn-admin-add-btn"><?php esc_html_e( 'Add New Taxonomy', 'snn' ); ?></button>
+            <div class="snn-admin-submit-wrap">
             <p class="submit"><input type="submit" name="submit" id="submit" class="button button-primary" value="<?php esc_attr_e( 'Save Taxonomies', 'snn' ); ?>"></p>
+            </div>
         </form>
 
         <script>
@@ -186,24 +190,26 @@ function snn_render_taxonomies_page() {
             addFieldButton.addEventListener('click', function() {
                 const newIndex = fieldContainer.querySelectorAll('.taxonomy-row').length;
                 const newRow = document.createElement('div');
-                newRow.classList.add('taxonomy-row');
+                newRow.classList.add('taxonomy-row', 'snn-admin-row-card');
                 newRow.dataset.index = newIndex;
                 newRow.innerHTML = `
-                    <div class="buttons">
-                        <button type="button" class="move-up" title="<?php esc_attr_e( 'Move Up', 'snn' ); ?>">▲</button>
-                        <button type="button" class="move-down" title="<?php esc_attr_e( 'Move Down', 'snn' ); ?>">▼</button>
-                        <button type="button" class="remove-taxonomy" title="<?php esc_attr_e( 'Remove Taxonomy', 'snn' ); ?>"><?php esc_html_e( 'Remove', 'snn' ); ?></button>
+                    <div class="buttons snn-admin-row-actions">
+                        <span class="snn-admin-row-index">${newIndex + 1}</span>
+                        <button type="button" class="move-up snn-admin-icon-btn" title="<?php esc_attr_e( 'Move Up', 'snn' ); ?>">▲</button>
+                        <button type="button" class="move-down snn-admin-icon-btn" title="<?php esc_attr_e( 'Move Down', 'snn' ); ?>">▼</button>
+                        <button type="button" class="remove-taxonomy snn-admin-icon-btn snn-admin-danger-btn" title="<?php esc_attr_e( 'Remove Taxonomy', 'snn' ); ?>"><?php esc_html_e( 'Remove', 'snn' ); ?></button>
                     </div>
-                    <div class="field-group">
-                        <label><?php esc_html_e( 'Taxonomy Name', 'snn' ); ?></label><br>
+                    <div class="snn-admin-field-grid">
+                    <div class="field-group snn-admin-field">
+                        <label><?php esc_html_e( 'Taxonomy Name', 'snn' ); ?></label>
                         <input type="text" name="taxonomies[${newIndex}][name]" placeholder="Taxonomy Name" />
                     </div>
-                    <div class="field-group">
-                        <label><?php esc_html_e( 'Taxonomy Slug', 'snn' ); ?></label><br>
+                    <div class="field-group snn-admin-field">
+                        <label><?php esc_html_e( 'Taxonomy Slug', 'snn' ); ?></label>
                         <input type="text" class="taxonomy-slug" name="taxonomies[${newIndex}][slug]" placeholder="taxonomy-slug" />
                     </div>
-                    <div class="field-group">
-                        <label><?php esc_html_e( 'Link Post Types', 'snn' ); ?></label><br>
+                    <div class="field-group snn-admin-field snn-admin-field-wide">
+                        <label><?php esc_html_e( 'Link Post Types', 'snn' ); ?></label>
                         <select name="taxonomies[${newIndex}][post_types][]" multiple>
                             <?php
                             foreach ( get_post_types( array( 'public' => true ), 'objects' ) as $post_type ) :
@@ -212,15 +218,16 @@ function snn_render_taxonomies_page() {
                             <?php endforeach; ?>
                         </select>
                     </div>
-                    <div class="field-group">
+                    <div class="field-group snn-admin-toggle-field">
                         <label><?php esc_html_e( 'Hierarchical', 'snn' ); ?></label>
                         <div class="checkbox-container">
                             <input type="checkbox" name="taxonomies[${newIndex}][hierarchical]" />
                         </div>
                     </div>
-                    <div class="field-group">
-                        <label><?php esc_html_e( 'Show Columns', 'snn' ); ?></label><br>
+                    <div class="field-group snn-admin-toggle-field">
+                        <label><?php esc_html_e( 'Show Columns', 'snn' ); ?></label>
                         <input type="checkbox" name="taxonomies[${newIndex}][add_columns]" />
+                    </div>
                     </div>
                 `;
                 fieldContainer.appendChild(newRow);
@@ -262,111 +269,6 @@ function snn_render_taxonomies_page() {
             updateFieldIndexes();
         });
         </script>
-
-        <style>
-            .taxonomy-row {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 10px;
-                margin-bottom: 10px;
-                align-items: flex-start;
-                padding: 20px;
-                border: 1px solid #e2e2e2;
-                border-radius: 10px;
-                background-color: #ffffff;
-            }
-            .taxonomy-row label {
-                width: auto;
-                font-weight: bold;
-            }
-            .taxonomy-row input[type="text"] {
-                flex: 1;
-                min-width: 150px;
-                padding: 5px;
-                background: #ffffff;
-                border-radius: 5px;
-                height: 40px;
-                border: solid 1px #e2e2e2;
-            }
-            .taxonomy-row input[type="text"]:hover {
-                border: solid 1px #000000;
-            }
-            .taxonomy-row select {
-                flex: 1;
-                min-width: 150px;
-                padding: 5px;
-                background: #ffffff;
-                border-radius: 5px;
-                border: solid 1px #e2e2e2;
-            }
-            .taxonomy-row select:hover {
-                border: solid 1px #000000;
-            }
-            .taxonomy-row .buttons {
-                display: flex;
-                flex-direction: row;
-                gap: 5px;
-                position: relative;
-                top:10px;
-            }
-            .taxonomy-row .buttons button {
-                background: #ffffff;
-                border-radius: 5px;
-                padding: 10px;
-                border: solid 1px #e2e2e2;
-                height: 40px;
-                cursor: pointer;
-            }
-            .taxonomy-row .buttons button:hover {
-                background: var(--wp-admin-theme-color);
-                color: white;
-            }
-            #add-taxonomy-row {
-                margin-top: 10px;
-            }
-            select[multiple] {
-                height: 100px;
-            }
-            .taxonomy-row [type="text"] {
-                width: 240px;
-            }
-            .taxonomy-row [type="checkbox"] {
-                appearance: none;
-                -webkit-appearance: none;
-                cursor: pointer;
-                position: relative;
-                width: 40px;
-                height: 22px;
-                background-color: #eeeeee;
-                border-radius: 11px;
-                border: 1px solid #e2e2e2;
-                transition: 0.25s;
-                margin-top: 2px;
-                min-width: 40px;
-            }
-            .taxonomy-row [type="checkbox"]::before {
-                content: "";
-                position: absolute;
-                top: 2px;
-                left: 3px;
-                width: 16px;
-                height: 16px;
-                background-color: #ffffff;
-                border-radius: 50%;
-                transition: 0.25s;
-            }
-            .taxonomy-row [type="checkbox"]:hover {
-                border: 2px solid var(--wp-admin-theme-color);
-            }
-            .taxonomy-row [type="checkbox"]:checked {
-                background-color: #eeeeee;
-                border: 2px solid var(--wp-admin-theme-color);
-            }
-            .taxonomy-row [type="checkbox"]:checked::before {
-                left: 21px;
-                background-color: var(--wp-admin-theme-color);
-            }
-        </style>
     </div>
     <?php
 }

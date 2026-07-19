@@ -1,0 +1,346 @@
+/*
+ * Shared design system for the SNN admin builder screens (Post Types,
+ * Custom Fields, Taxonomies). Additive only: every class here is new and
+ * layered on top of the existing functional classes/IDs those pages'
+ * inline JS already depends on -- nothing here replaces or renames an
+ * existing selector.
+ */
+
+.snn-admin-ui {
+    --snn-bg: #f8f8fb;
+    --snn-card-bg: #ffffff;
+    --snn-border: #e4e4e9;
+    --snn-border-strong: #d4d4d9;
+    --snn-text: #18181b;
+    --snn-text-muted: #6b7280;
+    --snn-accent: #4f46e5;
+    --snn-accent-hover: #4338ca;
+    --snn-accent-light: #eef2ff;
+    --snn-danger: #dc2626;
+    --snn-danger-light: #fef2f2;
+    --snn-radius: 12px;
+    --snn-radius-sm: 8px;
+    --snn-shadow: 0 1px 3px rgba(24, 24, 27, 0.06), 0 1px 2px rgba(24, 24, 27, 0.04);
+    --snn-shadow-hover: 0 6px 16px rgba(24, 24, 27, 0.08);
+    --snn-space-1: 4px;
+    --snn-space-2: 8px;
+    --snn-space-3: 12px;
+    --snn-space-4: 16px;
+    --snn-space-5: 24px;
+    --snn-space-6: 32px;
+    --snn-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+    background: var(--snn-bg);
+    font-family: var(--snn-font);
+    color: var(--snn-text);
+    margin: var(--snn-space-5) var(--snn-space-5) var(--snn-space-5) 2px;
+    padding: var(--snn-space-5);
+    border-radius: var(--snn-radius);
+}
+
+.snn-admin-ui h1 {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--snn-text);
+    margin: 0 0 var(--snn-space-2);
+}
+
+.snn-admin-ui .snn-admin-intro {
+    color: var(--snn-text-muted);
+    font-size: 14px;
+    margin: 0 0 var(--snn-space-5);
+    max-width: 640px;
+    line-height: 1.6;
+}
+
+.snn-admin-ui .updated,
+.snn-admin-ui .notice {
+    background: var(--snn-card-bg);
+    border: 1px solid var(--snn-border);
+    border-left: 4px solid var(--snn-accent);
+    border-radius: var(--snn-radius-sm);
+    box-shadow: var(--snn-shadow);
+    padding: var(--snn-space-3) var(--snn-space-4);
+    margin: 0 0 var(--snn-space-4);
+}
+
+/* Row card shell -- applied additively alongside the existing functional
+   row class (e.g. class="custom-post-type-row snn-admin-row-card"). */
+.snn-admin-ui .snn-admin-row-card {
+    background: var(--snn-card-bg);
+    border: 1px solid var(--snn-border);
+    border-radius: var(--snn-radius);
+    box-shadow: var(--snn-shadow);
+    padding: var(--snn-space-5);
+    margin-bottom: var(--snn-space-4);
+    transition: box-shadow 150ms ease, border-color 150ms ease;
+}
+
+.snn-admin-ui .snn-admin-row-card:hover {
+    box-shadow: var(--snn-shadow-hover);
+    border-color: var(--snn-border-strong);
+}
+
+.snn-admin-ui .snn-admin-row-index {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 999px;
+    background: var(--snn-accent-light);
+    color: var(--snn-accent);
+    font-size: 12px;
+    font-weight: 700;
+    margin-right: var(--snn-space-3);
+    flex-shrink: 0;
+}
+
+/* Action button cluster (move up/down, remove) */
+.snn-admin-ui .snn-admin-row-actions {
+    display: flex;
+    gap: var(--snn-space-2);
+    align-items: center;
+}
+
+.snn-admin-ui .snn-admin-icon-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    border: 1px solid var(--snn-border);
+    border-radius: var(--snn-radius-sm);
+    background: var(--snn-card-bg);
+    color: var(--snn-text-muted);
+    cursor: pointer;
+    font-size: 13px;
+    line-height: 1;
+    transition: background 120ms ease, color 120ms ease, border-color 120ms ease;
+}
+
+.snn-admin-ui .snn-admin-icon-btn:hover {
+    background: var(--snn-accent-light);
+    color: var(--snn-accent);
+    border-color: var(--snn-accent);
+}
+
+.snn-admin-ui .snn-admin-icon-btn.snn-admin-danger-btn {
+    width: auto;
+    padding: 0 var(--snn-space-3);
+    color: var(--snn-danger);
+    gap: var(--snn-space-1);
+    font-weight: 600;
+}
+
+.snn-admin-ui .snn-admin-icon-btn.snn-admin-danger-btn:hover {
+    background: var(--snn-danger-light);
+    color: var(--snn-danger);
+    border-color: var(--snn-danger);
+}
+
+/* Field grid: replaces bare form-table look with labeled, spaced cards */
+.snn-admin-ui .snn-admin-field-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--snn-space-4);
+    margin-top: var(--snn-space-4);
+}
+
+.snn-admin-ui .snn-admin-field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--snn-space-1);
+    flex: 1;
+    min-width: 180px;
+}
+
+.snn-admin-ui .snn-admin-field.snn-admin-field-narrow {
+    flex: 0 1 110px;
+    min-width: 90px;
+}
+
+.snn-admin-ui .snn-admin-field.snn-admin-field-wide {
+    flex: 1 1 100%;
+}
+
+.snn-admin-ui .snn-admin-field > label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--snn-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+}
+
+.snn-admin-ui input[type="text"],
+.snn-admin-ui input[type="number"],
+.snn-admin-ui input[type="url"],
+.snn-admin-ui input[type="email"],
+.snn-admin-ui select,
+.snn-admin-ui textarea {
+    font-family: var(--snn-font);
+    font-size: 14px;
+    color: var(--snn-text);
+    background: var(--snn-card-bg);
+    border: 1px solid var(--snn-border);
+    border-radius: var(--snn-radius-sm);
+    padding: 8px 10px;
+    min-height: 38px;
+    box-sizing: border-box;
+    transition: border-color 120ms ease, box-shadow 120ms ease;
+}
+
+.snn-admin-ui select[multiple] {
+    min-height: 96px;
+}
+
+.snn-admin-ui input[type="text"]:hover,
+.snn-admin-ui input[type="number"]:hover,
+.snn-admin-ui select:hover,
+.snn-admin-ui textarea:hover {
+    border-color: var(--snn-border-strong);
+}
+
+.snn-admin-ui input[type="text"]:focus,
+.snn-admin-ui input[type="number"]:focus,
+.snn-admin-ui select:focus,
+.snn-admin-ui textarea:focus {
+    outline: none;
+    border-color: var(--snn-accent);
+    box-shadow: 0 0 0 3px var(--snn-accent-light);
+}
+
+/* Toggle-switch checkboxes (visual restyle only, still real <input type=checkbox>) */
+.snn-admin-ui .snn-admin-toggle-field {
+    display: flex;
+    align-items: center;
+    gap: var(--snn-space-2);
+    flex: 1 1 auto;
+    min-width: 160px;
+}
+
+.snn-admin-ui .snn-admin-toggle-field > label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--snn-text);
+}
+
+.snn-admin-ui input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 38px;
+    height: 21px;
+    border-radius: 999px;
+    background: var(--snn-border-strong);
+    border: none;
+    position: relative;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background 150ms ease;
+}
+
+.snn-admin-ui input[type="checkbox"]::before {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 17px;
+    height: 17px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+    transition: left 150ms ease;
+}
+
+.snn-admin-ui input[type="checkbox"]:checked {
+    background: var(--snn-accent);
+}
+
+.snn-admin-ui input[type="checkbox"]:checked::before {
+    left: 19px;
+}
+
+.snn-admin-ui input[type="checkbox"]:focus-visible {
+    outline: 2px solid var(--snn-accent);
+    outline-offset: 2px;
+}
+
+.snn-admin-ui input[type="checkbox"]:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+/* "label wraps checkbox + text" pattern (e.g. <label><input type=checkbox>Text</label>) */
+.snn-admin-ui .snn-admin-check-label {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--snn-space-2);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--snn-text);
+    cursor: pointer;
+}
+
+/* Add-row / submit buttons */
+.snn-admin-ui .snn-admin-add-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--snn-space-2);
+    background: var(--snn-card-bg);
+    border: 1px dashed var(--snn-border-strong);
+    border-radius: var(--snn-radius-sm);
+    color: var(--snn-accent);
+    font-weight: 600;
+    font-size: 14px;
+    padding: 10px var(--snn-space-4);
+    cursor: pointer;
+    transition: background 120ms ease, border-color 120ms ease;
+}
+
+.snn-admin-ui .snn-admin-add-btn:hover {
+    background: var(--snn-accent-light);
+    border-color: var(--snn-accent);
+}
+
+.snn-admin-ui .snn-admin-submit-wrap {
+    margin-top: var(--snn-space-5);
+    padding-top: var(--snn-space-5);
+    border-top: 1px solid var(--snn-border);
+}
+
+.snn-admin-ui .snn-admin-submit-wrap input[type="submit"],
+.snn-admin-ui .snn-admin-submit-wrap .button-primary {
+    background: var(--snn-accent);
+    border: 1px solid var(--snn-accent);
+    color: #fff;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 10px var(--snn-space-5);
+    height: auto;
+    border-radius: var(--snn-radius-sm);
+    box-shadow: none;
+    text-shadow: none;
+    cursor: pointer;
+    transition: background 120ms ease, border-color 120ms ease;
+}
+
+.snn-admin-ui .snn-admin-submit-wrap input[type="submit"]:hover,
+.snn-admin-ui .snn-admin-submit-wrap .button-primary:hover {
+    background: var(--snn-accent-hover);
+    border-color: var(--snn-accent-hover);
+}
+
+@media (max-width: 782px) {
+    .snn-admin-ui {
+        margin: var(--snn-space-3);
+        padding: var(--snn-space-3);
+    }
+    .snn-admin-ui .snn-admin-field-grid {
+        flex-direction: column;
+    }
+    .snn-admin-ui .snn-admin-field,
+    .snn-admin-ui .snn-admin-field.snn-admin-field-narrow {
+        min-width: 0;
+    }
+}

@@ -109,53 +109,56 @@ function snn_render_custom_post_types_page() {
     }
     unset( $post_type );
     ?>
-    <div class="wrap">
+    <div class="wrap snn-admin-ui">
         <h1><?php echo esc_html__( 'Manage Custom Post Types', 'snn' ); ?></h1>
+        <p class="snn-admin-intro"><?php echo esc_html__( 'Define custom post types with name, slug (max 20 chars), visibility, dashicon, and supported features:', 'snn' ); ?></p>
         <form method="post">
             <?php wp_nonce_field( 'snn_save_custom_post_types', 'snn_custom_post_types_nonce' ); ?>
             <div id="custom-post-type-settings">
-                <p><?php echo esc_html__( 'Define custom post types with name, slug (max 20 chars), visibility, dashicon, and supported features:', 'snn' ); ?></p>
                 <?php foreach ( $custom_post_types as $index => $post_type ) : ?>
-                    <div class="custom-post-type-row" data-index="<?php echo esc_attr( $index ); ?>">
-                        <div class="buttons">
-                            <button type="button" class="move-up" title="<?php echo esc_attr__( 'Move Up', 'snn' ); ?>">▲</button>
-                            <button type="button" class="move-down" title="<?php echo esc_attr__( 'Move Down', 'snn' ); ?>">▼</button>
-                            <button type="button" class="remove-post-type" title="<?php echo esc_attr__( 'Remove Post Type', 'snn' ); ?>"><?php echo esc_html__( 'Remove', 'snn' ); ?></button>
+                    <div class="custom-post-type-row snn-admin-row-card" data-index="<?php echo esc_attr( $index ); ?>">
+                        <div class="buttons snn-admin-row-actions">
+                            <span class="snn-admin-row-index"><?php echo esc_html( $index + 1 ); ?></span>
+                            <button type="button" class="move-up snn-admin-icon-btn" title="<?php echo esc_attr__( 'Move Up', 'snn' ); ?>">▲</button>
+                            <button type="button" class="move-down snn-admin-icon-btn" title="<?php echo esc_attr__( 'Move Down', 'snn' ); ?>">▼</button>
+                            <button type="button" class="remove-post-type snn-admin-icon-btn snn-admin-danger-btn" title="<?php echo esc_attr__( 'Remove Post Type', 'snn' ); ?>"><?php echo esc_html__( 'Remove', 'snn' ); ?></button>
                         </div>
-                        <div class="post-type-name">
-                            <label><?php echo esc_html__( 'Post Type Name', 'snn' ); ?></label><br>
+                        <div class="snn-admin-field-grid">
+                        <div class="post-type-name snn-admin-field">
+                            <label><?php echo esc_html__( 'Post Type Name', 'snn' ); ?></label>
                             <input type="text" name="custom_post_types[<?php echo esc_attr( $index ); ?>][name]" placeholder="<?php echo esc_attr__( 'Post Type Name', 'snn' ); ?>" value="<?php echo esc_attr( $post_type['name'] ); ?>" />
                         </div>
-                        <div class="post-type-slug">
-                            <label><?php echo esc_html__( 'Post Type Slug (max 20 chars)', 'snn' ); ?></label><br>
+                        <div class="post-type-slug snn-admin-field">
+                            <label><?php echo esc_html__( 'Post Type Slug (max 20 chars)', 'snn' ); ?></label>
                             <input type="text" name="custom_post_types[<?php echo esc_attr( $index ); ?>][slug]" placeholder="<?php echo esc_attr__( 'post-slug', 'snn' ); ?>" value="<?php echo esc_attr( $post_type['slug'] ); ?>" maxlength="20" />
                         </div>
-                        <div class="post-type-icon">
-                            <label><?php echo esc_html__( 'Dashicon', 'snn' ); ?></label><br>
+                        <div class="post-type-icon snn-admin-field">
+                            <label><?php echo esc_html__( 'Dashicon', 'snn' ); ?></label>
                             <input type="hidden" name="custom_post_types[<?php echo esc_attr( $index ); ?>][dashicon]" value="<?php echo esc_attr( $post_type['dashicon'] ); ?>" class="dashicon-value-input" />
                             <button type="button" class="dashicon-picker-btn" title="<?php echo esc_attr__( 'Click to pick icon', 'snn' ); ?>">
                                 <span class="dashicons <?php echo esc_attr( $post_type['dashicon'] ); ?>"></span>
                                 <span class="dashicon-btn-label"><?php echo esc_html( str_replace( 'dashicons-', '', $post_type['dashicon'] ) ); ?></span>
                             </button>
                         </div>
+                        </div>
                         <!-- Supports Section -->
                         <div class="advanced-settings-wrap">
-                            <button type="button" class="toggle-advanced-btn">Advanced Settings ▼</button>
+                            <button type="button" class="toggle-advanced-btn snn-admin-collapsible-toggle">Advanced Settings ▼</button>
                             <div class="supports-section" style="display:none;">
                                 <?php foreach ( $available_supports as $key => $label ) : ?>
-                                    <label>
+                                    <label class="snn-admin-check-label">
                                         <input type="checkbox" name="custom_post_types[<?php echo esc_attr( $index ); ?>][supports][<?php echo esc_attr( $key ); ?>]" <?php checked( in_array( $key, $post_type['supports'], true ), true ); ?> />
                                         <?php echo esc_html( $label ); ?>
                                     </label>
                                 <?php endforeach; ?>
 
                                 <?php foreach ( $additional_options as $opt_key => $opt_label ) : ?>
-                                    <label>
+                                    <label class="snn-admin-check-label">
                                         <input type="checkbox" name="custom_post_types[<?php echo esc_attr( $index ); ?>][<?php echo esc_attr( $opt_key ); ?>]" <?php checked( $opt_key === 'show_order' ? (isset($post_type[$opt_key]) && $post_type[$opt_key]) : (!isset($post_type[$opt_key]) || $post_type[$opt_key]), 1 ); ?> />
                                         <?php echo esc_html( $opt_label ); ?>
                                     </label>
                                 <?php endforeach; ?>
-                                <label>
+                                <label class="snn-admin-check-label">
                                     <input type="checkbox" name="custom_post_types[<?php echo esc_attr( $index ); ?>][private]" <?php checked( isset($post_type['private']) && $post_type['private'], 1 ); ?> />
                                     <?php echo esc_html__( 'Private', 'snn' ); ?>
                                 </label>
@@ -165,9 +168,10 @@ function snn_render_custom_post_types_page() {
                     </div>
                 <?php endforeach; ?>
             </div>
-            <button type="button" id="add-custom-post-type-row" class="button"><?php echo esc_html__( 'Add New Post Type', 'snn' ); ?></button>
-            <br><br>
+            <button type="button" id="add-custom-post-type-row" class="button snn-admin-add-btn"><?php echo esc_html__( 'Add New Post Type', 'snn' ); ?></button>
+            <div class="snn-admin-submit-wrap">
             <p class="submit"><input type="submit" name="submit" id="submit" class="button button-primary" value="<?php echo esc_attr__( 'Save Custom Post Types', 'snn' ); ?>"></p>
+            </div>
         </form>
 
         <script>
@@ -235,7 +239,7 @@ function snn_render_custom_post_types_page() {
                 for (const [key, label] of Object.entries(availableSupports)) {
                     const isChecked = key !== 'comments';
                     inner += `
-                        <label>
+                        <label class="snn-admin-check-label">
                             <input type="checkbox" name="custom_post_types[${index}][supports][${key}]" ${isChecked ? 'checked' : ''} />
                             ${label}
                         </label>
@@ -244,14 +248,14 @@ function snn_render_custom_post_types_page() {
                         for (const [optKey, optLabel] of Object.entries(additionalOptions)) {
                             const isChecked = optKey !== 'show_order';
                             inner += `
-                                <label>
+                                <label class="snn-admin-check-label">
                                     <input type="checkbox" name="custom_post_types[${index}][${optKey}]" ${isChecked ? 'checked' : ''} />
                                     ${optLabel}
                                 </label>
                             `;
                         }
                         inner += `
-                            <label>
+                            <label class="snn-admin-check-label">
                                 <input type="checkbox" name="custom_post_types[${index}][private]" />
                                 <?php echo esc_html__( 'Private', 'snn' ); ?>
                             </label>
@@ -259,7 +263,7 @@ function snn_render_custom_post_types_page() {
                     }
                 }
                 return `<div class="advanced-settings-wrap">
-                    <button type="button" class="toggle-advanced-btn">Advanced Settings ▼</button>
+                    <button type="button" class="toggle-advanced-btn snn-admin-collapsible-toggle">Advanced Settings ▼</button>
                     <div class="supports-section" style="display:none;">${inner}</div>
                 </div>`;
             }
@@ -267,29 +271,32 @@ function snn_render_custom_post_types_page() {
             addFieldButton.addEventListener('click', function() {
                 const newIndex = fieldContainer.querySelectorAll('.custom-post-type-row').length;
                 const newRow = document.createElement('div');
-                newRow.classList.add('custom-post-type-row');
+                newRow.classList.add('custom-post-type-row', 'snn-admin-row-card');
                 newRow.dataset.index = newIndex;
                 newRow.innerHTML = `
-                    <div class="buttons">
-                        <button type="button" class="move-up" title="<?php echo esc_attr__( 'Move Up', 'snn' ); ?>">▲</button>
-                        <button type="button" class="move-down" title="<?php echo esc_attr__( 'Move Down', 'snn' ); ?>">▼</button>
-                        <button type="button" class="remove-post-type" title="<?php echo esc_attr__( 'Remove Post Type', 'snn' ); ?>"><?php echo esc_html__( 'Remove', 'snn' ); ?></button>
+                    <div class="buttons snn-admin-row-actions">
+                        <span class="snn-admin-row-index">${newIndex + 1}</span>
+                        <button type="button" class="move-up snn-admin-icon-btn" title="<?php echo esc_attr__( 'Move Up', 'snn' ); ?>">▲</button>
+                        <button type="button" class="move-down snn-admin-icon-btn" title="<?php echo esc_attr__( 'Move Down', 'snn' ); ?>">▼</button>
+                        <button type="button" class="remove-post-type snn-admin-icon-btn snn-admin-danger-btn" title="<?php echo esc_attr__( 'Remove Post Type', 'snn' ); ?>"><?php echo esc_html__( 'Remove', 'snn' ); ?></button>
                     </div>
-                    <div class="post-type-name">
-                        <label><?php echo esc_html__( 'Post Type Name', 'snn' ); ?></label><br>
+                    <div class="snn-admin-field-grid">
+                    <div class="post-type-name snn-admin-field">
+                        <label><?php echo esc_html__( 'Post Type Name', 'snn' ); ?></label>
                         <input type="text" name="custom_post_types[${newIndex}][name]" placeholder="<?php echo esc_attr__( 'Post Type Name', 'snn' ); ?>" />
                     </div>
-                    <div class="post-type-slug">
-                        <label><?php echo esc_html__( 'Post Type Slug (max 20 chars)', 'snn' ); ?></label><br>
+                    <div class="post-type-slug snn-admin-field">
+                        <label><?php echo esc_html__( 'Post Type Slug (max 20 chars)', 'snn' ); ?></label>
                         <input type="text" name="custom_post_types[${newIndex}][slug]" placeholder="<?php echo esc_attr__( 'post-slug', 'snn' ); ?>" maxlength="20" />
                     </div>
-                    <div class="post-type-icon">
-                        <label><?php echo esc_html__( 'Dashicon', 'snn' ); ?></label><br>
+                    <div class="post-type-icon snn-admin-field">
+                        <label><?php echo esc_html__( 'Dashicon', 'snn' ); ?></label>
                         <input type="hidden" name="custom_post_types[${newIndex}][dashicon]" value="dashicons-admin-page" class="dashicon-value-input" />
                         <button type="button" class="dashicon-picker-btn" title="<?php echo esc_attr__( 'Click to pick icon', 'snn' ); ?>">
                             <span class="dashicons dashicons-admin-page"></span>
                             <span class="dashicon-btn-label">admin-page</span>
                         </button>
+                    </div>
                     </div>
                     <!-- Supports Section -->
                     ${generateSupportsHTML(newIndex)}
@@ -505,142 +512,61 @@ function snn_render_custom_post_types_page() {
         </script>
 
         <style>
-            .custom-post-type-row {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 10px;
-                margin-bottom: 10px;
-                align-items: center;
-                padding: 20px;
-                border: 1px solid #e2e2e2;
-                border-radius: 10px;
-                background-color: #ffffff;
-            }
-            .custom-post-type-row label {
-                width: auto;
-                font-weight: bold;
-                min-width:200px
-            }
-            .custom-post-type-row input[type="text"] {
-                flex: 1;
-                width: 300px;
-                padding: 5px;
-                background: #ffffff;
-                border-radius: 5px;
-                height: 40px;
-                border: solid 1px #e2e2e2;
-            }
-            .custom-post-type-row input[type="text"]:hover {
-                border: solid 1px #000000;
-            }
-            .custom-post-type-row .buttons {
-                display: flex;
-                flex-direction: row;
-                gap: 5px;
-                position: relative;
-                top:10px;
-            }
-            .custom-post-type-row .buttons button {
-                background: #ffffff;
-                border-radius: 5px;
-                padding: 10px;
-                border: solid 1px #e2e2e2;
-                height: 40px;
-                cursor: pointer;
-            }
-            .custom-post-type-row .buttons button:hover {
-                background: var(--wp-admin-theme-color);
-                color: white;
-            }
-            #add-custom-post-type-row {
-                margin-top: 10px;
-            }
-            .custom-post-type-row [type="checkbox"] {
-                appearance: none;
-                -webkit-appearance: none;
-                cursor: pointer;
-                position: relative;
-                width: 40px;
-                height: 22px;
-                background-color: #eeeeee;
-                border-radius: 11px;
-                border: 1px solid #e2e2e2;
-                transition: 0.25s;
-                margin-top: 2px;
-                min-width: 40px;
-            }
-            .custom-post-type-row [type="checkbox"]::before {
-                content: "";
-                position: absolute;
-                top: 2px;
-                left: 3px;
-                width: 16px;
-                height: 16px;
-                background-color: #ffffff;
-                border-radius: 50%;
-                transition: 0.25s;
-            }
-            .custom-post-type-row [type="checkbox"]:hover {
-                border: 2px solid var(--wp-admin-theme-color);
-            }
-            .custom-post-type-row [type="checkbox"]:checked {
-                background-color: #eeeeee;
-                border: 2px solid var(--wp-admin-theme-color);
-            }
-            .custom-post-type-row [type="checkbox"]:checked::before {
-                left: 21px;
-                background-color: var(--wp-admin-theme-color);
-            }
-            .advanced-settings-wrap {
+            .snn-admin-ui .advanced-settings-wrap {
                 width: 100%;
-                padding-left: 155px;
+                margin-top: var(--snn-space-2);
             }
-            @media(max-width:768px) { .advanced-settings-wrap { padding-left: 0; } }
-            .toggle-advanced-btn {
+            .snn-admin-ui .toggle-advanced-btn.snn-admin-collapsible-toggle {
                 background: none;
                 border: none;
                 padding: 0;
                 cursor: pointer;
                 font-size: 13px;
-                color: #666;
-                margin-bottom: 8px;
+                font-weight: 600;
+                color: var(--snn-accent);
+                margin-bottom: var(--snn-space-2);
             }
-            .toggle-advanced-btn:hover {
-                color: #000;
+            .snn-admin-ui .toggle-advanced-btn.snn-admin-collapsible-toggle:hover {
+                color: var(--snn-accent-hover);
             }
-            .supports-section {
+            .snn-admin-ui .supports-section {
                 display: flex;
-                gap: 10px;
+                gap: var(--snn-space-2) var(--snn-space-4);
                 flex-wrap: wrap;
+                padding: var(--snn-space-4);
+                background: var(--snn-bg);
+                border: 1px solid var(--snn-border);
+                border-radius: var(--snn-radius-sm);
             }
             /* Dashicon picker button */
-            .post-type-icon .dashicon-picker-btn {
+            .snn-admin-ui .post-type-icon .dashicon-picker-btn {
                 display: inline-flex;
                 align-items: center;
-                gap: 8px;
-                padding: 0 12px;
-                background: #ffffff;
-                border: 1px solid #e2e2e2;
-                border-radius: 5px;
+                gap: var(--snn-space-2);
+                padding: 0 var(--snn-space-3);
+                background: var(--snn-card-bg);
+                border: 1px solid var(--snn-border);
+                border-radius: var(--snn-radius-sm);
                 cursor: pointer;
-                height: 40px;
+                height: 38px;
                 min-width: 160px;
                 max-width: 220px;
                 font-size: 13px;
                 transition: border-color 0.15s;
             }
-            .post-type-icon .dashicon-picker-btn:hover {
-                border-color: #000;
+            .snn-admin-ui .post-type-icon .dashicon-picker-btn:hover {
+                border-color: var(--snn-accent);
             }
-            .post-type-icon .dashicon-picker-btn .dashicons {
+            .snn-admin-ui .post-type-icon .dashicon-picker-btn .dashicons {
                 font-size: 20px;
                 width: 20px;
                 height: 20px;
                 flex-shrink: 0;
+                color: var(--snn-accent);
             }
-            .dashicon-btn-label {
+            .snn-admin-ui .dashicon-btn-label {
                 font-size: 11px;
-                color: #555;
+                color: var(--snn-text-muted);
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
@@ -653,16 +579,17 @@ function snn_render_custom_post_types_page() {
                 display: flex;
                 align-items: center;
                 justify-content: center;
+                font-family: var(--snn-font, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif);
             }
             .dashicon-picker-backdrop {
                 position: absolute;
                 inset: 0;
-                background: rgba(0,0,0,0.55);
+                background: rgba(24, 24, 27, 0.55);
             }
             .dashicon-picker-dialog {
                 position: relative;
                 background: #fff;
-                border-radius: 8px;
+                border-radius: 12px;
                 width: 660px;
                 max-width: 95vw;
                 max-height: 82vh;
@@ -675,21 +602,21 @@ function snn_render_custom_post_types_page() {
                 align-items: center;
                 gap: 10px;
                 padding: 14px 16px;
-                border-bottom: 1px solid #e2e2e2;
+                border-bottom: 1px solid #e4e4e9;
                 flex-shrink: 0;
             }
             #dashicon-search {
                 flex: 1;
                 height: 36px;
                 padding: 0 10px;
-                border: 1px solid #e2e2e2;
-                border-radius: 5px;
+                border: 1px solid #e4e4e9;
+                border-radius: 8px;
                 font-size: 13px;
-                background: #f9f9f9;
+                background: #f9f9fb;
             }
             #dashicon-search:focus {
                 outline: none;
-                border-color: var(--wp-admin-theme-color);
+                border-color: #4f46e5;
                 background: #fff;
             }
             #dashicon-picker-close {
@@ -697,7 +624,7 @@ function snn_render_custom_post_types_page() {
                 border: none;
                 font-size: 18px;
                 cursor: pointer;
-                color: #666;
+                color: #6b7280;
                 padding: 4px 8px;
                 border-radius: 4px;
                 line-height: 1;
@@ -705,7 +632,7 @@ function snn_render_custom_post_types_page() {
             }
             #dashicon-picker-close:hover {
                 background: #f0f0f0;
-                color: #000;
+                color: #18181b;
             }
             .dashicon-picker-grid {
                 display: grid;
@@ -722,17 +649,17 @@ function snn_render_custom_post_types_page() {
                 padding: 10px 4px;
                 background: none;
                 border: 1px solid transparent;
-                border-radius: 6px;
+                border-radius: 8px;
                 cursor: pointer;
                 transition: background 0.12s, border-color 0.12s;
             }
             .dashicon-item:hover {
-                background: #f0f7ff;
-                border-color: var(--wp-admin-theme-color, #2271b1);
+                background: #eef2ff;
+                border-color: #4f46e5;
             }
             .dashicon-item.selected {
-                background: #e8f3fb;
-                border-color: var(--wp-admin-theme-color, #2271b1);
+                background: #eef2ff;
+                border-color: #4f46e5;
             }
             .dashicon-item .dashicons {
                 font-size: 24px;
@@ -741,7 +668,7 @@ function snn_render_custom_post_types_page() {
                 color: #333;
             }
             .dashicon-item.selected .dashicons {
-                color: var(--wp-admin-theme-color, #2271b1);
+                color: #4f46e5;
             }
             .dashicon-item-label {
                 font-size: 9px;

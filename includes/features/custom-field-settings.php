@@ -86,17 +86,17 @@ function snn_custom_fields_page_callback() {
         echo '<div class="updated"><p>' . esc_html__('Custom fields saved successfully.', 'snn') . '</p></div>';
     }
     ?>
-    <div class="wrap">
+    <div class="wrap snn-admin-ui">
         <h1><?php esc_html_e('Manage Custom Fields', 'snn'); ?></h1>
+        <p class="snn-admin-intro">
+            <?php esc_html_e('Define custom fields with group name, field name, field type, and assign to post type, taxonomy, author, or an options page:', 'snn'); ?>
+            <br><?php esc_html_e('Select one or more to register the same Custom Field to Post Types, Taxonomies, or Author.', 'snn'); ?>
+            <br><?php esc_html_e('Checking "Options Page" will make this field available on a new admin page named after its "Group Name".', 'snn'); ?>
+            <br><?php esc_html_e('Press CTRL/CMD to select multiple or remove selection.', 'snn'); ?>
+        </p>
         <form method="post">
             <?php wp_nonce_field('snn_custom_fields_save', 'snn_custom_fields_nonce'); ?>
             <div id="custom-field-settings">
-                <p>
-                    <?php esc_html_e('Define custom fields with group name, field name, field type, and assign to post type, taxonomy, author, or an options page:', 'snn'); ?>
-                    <br><?php esc_html_e('Select one or more to register the same Custom Field to Post Types, Taxonomies, or Author.', 'snn'); ?>
-                    <br><?php esc_html_e('Checking "Options Page" will make this field available on a new admin page named after its "Group Name".', 'snn'); ?>
-                    <br><?php esc_html_e('Press CTRL/CMD to select multiple or remove selection.', 'snn'); ?>
-                </p>
                 <?php
                 if (!empty($custom_fields) && is_array($custom_fields)) {
                     foreach ($custom_fields as $index => $field) {
@@ -106,39 +106,40 @@ function snn_custom_fields_page_callback() {
                         $repeater_title = $is_repeater_disabled_type ? __('This field type cannot be a repeater', 'snn') : __('Allow multiple values', 'snn');
                         $show_quick_edit = in_array($field_type, ['text', 'textarea']);
                         ?>
-                        <div class="custom-field-row" data-index="<?php echo $index; ?>">
-                            <div class="buttons">
-                                <button type="button" class="move-up">▲</button>
-                                <button type="button" class="move-down">▼</button>
-                                <button type="button" class="remove-field"><?php esc_html_e('Remove', 'snn'); ?></button>
+                        <div class="custom-field-row snn-admin-row-card" data-index="<?php echo $index; ?>">
+                            <div class="buttons snn-admin-row-actions">
+                                <span class="snn-admin-row-index"><?php echo esc_html( $index + 1 ); ?></span>
+                                <button type="button" class="move-up snn-admin-icon-btn">▲</button>
+                                <button type="button" class="move-down snn-admin-icon-btn">▼</button>
+                                <button type="button" class="remove-field snn-admin-icon-btn snn-admin-danger-btn"><?php esc_html_e('Remove', 'snn'); ?></button>
                             </div>
                             <div class="field-identity-group">
-                                <div class="field-group">
+                                <div class="field-group snn-admin-field">
                                     <label><?php esc_html_e('Group Name', 'snn'); ?></label>
                                     <input type="text" class="cf-group-name" name="custom_fields[<?php echo $index; ?>][group_name]" placeholder="<?php esc_attr_e('Group Name', 'snn'); ?>"
                                            value="<?php echo esc_attr($field['group_name'] ?? ''); ?>" />
                                 </div>
-                                <div class="field-group">
+                                <div class="field-group snn-admin-field">
                                     <label><?php esc_html_e('Field Label', 'snn'); ?></label>
                                     <input type="text" class="cf-field-label" name="custom_fields[<?php echo $index; ?>][label]"
                                            placeholder="<?php esc_attr_e('Field Label Name', 'snn'); ?>"
                                            value="<?php echo esc_attr($field['label'] ?? ''); ?>" />
                                 </div>
-                                <div class="field-group">
+                                <div class="field-group snn-admin-field">
                                     <label><?php esc_html_e('Slug Name', 'snn'); ?></label>
                                     <input type="text" class="sanitize-key cf-slug-name" name="custom_fields[<?php echo $index; ?>][name]"
                                            placeholder="<?php esc_attr_e('field_name', 'snn'); ?>"
                                            value="<?php echo esc_attr($field['name']); ?>" />
                                 </div>
                             </div>
-                            <div class="field-group">
+                            <div class="field-group snn-admin-field snn-admin-field-narrow">
                                 <label><?php esc_html_e('Width (%)', 'snn'); ?></label>
                                 <input style="width:70px" type="number" class="cf-column-width" min="10" max="100"
                                        name="custom_fields[<?php echo $index; ?>][column_width]"
                                        placeholder="25"
                                        value="<?php echo esc_attr($field['column_width'] ?? ''); ?>" />
                             </div>
-                            <div class="field-group">
+                            <div class="field-group snn-admin-field">
                                 <label><?php esc_html_e('Field Type', 'snn'); ?></label>
                                 <select name="custom_fields[<?php echo $index; ?>][type]" class="field-type-select">
                                     <option value="text"    <?php selected($field_type, 'text'); ?>><?php esc_html_e('Text', 'snn'); ?></option>
@@ -161,68 +162,68 @@ function snn_custom_fields_page_callback() {
                                     <option value="map"       <?php selected($field_type, 'map'); ?>><?php esc_html_e('Map', 'snn'); ?></option>
                                 </select>
                             </div>
-                            <div class="field-group field-group-choices" style="<?php echo $show_choices ? '' : 'display:none;'; ?>">
+                            <div class="field-group field-group-choices snn-admin-field snn-admin-field-wide" style="<?php echo $show_choices ? '' : 'display:none;'; ?>">
                                 <label><?php esc_html_e('Choices', 'snn'); ?> <small><code>(<?php esc_html_e('value:label', 'snn'); ?>)</code></small></label>
                                 <textarea class="cf-choices" name="custom_fields[<?php echo $index; ?>][choices]" rows="4"
                                           placeholder="red : <?php esc_attr_e('Red Color', 'snn'); ?>&#10;green : <?php esc_attr_e('Green Color', 'snn'); ?>"><?php
                                           echo esc_textarea(wp_unslash($field['choices'] ?? '')); ?></textarea>
                             </div>
-                            <div class="field-group">
+                            <div class="field-group snn-admin-field">
                                 <label><?php esc_html_e('Post Types', 'snn'); ?></label>
                                 <select class="cf-post-types" name="custom_fields[<?php echo $index; ?>][post_type][]" multiple>
                                     <?php foreach ($post_types as $pt) : ?>
-                                        <option value="<?php echo esc_attr($pt->name); ?>"  
+                                        <option value="<?php echo esc_attr($pt->name); ?>"
                                             <?php echo (!empty($field['post_type']) && in_array($pt->name, $field['post_type'])) ? 'selected' : ''; ?>>
                                             <?php echo esc_html($pt->label); ?>
                                         </option>
                                     <?php endforeach; ?>
                                 </select>
                             </div>
-                            <div class="field-group">
+                            <div class="field-group snn-admin-field">
                                 <label><?php esc_html_e('Taxonomies', 'snn'); ?></label>
                                 <select class="cf-taxonomies" name="custom_fields[<?php echo $index; ?>][taxonomies][]" multiple>
                                     <?php foreach ($taxonomies as $tax) : ?>
-                                        <option value="<?php echo esc_attr($tax->name); ?>"  
+                                        <option value="<?php echo esc_attr($tax->name); ?>"
                                             <?php echo (!empty($field['taxonomies']) && in_array($tax->name, $field['taxonomies'])) ? 'selected' : ''; ?>>
                                             <?php echo esc_html($tax->label); ?>
                                         </option>
                                     <?php endforeach; ?>
                                 </select>
                             </div>
-                            <div class="field-group">
+                            <div class="field-group snn-admin-toggle-field">
                                 <label><?php esc_html_e('Author', 'snn'); ?></label>
-                                <input type="checkbox" class="author-checkbox" name="custom_fields[<?php echo $index; ?>][author]" value="1"  
-                                       <?php checked(!empty($field['author'])); 
+                                <input type="checkbox" class="author-checkbox" name="custom_fields[<?php echo $index; ?>][author]" value="1"
+                                       <?php checked(!empty($field['author']));
                                        echo (in_array($field_type, ['double_text', 'double_textarea'])) ? ' disabled' : ''; ?>
                                        title="<?php echo (in_array($field_type, ['double_text', 'double_textarea'])) ? esc_attr__('This field type cannot be assigned to Author', 'snn') : ''; ?>" />
                             </div>
-                             <div class="field-group">
+                             <div class="field-group snn-admin-toggle-field">
                                 <label><?php esc_html_e('Options Page', 'snn'); ?></label>
-                                <input type="checkbox" class="options-page-checkbox" name="custom_fields[<?php echo $index; ?>][options_page]" value="1"  
-                                       <?php checked(!empty($field['options_page'])); 
+                                <input type="checkbox" class="options-page-checkbox" name="custom_fields[<?php echo $index; ?>][options_page]" value="1"
+                                       <?php checked(!empty($field['options_page']));
                                        echo (in_array($field_type, ['double_text', 'double_textarea'])) ? ' disabled' : ''; ?>
                                        title="<?php echo (in_array($field_type, ['double_text', 'double_textarea'])) ? esc_attr__('This field type cannot be assigned to Options Page', 'snn') : ''; ?>" />
                             </div>
-                            <div class="field-group">
+                            <div class="field-group snn-admin-toggle-field">
                                 <label><?php esc_html_e('Repeater', 'snn'); ?></label>
                                 <input type="checkbox" class="repeater-checkbox" name="custom_fields[<?php echo $index; ?>][repeater]" value="1"
                                        <?php checked(!empty($field['repeater'])); echo $is_repeater_disabled_type ? ' disabled' : ''; ?>
                                        title="<?php echo esc_attr($repeater_title); ?>" />
                             </div>
-                            <div class="field-group quick-edit-group" style="<?php echo $show_quick_edit ? '' : 'display:none;'; ?>">
+                            <div class="field-group quick-edit-group snn-admin-toggle-field" style="<?php echo $show_quick_edit ? '' : 'display:none;'; ?>">
                                 <label><?php esc_html_e('Quick Edit', 'snn'); ?></label>
                                 <input type="checkbox" class="quick-edit-checkbox" name="custom_fields[<?php echo $index; ?>][quick_edit]" value="1"
                                        <?php checked(!empty($field['quick_edit'])); ?>
                                        title="<?php esc_attr_e('Enable Quick Edit for this field', 'snn'); ?>" />
                             </div>
                             <?php if ($field_type === 'media') : ?>
-                            <div class="field-group media-return-url-group">
+                            <div class="field-group media-return-url-group snn-admin-toggle-field">
                                 <label><?php esc_html_e('Return URL', 'snn'); ?></label>
                                 <input type="checkbox" class="cf-return-url" name="custom_fields[<?php echo $index; ?>][return_full_url]" value="1" <?php checked(!empty($field['return_full_url'])); ?> />
                             </div>
                             <?php endif; ?>
                             <?php if ($field_type === 'date') : ?>
-                            <div class="field-group date-format-group">
+                            <div class="field-group date-format-group snn-admin-field">
                                 <label><?php esc_html_e('Date Format', 'snn'); ?></label>
                                 <select class="cf-date-format" name="custom_fields[<?php echo $index; ?>][date_format]">
                                     <option value="YYYY-MM-DD" <?php selected(!empty($field['date_format']) ? $field['date_format'] : 'YYYY-MM-DD', 'YYYY-MM-DD'); ?>>YYYY-MM-DD</option>
@@ -238,9 +239,10 @@ function snn_custom_fields_page_callback() {
                 }
                 ?>
             </div>
-            <button type="button" id="add-custom-field-row"><?php esc_html_e('Add New Field', 'snn'); ?></button>
-            <br><br>
-            <?php submit_button(__('Save Custom Fields', 'snn')); ?>
+            <button type="button" id="add-custom-field-row" class="snn-admin-add-btn"><?php esc_html_e('Add New Field', 'snn'); ?></button>
+            <div class="snn-admin-submit-wrap">
+            <p class="submit"><input type="submit" name="submit" id="submit" class="button button-primary" value="<?php echo esc_attr__( 'Save Custom Fields', 'snn' ); ?>"></p>
+            </div>
         </form>
 
         <script>
@@ -342,7 +344,7 @@ function snn_custom_fields_page_callback() {
                     if (!mediaReturnGroup) {
                         const newIndex = row.dataset.index;
                         const div = document.createElement('div');
-                        div.classList.add('field-group', 'media-return-url-group');
+                        div.classList.add('field-group', 'media-return-url-group', 'snn-admin-toggle-field');
                         div.innerHTML = `<label><?php esc_html_e('Return Full URL', 'snn'); ?></label><input type="checkbox" name="custom_fields[${newIndex}][return_full_url]" value="1">`;
                         const repeaterDiv = row.querySelector('input[name*="[repeater]"]');
                         if (repeaterDiv && repeaterDiv.closest('.field-group')) {
@@ -366,7 +368,7 @@ function snn_custom_fields_page_callback() {
                     if (!dateFormatGroup) {
                         const newIndex = row.dataset.index;
                         const div = document.createElement('div');
-                        div.classList.add('field-group', 'date-format-group');
+                        div.classList.add('field-group', 'date-format-group', 'snn-admin-field');
                         div.innerHTML = `<label><?php esc_html_e('Date Format', 'snn'); ?></label><select name="custom_fields[${newIndex}][date_format]" ><option value="YYYY-MM-DD">YYYY-MM-DD</option><option value="DD-MM-YYYY">DD-MM-YYYY</option><option value="DD.MM.YYYY">DD.MM.YYYY</option><option value="MM.DD.YYYY">MM.DD.YYYY</option></select>`;
                         const repeaterDiv = row.querySelector('input[name*="[repeater]"]');
                         if (repeaterDiv && repeaterDiv.closest('.field-group')) {
@@ -388,21 +390,22 @@ function snn_custom_fields_page_callback() {
             addFieldButton.addEventListener('click', function() {
                 const newIndex = fieldContainer.querySelectorAll('.custom-field-row').length;
                 const newRow = document.createElement('div');
-                newRow.classList.add('custom-field-row');
+                newRow.classList.add('custom-field-row', 'snn-admin-row-card');
                 newRow.dataset.index = newIndex;
                 newRow.innerHTML = `
-                    <div class="buttons">
-                        <button type="button" class="move-up">▲</button>
-                        <button type="button" class="move-down">▼</button>
-                        <button type="button" class="remove-field"><?php esc_html_e('Remove', 'snn'); ?></button>
+                    <div class="buttons snn-admin-row-actions">
+                        <span class="snn-admin-row-index">${newIndex + 1}</span>
+                        <button type="button" class="move-up snn-admin-icon-btn">▲</button>
+                        <button type="button" class="move-down snn-admin-icon-btn">▼</button>
+                        <button type="button" class="remove-field snn-admin-icon-btn snn-admin-danger-btn"><?php esc_html_e('Remove', 'snn'); ?></button>
                     </div>
                     <div class="field-identity-group">
-                        <div class="field-group"><label><?php esc_html_e('Group Name', 'snn'); ?></label><input type="text" class="cf-group-name" name="custom_fields[${newIndex}][group_name]" placeholder="<?php esc_attr_e('Group Name', 'snn'); ?>"></div>
-                        <div class="field-group"><label><?php esc_html_e('Field Label', 'snn'); ?></label><input type="text" class="cf-field-label" name="custom_fields[${newIndex}][label]" placeholder="<?php esc_attr_e('Field Name', 'snn'); ?>"></div>
-                        <div class="field-group"><label><?php esc_html_e('Slug Name', 'snn'); ?></label><input type="text" class="sanitize-key cf-slug-name" name="custom_fields[${newIndex}][name]" placeholder="<?php esc_attr_e('field_name', 'snn'); ?>"></div>
+                        <div class="field-group snn-admin-field"><label><?php esc_html_e('Group Name', 'snn'); ?></label><input type="text" class="cf-group-name" name="custom_fields[${newIndex}][group_name]" placeholder="<?php esc_attr_e('Group Name', 'snn'); ?>"></div>
+                        <div class="field-group snn-admin-field"><label><?php esc_html_e('Field Label', 'snn'); ?></label><input type="text" class="cf-field-label" name="custom_fields[${newIndex}][label]" placeholder="<?php esc_attr_e('Field Name', 'snn'); ?>"></div>
+                        <div class="field-group snn-admin-field"><label><?php esc_html_e('Slug Name', 'snn'); ?></label><input type="text" class="sanitize-key cf-slug-name" name="custom_fields[${newIndex}][name]" placeholder="<?php esc_attr_e('field_name', 'snn'); ?>"></div>
                     </div>
-                    <div class="field-group"><label><?php esc_html_e('Width (%)', 'snn'); ?></label><input type="number" class="cf-column-width" name="custom_fields[${newIndex}][column_width]" min="10" max="100" placeholder="25"></div>
-                    <div class="field-group">
+                    <div class="field-group snn-admin-field snn-admin-field-narrow"><label><?php esc_html_e('Width (%)', 'snn'); ?></label><input type="number" class="cf-column-width" name="custom_fields[${newIndex}][column_width]" min="10" max="100" placeholder="25"></div>
+                    <div class="field-group snn-admin-field">
                         <label><?php esc_html_e('Field Type', 'snn'); ?></label>
                         <select name="custom_fields[${newIndex}][type]" class="field-type-select">
                             <option value="text"><?php esc_html_e('Text', 'snn'); ?></option>
@@ -425,26 +428,26 @@ function snn_custom_fields_page_callback() {
                             <option value="map"><?php esc_html_e('Map', 'snn'); ?></option>
                         </select>
                     </div>
-                    <div class="field-group field-group-choices" style="display:none;">
+                    <div class="field-group field-group-choices snn-admin-field snn-admin-field-wide" style="display:none;">
                         <label><?php esc_html_e('Choices', 'snn'); ?> <small>(<?php esc_html_e('value:label', 'snn'); ?>)</small></label>
                         <textarea class="cf-choices" name="custom_fields[${newIndex}][choices]" rows="4" placeholder="red : <?php esc_attr_e('Red', 'snn'); ?>&#10;green : <?php esc_attr_e('Green', 'snn'); ?>"></textarea>
                     </div>
-                    <div class="field-group"><label><?php esc_html_e('Post Types', 'snn'); ?></label><select class="cf-post-types" name="custom_fields[${newIndex}][post_type][]" multiple>
+                    <div class="field-group snn-admin-field"><label><?php esc_html_e('Post Types', 'snn'); ?></label><select class="cf-post-types" name="custom_fields[${newIndex}][post_type][]" multiple>
                         <?php foreach ($post_types as $pt) : ?>
                             <option value="<?php echo esc_js($pt->name); ?>"><?php echo esc_js($pt->label); ?></option>
                         <?php endforeach; ?>
                     </select></div>
-                    <div class="field-group"><label><?php esc_html_e('Taxonomies', 'snn'); ?></label><select class="cf-taxonomies" name="custom_fields[${newIndex}][taxonomies][]" multiple>
+                    <div class="field-group snn-admin-field"><label><?php esc_html_e('Taxonomies', 'snn'); ?></label><select class="cf-taxonomies" name="custom_fields[${newIndex}][taxonomies][]" multiple>
                         <?php foreach ($taxonomies as $tax) : ?>
                             <option value="<?php echo esc_js($tax->name); ?>"><?php echo esc_js($tax->label); ?></option>
                         <?php endforeach; ?>
                     </select></div>
-                    <div class="field-group"><label><?php esc_html_e('Author', 'snn'); ?></label><input type="checkbox" class="author-checkbox" name="custom_fields[${newIndex}][author]" value="1"></div>
-                    <div class="field-group"><label><?php esc_html_e('Options Page', 'snn'); ?></label><input type="checkbox" class="options-page-checkbox" name="custom_fields[${newIndex}][options_page]" value="1"></div>
-                    <div class="field-group"><label><?php esc_html_e('Repeater', 'snn'); ?></label><input type="checkbox" class="repeater-checkbox" name="custom_fields[${newIndex}][repeater]" value="1"></div>
-                    <div class="field-group quick-edit-group"><label><?php esc_html_e('Quick Edit', 'snn'); ?></label><input type="checkbox" class="quick-edit-checkbox" name="custom_fields[${newIndex}][quick_edit]" value="1" title="<?php esc_attr_e('Enable Quick Edit for this field', 'snn'); ?>"></div>
-                    <div class="field-group media-return-url-group" style="display:none;"><label><?php esc_html_e('Return Full URL', 'snn'); ?></label><input type="checkbox" class="cf-return-url" name="custom_fields[${newIndex}][return_full_url]" value="1"></div>
-                    <div class="field-group date-format-group" style="display:none;"><label><?php esc_html_e('Date Format', 'snn'); ?></label><select class="cf-date-format" name="custom_fields[${newIndex}][date_format]" style="width:140px"><option value="YYYY-MM-DD">YYYY-MM-DD</option><option value="DD-MM-YYYY">DD-MM-YYYY</option><option value="DD.MM.YYYY">DD.MM.YYYY</option><option value="MM.DD.YYYY">MM.DD.YYYY</option></select></div>
+                    <div class="field-group snn-admin-toggle-field"><label><?php esc_html_e('Author', 'snn'); ?></label><input type="checkbox" class="author-checkbox" name="custom_fields[${newIndex}][author]" value="1"></div>
+                    <div class="field-group snn-admin-toggle-field"><label><?php esc_html_e('Options Page', 'snn'); ?></label><input type="checkbox" class="options-page-checkbox" name="custom_fields[${newIndex}][options_page]" value="1"></div>
+                    <div class="field-group snn-admin-toggle-field"><label><?php esc_html_e('Repeater', 'snn'); ?></label><input type="checkbox" class="repeater-checkbox" name="custom_fields[${newIndex}][repeater]" value="1"></div>
+                    <div class="field-group quick-edit-group snn-admin-toggle-field"><label><?php esc_html_e('Quick Edit', 'snn'); ?></label><input type="checkbox" class="quick-edit-checkbox" name="custom_fields[${newIndex}][quick_edit]" value="1" title="<?php esc_attr_e('Enable Quick Edit for this field', 'snn'); ?>"></div>
+                    <div class="field-group media-return-url-group snn-admin-toggle-field" style="display:none;"><label><?php esc_html_e('Return Full URL', 'snn'); ?></label><input type="checkbox" class="cf-return-url" name="custom_fields[${newIndex}][return_full_url]" value="1"></div>
+                    <div class="field-group date-format-group snn-admin-field" style="display:none;"><label><?php esc_html_e('Date Format', 'snn'); ?></label><select class="cf-date-format" name="custom_fields[${newIndex}][date_format]" style="width:140px"><option value="YYYY-MM-DD">YYYY-MM-DD</option><option value="DD-MM-YYYY">DD-MM-YYYY</option><option value="DD.MM.YYYY">DD.MM.YYYY</option><option value="MM.DD.YYYY">MM.DD.YYYY</option></select></div>
                 `;
                 fieldContainer.appendChild(newRow);
                 attachFieldNameSanitizer(newRow.querySelector('.sanitize-key'));
@@ -542,206 +545,29 @@ function snn_custom_fields_page_callback() {
         </script>
 
         <style>
-
-
-            
-
-            .custom-field-row label {
-                font-weight: bold;
-                font-size: 14px; 
-                display: block; 
-                margin-bottom: 3px; 
-            }
-            .custom-field-row .field-group { 
-                display: flex;
-                flex-direction: column; 
-            }
-            .field-identity-group {
-                display: flex;
-                flex-direction: row;
-                gap: 8px; 
-                margin-top: 4px;
-            }
-            .field-identity-group input{
-                height:auto;
-                min-height:auto ;
-            }
-            .field-identity-group label{
-                line-height:1
-            }
-            .custom-field-row input,
-            .custom-field-row select,
-            .custom-field-row textarea {
-                font-size: 14px;
-            }
-            .custom-field-row {
+            .snn-admin-ui .custom-field-row {
                 display: flex;
                 flex-wrap: wrap;
-                gap: 10px;
-                margin-bottom: 10px;
+                gap: var(--snn-space-4);
                 align-items: flex-start;
-                gap: 10px; 
-                padding: 10px;
-                background-color: #ffffff;
-                border-radius:10px;
             }
-            .custom-field-row .buttons {
+            .snn-admin-ui .field-identity-group {
                 display: flex;
-                flex-direction: row; 
-                margin-right: 10px; 
-                order: -1; 
+                flex-direction: row;
+                gap: var(--snn-space-3);
+                flex: 1 1 100%;
             }
-
-            
-            .custom-field-row .buttons button{
-                background:#ffffff;
-                border-radius:5px;
-                padding:10px;
-                position: relative;
-                top: 20px;
-                border: solid 1px #e2e2e2;
-                height:40px;
-                cursor:pointer;
+            .snn-admin-ui .field-identity-group .snn-admin-field {
+                flex: 1;
+                min-width: 160px;
             }
-            .custom-field-row .buttons button:hover{
-                background:var(--wp-admin-theme-color);
-                color:white;
-            }
-            .custom-field-row .buttons button {
-                margin-left: 5px;
-            }
-
-            .custom-field-row .remove-field{   
-                background:red
-            }
-
-
             #add-custom-field-row {
-                color: #2271b1;
-                border-color: #2271b1;
-                background: #f6f7f7;
-                padding: 5px 20px;
-                border: solid 1px;
-                cursor: pointer;
-                border-radius: 3px;
+                margin-top: var(--snn-space-2);
             }
-            #add-custom-field-row:hover {
-                background: #eee;
-            }
-            .custom-field-row .cf-group-name,
-            .custom-field-row .cf-field-label,
-            .custom-field-row .cf-slug-name,
-            .custom-field-row .field-type-select,
-            .custom-field-row .cf-column-width,
-            .custom-field-row .cf-taxonomies,
-            .custom-field-row .cf-post-types,
-            .custom-field-row .cf-date-format
-            {
-                background:#ffffff ;
-                border-radius:5px ;
-                height:40px ;
-                border: solid 1px #e2e2e2 ;
-            }
-            .custom-field-row .cf-group-name:hover,
-            .custom-field-row .cf-field-label:hover,
-            .custom-field-row .cf-slug-name:hover,
-            .custom-field-row .field-type-select:hover,
-            .custom-field-row .cf-column-width:hover,
-            .custom-field-row .cf-taxonomies:hover,
-            .custom-field-row .cf-post-types:hover
-            {
-                border: solid 1px #000000 ;
-            }
-
-
-
-            .custom-field-row [type="checkbox"] {
-            appearance: none;
-            -webkit-appearance: none;
-            cursor: pointer;
-            position: relative;
-            width: 40px;
-            height: 22px;
-            background-color: #eeeeee;
-            border-radius: 11px;
-            border: 1px solid #e2e2e2;
-            transition: 0.25s;
-            margin-top:2px;
-            }
-
-            .custom-field-row [type="checkbox"]::before {
-            content: "";
-            position: absolute;
-            top: 2px;
-            left: 3px;
-            width: 16px;
-            height: 16px;
-            background-color: #ffffff; /* Default white knob */
-            border-radius: 50%;
-            transition: 0.25s;
-            }
-
-            .custom-field-row [type="checkbox"]:hover {
-            border: 2px solid var(--wp-admin-theme-color);
-            }
-
-            .custom-field-row [type="checkbox"]:checked {
-            background-color: #eeeeee; 
-            border: 2px solid var(--wp-admin-theme-color);
-            }
-
-            .custom-field-row [type="checkbox"]:checked::before {
-            left: 21px;
-            background-color: var(--wp-admin-theme-color);
-            }
-
-
-
-
-
-
-            .submit input[type="surgb(0, 0, 0){
-                background: var(--wp-admin-theme-color);
-                color: #fff;
-                text-shadow: none;
-            }
-            .submit input[type="submit"]:hover {
-                background-color: #005177;
-            }
-            .buttons button {
-                cursor: pointer;
-                border: 1px solid gray;
-                padding: 4px 10px;
-            }
-            .buttons button:hover {
-                background: white;
-            }
-            @media (max-width: 768px) {
-                .custom-field-row {
+            @media (max-width: 782px) {
+                .snn-admin-ui .field-identity-group {
                     flex-direction: column;
-                    align-items: flex-start;
                 }
-                .custom-field-row .buttons {
-                    flex-direction: row; 
-                    gap: 10px;
-                    margin-bottom: 10px; 
-                    order: 0; 
-                }
-                .custom-field-row .field-group, 
-                .custom-field-row .field-identity-group,
-                .custom-field-row input[type="text"],
-                .custom-field-row input[type="number"], 
-                .custom-field-row select,
-                .custom_field-row textarea { 
-                    width: 100%; 
-                }
-                .custom-field-row input[style*="width:70px"] { 
-                    width: 100% !important;
-                }
-                .custom-field-row select[style*="width:140px"] { 
-                    width: 100% !important;
-                }
-                
             }
         </style>
     </div>
