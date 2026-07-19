@@ -57,6 +57,10 @@ msgstr "0 = keine Größenänderung. 2000 empfohlen."
 msgid "2 - Fast"
 msgstr "2 - Schnell"
 
+#: includes/features/analytics.php
+msgid "30 Days"
+msgstr "30 Tage"
+
 #: includes/features/interactions.php:294
 msgid "3D Perspective Flip"
 msgstr "3D-Perspektiv-Flip"
@@ -72,6 +76,10 @@ msgstr "6 - Beste Komprimierung"
 #: includes/features/media-image-opt.php:1341
 msgid "60 typical. 0=max, 100=none."
 msgstr "60 typisch. 0=max, 100=keine."
+
+#: includes/features/analytics.php
+msgid "7 Days"
+msgstr "7 Tage"
 
 #: includes/features/media-image-opt.php:121
 #: includes/features/media-image-opt.php:1295
@@ -121,6 +129,10 @@ msgstr "AJAX-Fehler:"
 #: includes/features/custom-code-snippets.php:278
 msgid "AJAX error fetching revision."
 msgstr "AJAX-Fehler beim Abrufen der Revision."
+
+#: includes/features/analytics.php
+msgid "Analytics"
+msgstr "Analytics"
 
 #: includes/features/custom-code-snippets.php:1352
 msgid "ATTENTION PLEASE! These settings are not for normal users! If you don't have at least some basic knowledge of HTML, CSS, and FTP login, DO NOT USE IT!"
@@ -2157,6 +2169,14 @@ msgstr "Ausnahme: Nutzer, deren einzige Rolle(n) WooCommerce \"Kunde\" und/oder 
 msgid "Excerpt"
 msgstr "Auszug (Excerpt)"
 
+#: includes/features/analytics.php
+msgid "Exclude IP Addresses"
+msgstr "IP-Adressen ausschließen"
+
+#: includes/features/analytics.php
+msgid "Exclude Roles from Tracking"
+msgstr "Rollen vom Tracking ausschließen"
+
 #: includes/features/custom-code-snippets.php:1125
 msgid "Execution Disabled by Constant:"
 msgstr "Ausführung durch Konstante deaktiviert:"
@@ -2885,6 +2905,10 @@ msgstr "Revision laden & speichern"
 msgid "Loading..."
 msgstr "Laden..."
 
+#: includes/features/analytics.php
+msgid "Logged-in users whose role(s) are all checked here are not counted."
+msgstr "Eingeloggte Nutzer, deren Rolle(n) hier alle angehakt sind, werden nicht mitgezählt."
+
 #: includes/features/custom-code-snippets.php:1194
 #: includes/features/custom-code-snippets.php:1383
 msgid "Location"
@@ -3141,9 +3165,17 @@ msgstr "Keine Code-Snippets gefunden"
 msgid "No code snippets found in Trash"
 msgstr "Keine Code-Snippets im Papierkorb gefunden"
 
+#: includes/features/analytics.php
+msgid "No data."
+msgstr "Keine Daten."
+
 #: includes/features/custom-code-snippets.php:1550
 msgid "No errors logged yet."
 msgstr "Noch keine Fehler protokolliert."
+
+#: includes/features/analytics.php
+msgid "No external referrals."
+msgstr "Keine externen Zuweisungen."
 
 #: includes/features/cookie-banner.php:764
 msgid "No external scripts or iframes detected on this page."
@@ -3205,6 +3237,10 @@ msgstr "Keine (None)"
 msgid "Not an image file."
 msgstr "Keine Bilddatei."
 
+#: includes/features/analytics.php
+msgid "Not enough data for this time range."
+msgstr "Nicht genug Daten für diesen Zeitraum."
+
 #: includes/features/smtp-settings.php:837
 msgid "Note - PHP Warnings encountered:"
 msgstr "Hinweis – PHP-Warnungen aufgetreten:"
@@ -3218,6 +3254,10 @@ msgstr "Notizen"
 #: includes/features/custom-field-settings.php:409
 msgid "Number"
 msgstr "Zahl (Number)"
+
+#: includes/features/analytics.php
+msgid "Older records are automatically deleted daily."
+msgstr "Ältere Datensätze werden täglich automatisch gelöscht."
 
 #: includes/elements/gsap-multi-element-register.php:605
 msgid "Once True"
@@ -3406,6 +3446,10 @@ msgstr "PHP"
 msgid "PHPMailer Error:"
 msgstr "PHPMailer-Fehler:"
 
+#: includes/features/analytics.php
+msgid "Page"
+msgstr "Seite"
+
 #: includes/features/post-types-settings.php:34
 #: includes/features/post-types-settings.php:188
 msgid "Page Attributes"
@@ -3426,6 +3470,14 @@ msgstr "Seitenstruktur-Selektoren"
 #: includes/features/cookie-banner.php:53
 msgid "Page content is empty"
 msgstr "Seiteninhalt ist leer"
+
+#: includes/features/analytics.php
+msgid "Pageviews"
+msgstr "Seitenaufrufe"
+
+#: includes/features/analytics.php
+msgid "Pageviews per day"
+msgstr "Seitenaufrufe pro Tag"
 
 #: includes/elements/gsap-text-animations.php:57
 msgid "Paragraph"
@@ -3709,6 +3761,10 @@ msgstr "Weiterleitungs-Einstellung"
 #: includes/features/login-settings.php:63
 msgid "Redirect URL after Login"
 msgstr "Weiterleitungs-URL nach Login"
+
+#: includes/features/analytics.php
+msgid "Retention Period (Days)"
+msgstr "Aufbewahrungsfrist (Tage)"
 
 #: includes/features/editor-settings-panel-bricks.php:227
 msgid "Refresh Editor After Save"
@@ -4713,6 +4769,10 @@ msgstr "Snippet nicht gefunden."
 msgid "Snippet saved."
 msgstr "Snippet gespeichert."
 
+#: includes/features/analytics.php
+msgid "Source"
+msgstr "Quelle"
+
 #: includes/features/two-factor-auth.php:267
 #: includes/features/two-factor-auth.php:303
 msgid "Something went wrong. Please log in again."
@@ -5061,6 +5121,10 @@ msgstr "Der Titel im Präferenzen-Inhalt"
 msgid "The visibility state is saved in your browser and persists across page loads. Useful for taking screenshots or viewing the site without the admin bar."
 msgstr "Der Sichtbarkeitsstatus wird in deinem Browser gespeichert und bleibt auch nach dem Neuladen der Seite erhalten. Nützlich, um Screenshots zu erstellen oder die Website ohne Admin-Leiste anzusehen."
 
+#: includes/features/analytics.php
+msgid "This Year"
+msgstr "Dieses Jahr"
+
 #: includes/features/other-settings.php:268
 msgid "This allows you to create draft revisions of posts, edit them, and sync them back to the original when ready."
 msgstr "Damit kannst du Entwurfsrevisionen von Beiträgen erstellen, bearbeiten und bei Bedarf mit dem Original synchronisieren."
@@ -5164,6 +5228,10 @@ msgstr "Zeitstempel (Timestamp)"
 msgid "Title"
 msgstr "Titel"
 
+#: includes/features/analytics.php
+msgid "Today"
+msgstr "Heute"
+
 #: includes/features/two-factor-auth.php:281
 msgid "Too many incorrect attempts. Please log in again."
 msgstr "Zu viele falsche Versuche. Bitte melde dich erneut an."
@@ -5171,6 +5239,14 @@ msgstr "Zu viele falsche Versuche. Bitte melde dich erneut an."
 #: includes/features/cookie-banner.php:1017
 msgid "Top"
 msgstr "Oben"
+
+#: includes/features/analytics.php
+msgid "Top 10 Pages"
+msgstr "Top 10 Seiten"
+
+#: includes/features/analytics.php
+msgid "Top 10 Referrers"
+msgstr "Top 10 Referrer"
 
 #: includes/features/custom-code-snippets.php:1531
 msgid "Top-level"
@@ -5355,9 +5431,17 @@ msgstr "Fehlerprotokolle anzeigen"
 msgid "View all optimized images and restore originals if needed."
 msgstr "Zeige alle optimierten Bilder an und stelle bei Bedarf die Originale wieder her."
 
+#: includes/features/analytics.php
+msgid "Views"
+msgstr "Aufrufe"
+
 #: includes/features/editor-settings-bricks.php:299
 msgid "Visit <code>/?key=YOUR_SLUG</code> to set the bypass cookie (valid 24 h)."
 msgstr "Rufe <code>/?key=YOUR_SLUG</code> auf, um das Umgehungs-Cookie zu setzen (24 Std. gültig)."
+
+#: includes/features/analytics.php
+msgid "Visitors"
+msgstr "Besucher"
 
 #: includes/features/custom-code-snippets.php:1352
 #: includes/features/smtp-settings.php:121

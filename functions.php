@@ -29,6 +29,7 @@ require_once SNN_PATH . 'includes/features/smtp-settings.php';
 require_once SNN_PATH . 'includes/features/disable-emojis.php';
 require_once SNN_PATH . 'includes/features/disable-gravatar.php';
 require_once SNN_PATH . 'includes/features/custom-code-snippets.php';
+require_once SNN_PATH . 'includes/features/analytics.php';
 require_once SNN_PATH . 'includes/features/cookie-banner.php';
 require_once SNN_PATH . 'includes/features/interactions.php';
 require_once SNN_PATH . 'includes/features/draft-revision.php';
