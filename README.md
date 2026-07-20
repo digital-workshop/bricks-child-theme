@@ -33,6 +33,7 @@ Basiert auf [SNN-BRX](https://github.com/sinanisler/snn-brx-child-theme) von [si
     *   **Top 10 Seiten, Top 10 Blogbeiträge, Top 10 Referrer.**
     *   **Social Media Traffic:** Eigene Karte mit Besuchern/Views, die über bekannte Social-Plattformen (Facebook, Instagram, Pinterest, LinkedIn, X, TikTok, YouTube, Reddit, WhatsApp, Telegram, Threads, Bluesky, Snapchat, Xing) hereinkamen, inklusive Aufschlüsselung pro Plattform.
     *   **Frei anordbares Dashboard:** Alle Karten sind echte WordPress-Postboxen wie bei den normalen Dashboard-Widgets — per Drag & Drop verschiebbar, einklappbar, die Reihenfolge wird pro Benutzer gespeichert.
+    *   **Import bestehender Independent-Analytics-Daten:** Ist das Plugin (noch) installiert, erkennt das Dashboard dessen Datenbank-Tabellen automatisch und bietet einen einmaligen, fortsetzbaren Import der bisherigen Seitenaufrufe an — inklusive URL-Auflösung über die echten WordPress-Permalink-Funktionen, damit keine Daten geraten, sondern nur zuverlässig rekonstruierbare übernommen werden.
 
     ![Analytics Dashboard](docs/screenshots/analytics-dashboard.png)
 
