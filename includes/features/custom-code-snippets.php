@@ -881,6 +881,162 @@ function snn_snippets_disable_invalid_snippet( $post, $validation ) {
 }
 
 /**
+ * Extracts top-level (non-method, non-anonymous) function names a snippet's
+ * PHP code declares. Used to catch "Cannot redeclare function" fatals
+ * before they happen, rather than after -- e.g. a snippet copied in from
+ * the real FluentSnippets plugin (or any other active plugin) without
+ * removing the original, or the same snippet accidentally duplicated.
+ * Methods inside a class/interface/trait body are intentionally excluded --
+ * those aren't declared in the global function table.
+ */
+function snn_snippets_extract_declared_function_names( $code ) {
+    $names  = array();
+    $tokens = @token_get_all( "<?php\n" . $code );
+    if ( ! is_array( $tokens ) ) {
+        return $names;
+    }
+
+    $depth                 = 0;
+    $class_depth           = null;
+    $awaiting_class_brace  = false;
+    $count                 = count( $tokens );
+
+    for ( $i = 0; $i < $count; $i++ ) {
+        $token = $tokens[ $i ];
+
+        if ( is_array( $token ) ) {
+            $id = $token[0];
+
+            if ( in_array( $id, array( T_CLASS, T_INTERFACE, T_TRAIT ), true ) ) {
+                $awaiting_class_brace = true;
+            } elseif ( T_FUNCTION === $id && null === $class_depth ) {
+                $j = $i + 1;
+                while ( $j < $count && (
+                    ( is_array( $tokens[ $j ] ) && ( in_array( $tokens[ $j ][0], array( T_WHITESPACE, T_COMMENT, T_DOC_COMMENT ), true ) || '&' === $tokens[ $j ][1] ) )
+                    || '&' === $tokens[ $j ]
+                ) ) {
+                    $j++;
+                }
+                if ( isset( $tokens[ $j ] ) && is_array( $tokens[ $j ] ) && T_STRING === $tokens[ $j ][0] ) {
+                    $names[] = $tokens[ $j ][1];
+                }
+            }
+            continue;
+        }
+
+        if ( '{' === $token ) {
+            if ( $awaiting_class_brace ) {
+                $class_depth          = $depth;
+                $awaiting_class_brace = false;
+            }
+            $depth++;
+        } elseif ( '}' === $token ) {
+            $depth--;
+            if ( null !== $class_depth && $depth <= $class_depth ) {
+                $class_depth = null;
+            }
+        }
+    }
+
+    return array_unique( $names );
+}
+
+/**
+ * One pass over every currently-active PHP snippet across all 4 locations,
+ * so a function-name collision can be caught before compiling instead of
+ * fataling the live site. Two kinds of collisions are caught:
+ *   - Two of our own active snippets declaring the same function (e.g. the
+ *     same snippet duplicated by accident).
+ *   - A name that's uniquely ours but already exists in the current PHP
+ *     process, AND isn't something our own existing compiled output already
+ *     declares. That second condition matters: "immediate" always runs on
+ *     the init hook, so by the time an admin save triggers a recompile, the
+ *     OLD compiled immediate.php has typically already been include()'d
+ *     earlier in this very request -- function_exists() would be true for
+ *     a snippet's own function purely because of that, not because of a
+ *     real conflict. Only a name that's loaded AND absent from our own
+ *     existing compiled files can be an unrelated external source (another
+ *     active plugin, WP core, or a leftover copy in the real FluentSnippets
+ *     plugin's own snippet storage).
+ * Returns [ snippet_id => human-readable reason ] for every snippet that
+ * must be left out of the compiled output. Computed once per request and
+ * cached -- a full recompile calls this once per location (4x), and each
+ * call needs the same cross-location picture anyway.
+ */
+function snn_snippets_get_function_collisions() {
+    static $result = null;
+    if ( null !== $result ) {
+        return $result;
+    }
+
+    $already_compiled_by_us = array(); // lowercase function name => true
+    foreach ( snn_snippets_get_locations() as $location ) {
+        $file = snn_snippets_compiled_file_path( $location );
+        if ( ! file_exists( $file ) ) {
+            continue;
+        }
+        $src = file_get_contents( $file );
+        if ( false === $src ) {
+            continue;
+        }
+        foreach ( snn_snippets_extract_declared_function_names( $src ) as $name ) {
+            $already_compiled_by_us[ strtolower( $name ) ] = true;
+        }
+    }
+
+    $declared_by   = array(); // lowercase function name => [snippet_id, ...]
+    $snippet_names = array(); // snippet_id => [function name, ...]
+
+    foreach ( snn_snippets_get_locations() as $location ) {
+        foreach ( snn_snippets_query_by_location( $location ) as $post ) {
+            $meta = snn_snippet_get_meta( $post->ID );
+            if ( 'php' !== $meta['type'] || trim( $post->post_content ) === '' ) {
+                continue;
+            }
+            $names = snn_snippets_extract_declared_function_names( $post->post_content );
+            if ( empty( $names ) ) {
+                continue;
+            }
+            $snippet_names[ $post->ID ] = $names;
+            foreach ( $names as $name ) {
+                $declared_by[ strtolower( $name ) ][] = $post->ID;
+            }
+        }
+    }
+
+    $result = array();
+
+    foreach ( $snippet_names as $snippet_id => $names ) {
+        foreach ( $names as $name ) {
+            $owners = array_unique( $declared_by[ strtolower( $name ) ] );
+
+            if ( count( $owners ) > 1 ) {
+                sort( $owners );
+                if ( (int) $owners[0] !== (int) $snippet_id ) {
+                    $result[ $snippet_id ] = sprintf(
+                        /* translators: 1: function name, 2: ID of the snippet that keeps using it */
+                        __( 'Function "%1$s" is also declared by another active snippet (#%2$d). Only one can keep it.', 'snn' ),
+                        $name,
+                        $owners[0]
+                    );
+                }
+                continue;
+            }
+
+            if ( function_exists( $name ) && empty( $already_compiled_by_us[ strtolower( $name ) ] ) ) {
+                $result[ $snippet_id ] = sprintf(
+                    /* translators: %s: function name */
+                    __( 'Function "%s" is already declared by another active plugin (or a leftover copy outside this system).', 'snn' ),
+                    $name
+                );
+            }
+        }
+    }
+
+    return $result;
+}
+
+/**
  * Compiles one location's active snippets into a single PHP file. Every
  * PHP-type snippet is validated individually first (and excluded + disabled
  * if invalid), then the whole assembled file is validated once more as a
@@ -924,6 +1080,15 @@ function snn_snippets_compile_location( $location ) {
         $validation = snn_snippets_validate_for_compile( $code, $location );
         if ( true !== $validation ) {
             snn_snippets_disable_invalid_snippet( $post, $validation );
+            continue;
+        }
+
+        $collisions = snn_snippets_get_function_collisions();
+        if ( isset( $collisions[ $post->ID ] ) ) {
+            snn_snippets_disable_invalid_snippet( $post, array(
+                'message' => $collisions[ $post->ID ],
+                'line'    => 0,
+            ) );
             continue;
         }
 

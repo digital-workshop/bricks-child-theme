@@ -2508,6 +2508,14 @@ msgstr ""
 msgid "Full Page Replace"
 msgstr ""
 
+#: includes/features/custom-code-snippets.php:1018
+msgid "Function \"%1$s\" is also declared by another active snippet (#%2$d). Only one can keep it."
+msgstr ""
+
+#: includes/features/custom-code-snippets.php:1029
+msgid "Function \"%s\" is already declared by another active plugin (or a leftover copy outside this system)."
+msgstr ""
+
 #: includes/features/custom-code-snippets.php:1515
 msgid "Function/Context"
 msgstr ""
@@ -5873,3 +5881,4 @@ msgstr ""
 #: includes/features/media-image-opt.php:2841
 msgid "🔍 Debug: Raw Metadata"
 msgstr ""
+

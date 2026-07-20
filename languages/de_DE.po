@@ -2540,6 +2540,14 @@ msgstr "Frontend-Head"
 msgid "Full Page Replace"
 msgstr "Vollständiger Seitenaustausch"
 
+#: includes/features/custom-code-snippets.php:1018
+msgid "Function \"%1$s\" is also declared by another active snippet (#%2$d). Only one can keep it."
+msgstr "Funktion \"%1$s\" wird auch von einem anderen aktiven Snippet deklariert (#%2$d). Nur eines kann sie behalten."
+
+#: includes/features/custom-code-snippets.php:1029
+msgid "Function \"%s\" is already declared by another active plugin (or a leftover copy outside this system)."
+msgstr "Funktion \"%s\" wird bereits von einem anderen aktiven Plugin deklariert (oder einer übrig gebliebenen Kopie außerhalb dieses Systems)."
+
 #: includes/features/custom-code-snippets.php:1515
 msgid "Function/Context"
 msgstr "Funktion/Kontext"
@@ -5985,3 +5993,4 @@ msgstr "⚠ WARNUNG – Du kannst mehrere Rollen zuweisen, aber sich überlappen
 #: includes/features/media-image-opt.php:2841
 msgid "🔍 Debug: Raw Metadata"
 msgstr "🔍 Debug: Rohe Metadaten"
+
