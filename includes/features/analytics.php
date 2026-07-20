@@ -757,8 +757,8 @@ function snn_analytics_page() {
             <?php endforeach; ?>
         </nav>
 
-        <div id="poststuff">
-            <div id="post-body" class="metabox-holder columns-2">
+        <div id="dashboard-widgets-wrap">
+            <div id="dashboard-widgets" class="metabox-holder columns-2">
                 <div id="postbox-container-1" class="postbox-container">
                     <?php do_meta_boxes( $screen->id, 'normal', null ); ?>
                 </div>
