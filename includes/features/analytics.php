@@ -306,6 +306,114 @@ function snn_analytics_query_top( $column, $start, $end, $limit = 10 ) {
 }
 
 // ----------------------------------------------------------------------
+// Social media traffic
+// ----------------------------------------------------------------------
+
+/**
+ * Known social platform domains, keyed by their canonical domain and mapped
+ * to a display label. Matching also covers subdomains (e.g. m.facebook.com,
+ * l.instagram.com) -- see snn_analytics_match_social_platform().
+ */
+function snn_analytics_social_platforms() {
+    return array(
+        'facebook.com'  => 'Facebook',
+        'instagram.com' => 'Instagram',
+        'pinterest.com' => 'Pinterest',
+        'pin.it'        => 'Pinterest',
+        'linkedin.com'  => 'LinkedIn',
+        'lnkd.in'       => 'LinkedIn',
+        'twitter.com'   => 'X (Twitter)',
+        'x.com'         => 'X (Twitter)',
+        't.co'          => 'X (Twitter)',
+        'tiktok.com'    => 'TikTok',
+        'youtube.com'   => 'YouTube',
+        'youtu.be'      => 'YouTube',
+        'reddit.com'    => 'Reddit',
+        'redd.it'       => 'Reddit',
+        'whatsapp.com'  => 'WhatsApp',
+        'wa.me'         => 'WhatsApp',
+        'telegram.org'  => 'Telegram',
+        't.me'          => 'Telegram',
+        'threads.net'   => 'Threads',
+        'bsky.app'      => 'Bluesky',
+        'snapchat.com'  => 'Snapchat',
+        'xing.com'      => 'Xing',
+    );
+}
+
+function snn_analytics_match_social_platform( $host ) {
+    $host = strtolower( (string) $host );
+    foreach ( snn_analytics_social_platforms() as $domain => $label ) {
+        if ( $host === $domain || substr( $host, -( strlen( $domain ) + 1 ) ) === '.' . $domain ) {
+            return $label;
+        }
+    }
+    return null;
+}
+
+/**
+ * Builds a "referrer_host matches a known social domain (or subdomain)"
+ * SQL fragment plus its bound params, so the overall summary count can be
+ * computed with a single accurate COUNT(DISTINCT ...) query instead of
+ * summing per-host visitor counts (which could double-count a visitor who
+ * arrived via two host variants of the same platform on the same day).
+ */
+function snn_analytics_social_where_clause( $column = 'referrer_host' ) {
+    global $wpdb;
+    $clauses = array();
+    $params  = array();
+    foreach ( array_keys( snn_analytics_social_platforms() ) as $domain ) {
+        $clauses[] = "({$column} = %s OR {$column} LIKE %s)";
+        $params[]  = $domain;
+        $params[]  = '%.' . $wpdb->esc_like( $domain );
+    }
+    return array( '(' . implode( ' OR ', $clauses ) . ')', $params );
+}
+
+function snn_analytics_query_social_summary( $start, $end ) {
+    global $wpdb;
+    $table = snn_analytics_table();
+    list( $where, $params ) = snn_analytics_social_where_clause();
+
+    $sql = "SELECT COUNT(*) as views, COUNT(DISTINCT visitor_hash) as visitors FROM {$table} WHERE created_at BETWEEN %s AND %s AND {$where}";
+    $row = $wpdb->get_row( $wpdb->prepare( $sql, array_merge( array( $start, $end ), $params ) ), ARRAY_A );
+
+    return array(
+        'views'    => (int) ( $row['views'] ?? 0 ),
+        'visitors' => (int) ( $row['visitors'] ?? 0 ),
+    );
+}
+
+function snn_analytics_query_social_breakdown( $start, $end ) {
+    global $wpdb;
+    $table = snn_analytics_table();
+
+    $rows = $wpdb->get_results( $wpdb->prepare(
+        "SELECT referrer_host, COUNT(*) as views, COUNT(DISTINCT visitor_hash) as visitors FROM {$table} WHERE created_at BETWEEN %s AND %s AND referrer_host IS NOT NULL GROUP BY referrer_host",
+        $start, $end
+    ), ARRAY_A );
+
+    $platforms = array();
+    foreach ( $rows as $row ) {
+        $label = snn_analytics_match_social_platform( $row['referrer_host'] );
+        if ( ! $label ) {
+            continue;
+        }
+        if ( ! isset( $platforms[ $label ] ) ) {
+            $platforms[ $label ] = array( 'label' => $label, 'views' => 0, 'visitors' => 0 );
+        }
+        // Approximate: a visitor who hit two host variants of the same
+        // platform (e.g. facebook.com and m.facebook.com) on the same day
+        // is counted once per host here. Good enough for a ranking table.
+        $platforms[ $label ]['views']    += (int) $row['views'];
+        $platforms[ $label ]['visitors'] += (int) $row['visitors'];
+    }
+
+    usort( $platforms, function( $a, $b ) { return $b['views'] <=> $a['views']; } );
+    return array_values( $platforms );
+}
+
+// ----------------------------------------------------------------------
 // Admin page
 // ----------------------------------------------------------------------
 
@@ -425,17 +533,23 @@ function snn_analytics_admin_styles() {
         .snn-analytics-range { margin: 14px 0; }
         .snn-analytics-range a { margin-right: 4px; }
         .snn-analytics-range a.button-primary { pointer-events: none; }
-        .snn-analytics-stats { display: flex; gap: 16px; margin-bottom: 20px; }
-        .snn-analytics-stat-card { background: #fff; border: 1px solid #ccd0d4; border-radius: 4px; padding: 16px 20px; min-width: 160px; }
+        .snn-analytics-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; align-items: start; }
+        .snn-analytics-grid .snn-analytics-span-2 { grid-column: 1 / -1; }
+        .snn-analytics-stat-card { background: #fff; border: 1px solid #ccd0d4; border-radius: 4px; padding: 16px 20px; }
         .snn-analytics-stat-card .value { font-size: 28px; font-weight: 600; line-height: 1.2; }
         .snn-analytics-stat-card .label { color: #646970; }
-        .snn-analytics-chart-wrap { background: #fff; border: 1px solid #ccd0d4; border-radius: 4px; padding: 16px 20px; margin-bottom: 20px; }
+        .snn-analytics-chart-wrap { background: #fff; border: 1px solid #ccd0d4; border-radius: 4px; padding: 16px 20px; }
         .snn-analytics-chart { width: 100%; height: auto; }
         .snn-analytics-chart-grid { stroke: #eee; stroke-width: 1; }
         .snn-analytics-chart-line { fill: none; stroke: #2271b1; stroke-width: 2; }
         .snn-analytics-chart-axis { font-size: 10px; fill: #646970; }
-        .snn-analytics-tables { display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 20px; }
-        .snn-analytics-tables .postbox { flex: 1; min-width: 320px; padding: 0 12px 12px; }
+        .snn-analytics-grid .postbox { padding: 0 12px 12px; margin: 0; }
+        .snn-analytics-social-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 12px; }
+        .snn-analytics-social-stats .snn-analytics-stat-card { border-style: dashed; }
+        .snn-analytics-social-empty { color: #646970; }
+        @media (max-width: 782px) {
+            .snn-analytics-grid, .snn-analytics-social-stats { grid-template-columns: 1fr; }
+        }
         .snn-analytics-settings-wrap { max-width: 700px; }
         #snn_analytics_ip_wrap .button .dashicons { line-height: 1 !important; vertical-align: middle; }
         #snn_analytics_ip_wrap .snn-analytics-ip-row { display: flex; align-items: center; gap: 8px; margin-top: 10px; }
@@ -459,10 +573,12 @@ function snn_analytics_page() {
     }
     list( $start, $end ) = snn_analytics_get_range_bounds( $range );
 
-    $stats         = snn_analytics_query_stats( $start, $end );
-    $daily_counts  = snn_analytics_query_daily_counts( $start, $end );
-    $top_pages     = snn_analytics_query_top( 'page_path', $start, $end );
-    $top_referrers = snn_analytics_query_top( 'referrer_host', $start, $end );
+    $stats           = snn_analytics_query_stats( $start, $end );
+    $daily_counts    = snn_analytics_query_daily_counts( $start, $end );
+    $top_pages       = snn_analytics_query_top( 'page_path', $start, $end );
+    $top_referrers   = snn_analytics_query_top( 'referrer_host', $start, $end );
+    $social_summary  = snn_analytics_query_social_summary( $start, $end );
+    $social_platforms = snn_analytics_query_social_breakdown( $start, $end );
 
     $range_labels = array(
         'today' => __( 'Today', 'snn' ),
@@ -491,7 +607,7 @@ function snn_analytics_page() {
             <?php endforeach; ?>
         </nav>
 
-        <div class="snn-analytics-stats">
+        <div class="snn-analytics-grid">
             <div class="snn-analytics-stat-card">
                 <div class="value"><?php echo esc_html( number_format_i18n( $stats['pageviews'] ) ); ?></div>
                 <div class="label"><?php esc_html_e( 'Pageviews', 'snn' ); ?></div>
@@ -500,14 +616,12 @@ function snn_analytics_page() {
                 <div class="value"><?php echo esc_html( number_format_i18n( $stats['visitors'] ) ); ?></div>
                 <div class="label"><?php esc_html_e( 'Visitors', 'snn' ); ?></div>
             </div>
-        </div>
 
-        <div class="snn-analytics-chart-wrap">
-            <h2><?php esc_html_e( 'Pageviews per day', 'snn' ); ?></h2>
-            <?php echo snn_analytics_render_line_chart( $daily_counts ); ?>
-        </div>
+            <div class="snn-analytics-chart-wrap snn-analytics-span-2">
+                <h2><?php esc_html_e( 'Pageviews per day', 'snn' ); ?></h2>
+                <?php echo snn_analytics_render_line_chart( $daily_counts ); ?>
+            </div>
 
-        <div class="snn-analytics-tables">
             <div class="postbox">
                 <h2 class="hndle" style="padding: 10px 0;"><?php esc_html_e( 'Top 10 Pages', 'snn' ); ?></h2>
                 <table class="widefat striped">
@@ -533,6 +647,36 @@ function snn_analytics_page() {
                         <?php endforeach; endif; ?>
                     </tbody>
                 </table>
+            </div>
+
+            <div class="postbox snn-analytics-span-2">
+                <h2 class="hndle" style="padding: 10px 0;"><?php esc_html_e( 'Social Media Traffic', 'snn' ); ?></h2>
+                <div class="snn-analytics-social-stats">
+                    <div class="snn-analytics-stat-card">
+                        <div class="value"><?php echo esc_html( number_format_i18n( $social_summary['visitors'] ) ); ?></div>
+                        <div class="label"><?php esc_html_e( 'Visitors from Social Media', 'snn' ); ?></div>
+                    </div>
+                    <div class="snn-analytics-stat-card">
+                        <div class="value"><?php echo esc_html( number_format_i18n( $social_summary['views'] ) ); ?></div>
+                        <div class="label"><?php esc_html_e( 'Views from Social Media', 'snn' ); ?></div>
+                    </div>
+                </div>
+                <?php if ( empty( $social_platforms ) ) : ?>
+                    <p class="snn-analytics-social-empty"><?php esc_html_e( 'No social media referrals in this period.', 'snn' ); ?></p>
+                <?php else : ?>
+                    <table class="widefat striped">
+                        <thead><tr><th><?php esc_html_e( 'Platform', 'snn' ); ?></th><th><?php esc_html_e( 'Visitors', 'snn' ); ?></th><th><?php esc_html_e( 'Views', 'snn' ); ?></th></tr></thead>
+                        <tbody>
+                            <?php foreach ( $social_platforms as $row ) : ?>
+                                <tr>
+                                    <td><?php echo esc_html( $row['label'] ); ?></td>
+                                    <td><?php echo esc_html( number_format_i18n( $row['visitors'] ) ); ?></td>
+                                    <td><?php echo esc_html( number_format_i18n( $row['views'] ) ); ?></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                <?php endif; ?>
             </div>
         </div>
     </div>
