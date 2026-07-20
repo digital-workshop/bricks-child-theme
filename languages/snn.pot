@@ -57,12 +57,32 @@ msgstr ""
 msgid "2 - Fast"
 msgstr ""
 
+#: includes/features/redirects.php:452
+msgid "301 - Moved Permanently"
+msgstr ""
+
+#: includes/features/redirects.php:453
+msgid "302 - Found (Temporary)"
+msgstr ""
+
+#: includes/features/redirects.php:454
+msgid "307 - Temporary Redirect"
+msgstr ""
+
 #: includes/features/interactions.php:294
 msgid "3D Perspective Flip"
 msgstr ""
 
 #: includes/features/media-image-opt.php:1315
 msgid "4 - Balanced"
+msgstr ""
+
+#: includes/features/redirects.php:375
+msgid "404 log cleared."
+msgstr ""
+
+#: includes/features/redirects.php:430
+msgid "404s (%d)"
 msgstr ""
 
 #: includes/features/media-image-opt.php:1316
@@ -108,6 +128,10 @@ msgstr ""
 
 #: includes/features/two-factor-auth.php:313
 msgid "A new code has been sent."
+msgstr ""
+
+#: includes/features/redirects.php:310
+msgid "A redirect for this source already exists."
 msgstr ""
 
 #: includes/features/custom-code-snippets.php:995
@@ -164,6 +188,10 @@ msgstr ""
 msgid "Actions"
 msgstr ""
 
+#: includes/features/redirects.php:476
+msgid "Active"
+msgstr ""
+
 #: includes/features/security-page.php:250
 msgid "Add IP Address"
 msgstr ""
@@ -185,6 +213,10 @@ msgstr ""
 
 #: includes/features/taxonomy-settings.php:127
 msgid "Add New Taxonomy"
+msgstr ""
+
+#: includes/features/redirects.php:436
+msgid "Add Redirect"
 msgstr ""
 
 #: includes/features/custom-field-settings.php:2569
@@ -728,6 +760,10 @@ msgstr ""
 msgid "Camera Aperture (Spiral)"
 msgstr ""
 
+#: includes/features/redirects.php:461
+msgid "Cancel Edit"
+msgstr ""
+
 #: includes/features/media-image-opt.php:2465
 msgid "Cannot Restore"
 msgstr ""
@@ -820,6 +856,10 @@ msgstr ""
 msgid "Clamp Generator"
 msgstr ""
 
+#: includes/features/redirects.php:521
+msgid "Clear All"
+msgstr ""
+
 #: includes/features/security-page.php:54
 msgid "Clear All Blocked IPs"
 msgstr ""
@@ -830,6 +870,10 @@ msgstr ""
 
 #: includes/features/custom-code-snippets.php:1444
 msgid "Clear All Revisions"
+msgstr ""
+
+#: includes/features/redirects.php:519
+msgid "Clear the entire 404 log?"
 msgstr ""
 
 #: includes/features/cookie-banner.php:628
@@ -927,6 +971,10 @@ msgstr ""
 
 #: includes/features/custom-code-snippets.php:1244
 msgid "Close"
+msgstr ""
+
+#: includes/features/redirects.php:474
+msgid "Code"
 msgstr ""
 
 #: includes/features/custom-code-snippets.php:1517
@@ -1310,6 +1358,10 @@ msgstr ""
 
 #: includes/features/media-image-opt.php:2213
 msgid "Delete Originals to Save Space"
+msgstr ""
+
+#: includes/features/redirects.php:503
+msgid "Delete this redirect?"
 msgstr ""
 
 #: includes/features/custom-code-snippets.php:1269
@@ -2048,6 +2100,10 @@ msgstr ""
 msgid "End 90%"
 msgstr ""
 
+#: includes/features/redirects.php:458
+msgid "End the source with /* to redirect everything below that path (e.g. /old-section/* to /new-section/*)."
+msgstr ""
+
 #: includes/features/settings-page.php:66
 msgid "Enjoy building your site."
 msgstr ""
@@ -2147,6 +2203,10 @@ msgstr ""
 #: includes/features/post-types-settings.php:30
 #: includes/features/post-types-settings.php:184
 msgid "Excerpt"
+msgstr ""
+
+#: includes/features/redirects.php:573
+msgid "Exclude bots/crawlers from 404 logging"
 msgstr ""
 
 #: includes/features/custom-code-snippets.php:1125
@@ -2338,6 +2398,10 @@ msgstr ""
 
 #: includes/elements/gsap-multi-element-register.php:167
 msgid "Firework Out"
+msgstr ""
+
+#: includes/features/redirects.php:534
+msgid "First Seen"
 msgstr ""
 
 #: includes/features/custom-code-snippets.php:1010
@@ -2559,6 +2623,10 @@ msgstr ""
 msgid "HTML"
 msgstr ""
 
+#: includes/features/redirects.php:450
+msgid "HTTP Code"
+msgstr ""
+
 #: includes/features/interactions.php:296
 msgid "Halftone Dots"
 msgstr ""
@@ -2624,6 +2692,10 @@ msgstr ""
 
 #: includes/features/media-image-opt.php:228
 msgid "History & Settings"
+msgstr ""
+
+#: includes/features/redirects.php:475
+msgid "Hits"
 msgstr ""
 
 #: includes/features/cookie-banner.php:650
@@ -2792,6 +2864,14 @@ msgstr ""
 msgid "Jello"
 msgstr ""
 
+#: includes/features/redirects.php:576
+msgid "Keep 404 log entries for"
+msgstr ""
+
+#: includes/features/redirects.php:535
+msgid "Last Seen"
+msgstr ""
+
 #: includes/features/auto-update-snn-brx-github.php:127
 msgid "Latest release information from GitHub."
 msgstr ""
@@ -2880,6 +2960,10 @@ msgstr ""
 
 #: includes/features/security-page.php:175
 msgid "Locked out (e.g. the code email isn't arriving)? Add %s to wp-config.php to force this off, no database access needed."
+msgstr ""
+
+#: includes/features/redirects.php:569
+msgid "Log 404 errors"
 msgstr ""
 
 #: includes/features/limit-login-attempts.php:110
@@ -3116,6 +3200,10 @@ msgstr ""
 msgid "No"
 msgstr ""
 
+#: includes/features/redirects.php:527
+msgid "No 404s logged."
+msgstr ""
+
 #: includes/features/custom-field-settings.php:1580
 #: includes/features/custom-field-settings.php:1599
 msgid "No choices defined."
@@ -3165,6 +3253,10 @@ msgstr ""
 
 #: includes/features/custom-code-snippets.php:1447
 msgid "No past revisions yet. Save changes to start tracking revisions."
+msgstr ""
+
+#: includes/features/redirects.php:467
+msgid "No redirects yet."
 msgstr ""
 
 #: includes/features/cookie-banner.php:707
@@ -3509,6 +3601,14 @@ msgstr ""
 msgid "Please accept cookies to see the contents of this iframe."
 msgstr ""
 
+#: includes/features/redirects.php:300
+msgid "Please enter a source path."
+msgstr ""
+
+#: includes/features/redirects.php:302
+msgid "Please enter a valid target URL or path."
+msgstr ""
+
 #: includes/features/media-image-opt.php:2577
 msgid "Please select at least one image to restore."
 msgstr ""
@@ -3696,6 +3796,18 @@ msgstr ""
 
 #: includes/features/login-settings.php:63
 msgid "Redirect URL after Login"
+msgstr ""
+
+#: includes/features/redirects.php:361
+msgid "Redirect deleted."
+msgstr ""
+
+#: includes/features/redirects.php:338
+msgid "Redirect saved."
+msgstr ""
+
+#: includes/features/redirects.php:278
+msgid "Redirects"
 msgstr ""
 
 #: includes/features/editor-settings-panel-bricks.php:227
@@ -4083,6 +4195,10 @@ msgstr ""
 
 #: includes/features/media-image-opt.php:2191
 msgid "Save Automatic Optimization Settings"
+msgstr ""
+
+#: includes/features/redirects.php:623
+msgid "Save Changes"
 msgstr ""
 
 #: includes/features/custom-field-settings.php:243
@@ -4706,6 +4822,10 @@ msgstr ""
 msgid "Something went wrong. Please log in again."
 msgstr ""
 
+#: includes/features/redirects.php:442
+msgid "Source URL"
+msgstr ""
+
 #: includes/elements/gsap-text-animations.php:58
 msgid "Span"
 msgstr ""
@@ -4957,8 +5077,16 @@ msgstr ""
 msgid "Tags"
 msgstr ""
 
+#: includes/features/redirects.php:473
+msgid "Target"
+msgstr ""
+
 #: includes/features/media-image-opt.php:50
 msgid "Target Format"
+msgstr ""
+
+#: includes/features/redirects.php:446
+msgid "Target URL"
 msgstr ""
 
 #: includes/features/custom-field-settings.php:182
@@ -5603,6 +5731,10 @@ msgstr ""
 msgid "comma, separated, tags"
 msgstr ""
 
+#: includes/features/redirects.php:578
+msgid "days since last hit"
+msgstr ""
+
 #: includes/features/media-image-opt.php:2692
 msgid "deleted"
 msgstr ""
@@ -5741,4 +5873,3 @@ msgstr ""
 #: includes/features/media-image-opt.php:2841
 msgid "🔍 Debug: Raw Metadata"
 msgstr ""
-

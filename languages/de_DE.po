@@ -61,6 +61,18 @@ msgstr "2 - Schnell"
 msgid "30 Days"
 msgstr "30 Tage"
 
+#: includes/features/redirects.php:452
+msgid "301 - Moved Permanently"
+msgstr "301 – Dauerhaft verschoben"
+
+#: includes/features/redirects.php:453
+msgid "302 - Found (Temporary)"
+msgstr "302 – Vorübergehend verschoben (Found)"
+
+#: includes/features/redirects.php:454
+msgid "307 - Temporary Redirect"
+msgstr "307 – Temporäre Weiterleitung"
+
 #: includes/features/interactions.php:294
 msgid "3D Perspective Flip"
 msgstr "3D-Perspektiv-Flip"
@@ -68,6 +80,14 @@ msgstr "3D-Perspektiv-Flip"
 #: includes/features/media-image-opt.php:1315
 msgid "4 - Balanced"
 msgstr "4 - Ausgewogen"
+
+#: includes/features/redirects.php:375
+msgid "404 log cleared."
+msgstr "404-Log geleert."
+
+#: includes/features/redirects.php:430
+msgid "404s (%d)"
+msgstr "404er (%d)"
 
 #: includes/features/media-image-opt.php:1316
 msgid "6 - Best compression"
@@ -118,6 +138,10 @@ msgstr "Ein Code-Snippet wurde automatisch deaktiviert"
 msgid "A new code has been sent."
 msgstr "Ein neuer Code wurde gesendet."
 
+#: includes/features/redirects.php:310
+msgid "A redirect for this source already exists."
+msgstr "Für diese Quelle existiert bereits eine Weiterleitung."
+
 #: includes/features/custom-code-snippets.php:995
 msgid "A snippet caused a fatal PHP error, so it was switched off automatically to keep the rest of the site running. All other snippets are unaffected."
 msgstr "Ein Snippet hat einen fatalen PHP-Fehler verursacht und wurde automatisch deaktiviert, damit der Rest der Seite weiterläuft. Alle anderen Snippets sind davon nicht betroffen."
@@ -129,10 +153,6 @@ msgstr "AJAX-Fehler:"
 #: includes/features/custom-code-snippets.php:278
 msgid "AJAX error fetching revision."
 msgstr "AJAX-Fehler beim Abrufen der Revision."
-
-#: includes/features/analytics.php
-msgid "Analytics"
-msgstr "Analytics"
 
 #: includes/features/custom-code-snippets.php:1352
 msgid "ATTENTION PLEASE! These settings are not for normal users! If you don't have at least some basic knowledge of HTML, CSS, and FTP login, DO NOT USE IT!"
@@ -176,6 +196,10 @@ msgstr "Aktion abgebrochen. Originaldateien wurden nicht gelöscht."
 msgid "Actions"
 msgstr "Aktionen"
 
+#: includes/features/redirects.php:476
+msgid "Active"
+msgstr "Aktiv"
+
 #: includes/features/security-page.php:250
 msgid "Add IP Address"
 msgstr "IP-Adresse hinzufügen"
@@ -198,6 +222,10 @@ msgstr "Neuen Beitragstyp hinzufügen"
 #: includes/features/taxonomy-settings.php:127
 msgid "Add New Taxonomy"
 msgstr "Neue Taxonomie hinzufügen"
+
+#: includes/features/redirects.php:436
+msgid "Add Redirect"
+msgstr "Weiterleitung hinzufügen"
 
 #: includes/features/custom-field-settings.php:2569
 msgid "Add Selected"
@@ -301,6 +329,10 @@ msgstr "Alpha-Qualität (0-100):"
 #: includes/features/cookie-banner.php:810
 msgid "Already Blocked"
 msgstr "Bereits blockiert"
+
+#: includes/features/analytics.php
+msgid "Analytics"
+msgstr "Analytics"
 
 #: includes/elements/gsap-animations.php:69
 msgid "Animation"
@@ -748,6 +780,10 @@ msgstr "CSS-Selektor für den Hauptinhaltsbereich. Unterstützt mehrere durch Ko
 msgid "Camera Aperture (Spiral)"
 msgstr "Kamerablende (Spirale)"
 
+#: includes/features/redirects.php:461
+msgid "Cancel Edit"
+msgstr "Bearbeiten abbrechen"
+
 #: includes/features/media-image-opt.php:2465
 msgid "Cannot Restore"
 msgstr "Kann nicht wiederhergestellt werden"
@@ -840,6 +876,10 @@ msgstr "Medien auswählen"
 msgid "Clamp Generator"
 msgstr "Clamp-Generator"
 
+#: includes/features/redirects.php:521
+msgid "Clear All"
+msgstr "Alle löschen"
+
 #: includes/features/security-page.php:54
 msgid "Clear All Blocked IPs"
 msgstr "Alle gesperrten IPs entfernen"
@@ -851,6 +891,10 @@ msgstr "Alle Fehlerprotokolle löschen"
 #: includes/features/custom-code-snippets.php:1444
 msgid "Clear All Revisions"
 msgstr "Alle Revisionen löschen"
+
+#: includes/features/redirects.php:519
+msgid "Clear the entire 404 log?"
+msgstr "Das gesamte 404-Log leeren?"
 
 #: includes/features/cookie-banner.php:628
 msgid "Click \"Scan Page\" to analyze all scripts on that page"
@@ -948,6 +992,10 @@ msgstr "Clip Dreieck rechts enthüllen"
 #: includes/features/custom-code-snippets.php:1244
 msgid "Close"
 msgstr "Schließen"
+
+#: includes/features/redirects.php:474
+msgid "Code"
+msgstr "Code"
 
 #: includes/features/custom-code-snippets.php:1517
 msgid "Code Context"
@@ -1331,6 +1379,10 @@ msgstr "Originaldateien jetzt löschen (Debug)"
 #: includes/features/media-image-opt.php:2213
 msgid "Delete Originals to Save Space"
 msgstr "Originale löschen, um Speicherplatz zu sparen"
+
+#: includes/features/redirects.php:503
+msgid "Delete this redirect?"
+msgstr "Diese Weiterleitung löschen?"
 
 #: includes/features/custom-code-snippets.php:1269
 #: includes/features/custom-code-snippets.php:1477
@@ -2072,6 +2124,10 @@ msgstr "Ende 80%"
 msgid "End 90%"
 msgstr "Ende 90%"
 
+#: includes/features/redirects.php:458
+msgid "End the source with /* to redirect everything below that path (e.g. /old-section/* to /new-section/*)."
+msgstr "Beende die Quelle mit /*, um alles unterhalb dieses Pfads umzuleiten (z. B. /alter-bereich/* zu /neuer-bereich/*)."
+
 #: includes/features/settings-page.php:66
 msgid "Enjoy building your site."
 msgstr "Viel Spaß beim Erstellen deiner Website."
@@ -2180,6 +2236,10 @@ msgstr "IP-Adressen ausschließen"
 #: includes/features/analytics.php
 msgid "Exclude Roles from Tracking"
 msgstr "Rollen vom Tracking ausschließen"
+
+#: includes/features/redirects.php:573
+msgid "Exclude bots/crawlers from 404 logging"
+msgstr "Bots/Crawler von der 404-Protokollierung ausschließen"
 
 #: includes/features/custom-code-snippets.php:1125
 msgid "Execution Disabled by Constant:"
@@ -2371,6 +2431,10 @@ msgstr "Feuerwerk rein"
 #: includes/elements/gsap-multi-element-register.php:167
 msgid "Firework Out"
 msgstr "Feuerwerk raus"
+
+#: includes/features/redirects.php:534
+msgid "First Seen"
+msgstr "Zuerst gesehen"
 
 #: includes/features/custom-code-snippets.php:1010
 msgid "Fix this snippet"
@@ -2591,6 +2655,10 @@ msgstr "H4"
 msgid "HTML"
 msgstr "HTML"
 
+#: includes/features/redirects.php:450
+msgid "HTTP Code"
+msgstr "HTTP-Code"
+
 #: includes/features/interactions.php:296
 msgid "Halftone Dots"
 msgstr "Halbton-Punkte"
@@ -2657,6 +2725,10 @@ msgstr "Scharnier (Hinge)"
 #: includes/features/media-image-opt.php:228
 msgid "History & Settings"
 msgstr "Verlauf & Einstellungen"
+
+#: includes/features/redirects.php:475
+msgid "Hits"
+msgstr "Treffer"
 
 #: includes/features/cookie-banner.php:650
 msgid "Homepage"
@@ -2824,6 +2896,14 @@ msgstr "Springteufel (Jack In The Box)"
 msgid "Jello"
 msgstr "Wackeln (Jello)"
 
+#: includes/features/redirects.php:576
+msgid "Keep 404 log entries for"
+msgstr "404-Log-Einträge aufbewahren für"
+
+#: includes/features/redirects.php:535
+msgid "Last Seen"
+msgstr "Zuletzt gesehen"
+
 #: includes/features/auto-update-snn-brx-github.php:127
 msgid "Latest release information from GitHub."
 msgstr "Aktuelle Versionsinformationen von GitHub."
@@ -2909,10 +2989,6 @@ msgstr "Revision laden & speichern"
 msgid "Loading..."
 msgstr "Laden..."
 
-#: includes/features/analytics.php
-msgid "Logged-in users whose role(s) are all checked here are not counted."
-msgstr "Eingeloggte Nutzer, deren Rolle(n) hier alle angehakt sind, werden nicht mitgezählt."
-
 #: includes/features/custom-code-snippets.php:1194
 #: includes/features/custom-code-snippets.php:1383
 msgid "Location"
@@ -2921,6 +2997,14 @@ msgstr "Ort"
 #: includes/features/security-page.php:175
 msgid "Locked out (e.g. the code email isn't arriving)? Add %s to wp-config.php to force this off, no database access needed."
 msgstr "Ausgesperrt (z. B. weil die Code-E-Mail nicht ankommt)? Füge %s zur wp-config.php hinzu, um dies ohne Datenbankzugriff zu erzwingen."
+
+#: includes/features/redirects.php:569
+msgid "Log 404 errors"
+msgstr "404-Fehler protokollieren"
+
+#: includes/features/analytics.php
+msgid "Logged-in users whose role(s) are all checked here are not counted."
+msgstr "Eingeloggte Nutzer, deren Rolle(n) hier alle angehakt sind, werden nicht mitgezählt."
 
 #: includes/features/limit-login-attempts.php:110
 msgid "Login Blocked"
@@ -3156,6 +3240,10 @@ msgstr "Neues Snippet"
 msgid "No"
 msgstr "Nein"
 
+#: includes/features/redirects.php:527
+msgid "No 404s logged."
+msgstr "Keine 404er protokolliert."
+
 #: includes/features/custom-field-settings.php:1580
 #: includes/features/custom-field-settings.php:1599
 msgid "No choices defined."
@@ -3214,6 +3302,10 @@ msgstr "Keine Seiten-URL angegeben"
 #: includes/features/custom-code-snippets.php:1447
 msgid "No past revisions yet. Save changes to start tracking revisions."
 msgstr "Noch keine bisherigen Revisionen. Speichere Änderungen, um mit der Revisionsverfolgung zu beginnen."
+
+#: includes/features/redirects.php:467
+msgid "No redirects yet."
+msgstr "Noch keine Weiterleitungen."
 
 #: includes/features/cookie-banner.php:707
 #: includes/features/cookie-banner.php:946
@@ -3577,6 +3669,14 @@ msgstr "Pixel-Dither (Auflösen)"
 msgid "Please accept cookies to see the contents of this iframe."
 msgstr "Bitte akzeptiere Cookies, um den Inhalt dieses iFrames zu sehen."
 
+#: includes/features/redirects.php:300
+msgid "Please enter a source path."
+msgstr "Bitte gib einen Quellpfad ein."
+
+#: includes/features/redirects.php:302
+msgid "Please enter a valid target URL or path."
+msgstr "Bitte gib eine gültige Ziel-URL oder einen Pfad ein."
+
 #: includes/features/media-image-opt.php:2577
 msgid "Please select at least one image to restore."
 msgstr "Bitte wähle mindestens ein Bild zum Wiederherstellen aus."
@@ -3766,9 +3866,17 @@ msgstr "Weiterleitungs-Einstellung"
 msgid "Redirect URL after Login"
 msgstr "Weiterleitungs-URL nach Login"
 
-#: includes/features/analytics.php
-msgid "Retention Period (Days)"
-msgstr "Aufbewahrungsfrist (Tage)"
+#: includes/features/redirects.php:361
+msgid "Redirect deleted."
+msgstr "Weiterleitung gelöscht."
+
+#: includes/features/redirects.php:338
+msgid "Redirect saved."
+msgstr "Weiterleitung gespeichert."
+
+#: includes/features/redirects.php:278
+msgid "Redirects"
+msgstr "Weiterleitungen"
 
 #: includes/features/editor-settings-panel-bricks.php:227
 msgid "Refresh Editor After Save"
@@ -3912,6 +4020,10 @@ msgstr "Wird wiederhergestellt"
 #: includes/features/media-image-opt.php:2918
 msgid "Restoring..."
 msgstr "Wird wiederhergestellt …"
+
+#: includes/features/analytics.php
+msgid "Retention Period (Days)"
+msgstr "Aufbewahrungsfrist (Tage)"
 
 #: includes/features/custom-field-settings.php:346
 #: includes/features/custom-field-settings.php:446
@@ -4156,6 +4268,10 @@ msgstr "SSL"
 #: includes/features/media-image-opt.php:2191
 msgid "Save Automatic Optimization Settings"
 msgstr "Einstellungen für automatische Optimierung speichern"
+
+#: includes/features/redirects.php:623
+msgid "Save Changes"
+msgstr "Änderungen speichern"
 
 #: includes/features/custom-field-settings.php:243
 msgid "Save Custom Fields"
@@ -4773,14 +4889,18 @@ msgstr "Snippet nicht gefunden."
 msgid "Snippet saved."
 msgstr "Snippet gespeichert."
 
-#: includes/features/analytics.php
-msgid "Source"
-msgstr "Quelle"
-
 #: includes/features/two-factor-auth.php:267
 #: includes/features/two-factor-auth.php:303
 msgid "Something went wrong. Please log in again."
 msgstr "Etwas ist schiefgelaufen. Bitte melde dich erneut an."
+
+#: includes/features/analytics.php
+msgid "Source"
+msgstr "Quelle"
+
+#: includes/features/redirects.php:442
+msgid "Source URL"
+msgstr "Quell-URL"
 
 #: includes/elements/gsap-text-animations.php:58
 msgid "Span"
@@ -5033,9 +5153,17 @@ msgstr "Tada"
 msgid "Tags"
 msgstr "Tags"
 
+#: includes/features/redirects.php:473
+msgid "Target"
+msgstr "Ziel"
+
 #: includes/features/media-image-opt.php:50
 msgid "Target Format"
 msgstr "Zielformat"
+
+#: includes/features/redirects.php:446
+msgid "Target URL"
+msgstr "Ziel-URL"
 
 #: includes/features/custom-field-settings.php:182
 #: includes/features/custom-field-settings.php:437
@@ -5715,6 +5843,10 @@ msgstr "und"
 msgid "comma, separated, tags"
 msgstr "Komma, getrennte, Tags"
 
+#: includes/features/redirects.php:578
+msgid "days since last hit"
+msgstr "Tage seit dem letzten Treffer"
+
 #: includes/features/media-image-opt.php:2692
 msgid "deleted"
 msgstr "gelöscht"
@@ -5853,4 +5985,3 @@ msgstr "⚠ WARNUNG – Du kannst mehrere Rollen zuweisen, aber sich überlappen
 #: includes/features/media-image-opt.php:2841
 msgid "🔍 Debug: Raw Metadata"
 msgstr "🔍 Debug: Rohe Metadaten"
-
