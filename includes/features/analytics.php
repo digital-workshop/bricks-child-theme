@@ -7,7 +7,7 @@ define( 'SNN_ANALYTICS_OPTIONS_KEY', 'snn_analytics_options' );
 define( 'SNN_ANALYTICS_DB_VERSION_OPTION', 'snn_analytics_db_version' );
 // Bump whenever the pageviews table schema changes -- snn_analytics_maybe_upgrade_db()
 // re-runs dbDelta() automatically the next time an admin page loads.
-define( 'SNN_ANALYTICS_DB_VERSION', 1 );
+define( 'SNN_ANALYTICS_DB_VERSION', 2 );
 
 // ----------------------------------------------------------------------
 // Table + options helpers
@@ -16,6 +16,11 @@ define( 'SNN_ANALYTICS_DB_VERSION', 1 );
 function snn_analytics_table() {
     global $wpdb;
     return $wpdb->prefix . 'snn_analytics_pageviews';
+}
+
+function snn_analytics_markers_table() {
+    global $wpdb;
+    return $wpdb->prefix . 'snn_analytics_markers';
 }
 
 function snn_analytics_get_options() {
@@ -55,6 +60,7 @@ function snn_analytics_maybe_upgrade_db() {
 
     global $wpdb;
     $table           = snn_analytics_table();
+    $markers_table   = snn_analytics_markers_table();
     $charset_collate = $wpdb->get_charset_collate();
 
     $sql = "CREATE TABLE {$table} (
@@ -66,6 +72,14 @@ function snn_analytics_maybe_upgrade_db() {
         PRIMARY KEY  (id),
         KEY created_at (created_at),
         KEY visitor_hash (visitor_hash)
+    ) {$charset_collate};
+    CREATE TABLE {$markers_table} (
+        id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+        marker_date DATE NOT NULL,
+        note VARCHAR(255) NOT NULL,
+        created_at DATETIME NOT NULL,
+        PRIMARY KEY  (id),
+        KEY marker_date (marker_date)
     ) {$charset_collate};";
 
     require_once ABSPATH . 'wp-admin/includes/upgrade.php';
@@ -292,6 +306,63 @@ function snn_analytics_query_daily_counts( $start, $end ) {
     return $out;
 }
 
+// ----------------------------------------------------------------------
+// Chart markers ("here I did X") -- date + short note, shown on the
+// pageviews-per-day chart and listed underneath it for a quick overview.
+// ----------------------------------------------------------------------
+
+function snn_analytics_get_markers( $start = null, $end = null, $limit = 100 ) {
+    global $wpdb;
+    $table = snn_analytics_markers_table();
+
+    if ( $start && $end ) {
+        return $wpdb->get_results( $wpdb->prepare(
+            "SELECT id, marker_date, note FROM {$table} WHERE marker_date BETWEEN %s AND %s ORDER BY marker_date DESC, id DESC LIMIT %d",
+            substr( $start, 0, 10 ), substr( $end, 0, 10 ), $limit
+        ), ARRAY_A );
+    }
+
+    return $wpdb->get_results( $wpdb->prepare(
+        "SELECT id, marker_date, note FROM {$table} ORDER BY marker_date DESC, id DESC LIMIT %d",
+        $limit
+    ), ARRAY_A );
+}
+
+function snn_analytics_handle_marker_actions() {
+    if ( $_SERVER['REQUEST_METHOD'] !== 'POST' || ! current_user_can( 'manage_options' ) ) {
+        return;
+    }
+
+    if ( isset( $_POST['snn_analytics_add_marker'] ) && check_admin_referer( 'snn_analytics_marker_action', 'snn_analytics_marker_nonce' ) ) {
+        $date = sanitize_text_field( wp_unslash( $_POST['marker_date'] ?? '' ) );
+        $note = trim( sanitize_text_field( wp_unslash( $_POST['marker_note'] ?? '' ) ) );
+
+        $date_obj = DateTime::createFromFormat( 'Y-m-d', $date );
+        if ( ! $date_obj || $date_obj->format( 'Y-m-d' ) !== $date ) {
+            add_settings_error( 'snn-analytics-marker', 'invalid_date', __( 'Please enter a valid date.', 'snn' ), 'error' );
+        } elseif ( '' === $note ) {
+            add_settings_error( 'snn-analytics-marker', 'empty_note', __( 'Please enter a note for the marker.', 'snn' ), 'error' );
+        } else {
+            global $wpdb;
+            $wpdb->insert(
+                snn_analytics_markers_table(),
+                array(
+                    'marker_date' => $date,
+                    'note'        => substr( $note, 0, 255 ),
+                    'created_at'  => current_time( 'mysql' ),
+                ),
+                array( '%s', '%s', '%s' )
+            );
+        }
+    }
+
+    if ( isset( $_POST['snn_analytics_delete_marker'] ) && check_admin_referer( 'snn_analytics_marker_delete_action', 'snn_analytics_marker_delete_nonce' ) ) {
+        global $wpdb;
+        $wpdb->delete( snn_analytics_markers_table(), array( 'id' => absint( $_POST['marker_id'] ?? 0 ) ), array( '%d' ) );
+    }
+}
+add_action( 'admin_init', 'snn_analytics_handle_marker_actions' );
+
 function snn_analytics_query_top( $column, $start, $end, $limit = 10 ) {
     global $wpdb;
     $table  = snn_analytics_table();
@@ -513,7 +584,41 @@ function snn_analytics_mb_overview() {
 
 function snn_analytics_mb_chart() {
     list( , $start, $end ) = snn_analytics_current_range_bounds();
-    echo snn_analytics_render_line_chart( snn_analytics_query_daily_counts( $start, $end ) );
+    $markers = snn_analytics_get_markers( $start, $end );
+
+    settings_errors( 'snn-analytics-marker' );
+
+    echo snn_analytics_render_line_chart( snn_analytics_query_daily_counts( $start, $end ), $markers );
+    ?>
+    <form method="post" class="snn-analytics-marker-form">
+        <?php wp_nonce_field( 'snn_analytics_marker_action', 'snn_analytics_marker_nonce' ); ?>
+        <div class="field">
+            <label for="snn_analytics_marker_date"><?php esc_html_e( 'Date', 'snn' ); ?></label>
+            <input type="date" id="snn_analytics_marker_date" name="marker_date" value="<?php echo esc_attr( current_time( 'Y-m-d' ) ); ?>" required>
+        </div>
+        <div class="field" style="flex:1; min-width:200px;">
+            <label for="snn_analytics_marker_note"><?php esc_html_e( 'Note', 'snn' ); ?></label>
+            <input type="text" id="snn_analytics_marker_note" name="marker_note" class="widefat" placeholder="<?php esc_attr_e( 'e.g. Published new blog post', 'snn' ); ?>" maxlength="255" required>
+        </div>
+        <button type="submit" name="snn_analytics_add_marker" class="button"><?php esc_html_e( 'Add Marker', 'snn' ); ?></button>
+    </form>
+    <?php if ( empty( $markers ) ) : ?>
+        <p class="description"><?php esc_html_e( 'No markers in this time range.', 'snn' ); ?></p>
+    <?php else : ?>
+        <ul class="snn-analytics-marker-list">
+            <?php foreach ( $markers as $marker ) : ?>
+                <li>
+                    <span class="snn-analytics-marker-date"><?php echo esc_html( date_i18n( get_option( 'date_format' ), strtotime( $marker['marker_date'] ) ) ); ?></span>
+                    <span class="snn-analytics-marker-note"><?php echo esc_html( $marker['note'] ); ?></span>
+                    <form method="post" class="snn-analytics-marker-delete">
+                        <?php wp_nonce_field( 'snn_analytics_marker_delete_action', 'snn_analytics_marker_delete_nonce' ); ?>
+                        <input type="hidden" name="marker_id" value="<?php echo esc_attr( $marker['id'] ); ?>">
+                        <button type="submit" name="snn_analytics_delete_marker" class="button-link-delete" aria-label="<?php esc_attr_e( 'Delete marker', 'snn' ); ?>">&times;</button>
+                    </form>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    <?php endif;
 }
 
 function snn_analytics_mb_top_pages() {
@@ -654,7 +759,7 @@ function snn_analytics_handle_form_submit() {
 }
 add_action( 'admin_init', 'snn_analytics_handle_form_submit' );
 
-function snn_analytics_render_line_chart( $daily_counts ) {
+function snn_analytics_render_line_chart( $daily_counts, $markers = array() ) {
     $values = array_values( $daily_counts );
     $labels = array_keys( $daily_counts );
     $n      = count( $values );
@@ -674,12 +779,33 @@ function snn_analytics_render_line_chart( $daily_counts ) {
         $points[] = round( $x, 1 ) . ',' . round( $y, 1 );
     }
 
+    // Group markers by date so multiple notes on the same day share one line.
+    $notes_by_date = array();
+    foreach ( $markers as $marker ) {
+        $notes_by_date[ $marker['marker_date'] ][] = $marker['note'];
+    }
+
     $svg = '<svg viewBox="0 0 ' . $w . ' ' . $h . '" class="snn-analytics-chart" role="img" aria-label="' . esc_attr__( 'Pageviews per day', 'snn' ) . '">';
 
     for ( $i = 0; $i <= 4; $i++ ) {
         $y    = $pad_t + $plot_h - ( $i / 4 ) * $plot_h;
         $svg .= '<line x1="' . $pad_l . '" y1="' . round( $y, 1 ) . '" x2="' . ( $w - $pad_r ) . '" y2="' . round( $y, 1 ) . '" class="snn-analytics-chart-grid" />';
         $svg .= '<text x="0" y="' . round( $y + 4, 1 ) . '" class="snn-analytics-chart-axis">' . round( $max * $i / 4 ) . '</text>';
+    }
+
+    foreach ( $notes_by_date as $date => $notes ) {
+        $idx = array_search( $date, $labels, true );
+        if ( false === $idx ) {
+            continue; // Marker falls outside the currently selected range.
+        }
+        $x       = $pad_l + ( 0 === $idx && $n === 1 ? 0 : ( $idx / ( $n - 1 ) ) * $plot_w );
+        $x       = round( $x, 1 );
+        $tooltip = esc_html( date_i18n( get_option( 'date_format' ), strtotime( $date ) ) ) . "\n" . esc_html( implode( "\n", $notes ) );
+        $svg    .= '<g class="snn-analytics-chart-marker">'
+            . '<line x1="' . $x . '" y1="' . $pad_t . '" x2="' . $x . '" y2="' . ( $pad_t + $plot_h ) . '" class="snn-analytics-chart-marker-line" />'
+            . '<circle cx="' . $x . '" cy="' . $pad_t . '" r="4" class="snn-analytics-chart-marker-dot" />'
+            . '<title>' . $tooltip . '</title>'
+            . '</g>';
     }
 
     $svg .= '<polyline points="' . esc_attr( implode( ' ', $points ) ) . '" class="snn-analytics-chart-line" />';
@@ -708,6 +834,17 @@ function snn_analytics_admin_styles() {
         .snn-analytics-chart-grid { stroke: #eee; stroke-width: 1; }
         .snn-analytics-chart-line { fill: none; stroke: #2271b1; stroke-width: 2; }
         .snn-analytics-chart-axis { font-size: 10px; fill: #646970; }
+        .snn-analytics-chart-marker-line { stroke: #d63638; stroke-width: 1; stroke-dasharray: 3 2; }
+        .snn-analytics-chart-marker-dot { fill: #d63638; cursor: pointer; }
+        .snn-analytics-chart-marker:hover .snn-analytics-chart-marker-line { stroke-width: 1.5; }
+        .snn-analytics-marker-form { display: flex; gap: 8px; align-items: flex-end; flex-wrap: wrap; margin: 16px 0 12px; padding-top: 12px; border-top: 1px solid #eee; }
+        .snn-analytics-marker-form .field label { display: block; font-size: 12px; font-weight: 600; margin-bottom: 4px; }
+        .snn-analytics-marker-list { margin: 0; }
+        .snn-analytics-marker-list li { display: flex; align-items: center; gap: 10px; padding: 6px 0; border-bottom: 1px solid #f0f0f1; }
+        .snn-analytics-marker-list li:last-child { border-bottom: none; }
+        .snn-analytics-marker-date { color: #646970; white-space: nowrap; font-variant-numeric: tabular-nums; }
+        .snn-analytics-marker-note { flex: 1; }
+        .snn-analytics-marker-delete { margin-left: auto; }
         .snn-analytics-social-stats { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 12px; }
         .snn-analytics-social-stats .snn-analytics-stat-card { border-style: dashed; }
         .snn-analytics-social-empty { color: #646970; }

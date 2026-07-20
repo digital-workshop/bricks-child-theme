@@ -196,6 +196,10 @@ msgstr ""
 msgid "Add IP Address"
 msgstr ""
 
+#: includes/features/analytics.php:603
+msgid "Add Marker"
+msgstr ""
+
 #: includes/features/custom-field-settings.php:1151
 #: includes/features/custom-field-settings.php:1978
 #: includes/features/custom-field-settings.php:2028
@@ -1358,6 +1362,10 @@ msgstr ""
 
 #: includes/features/media-image-opt.php:2213
 msgid "Delete Originals to Save Space"
+msgstr ""
+
+#: includes/features/analytics.php:616
+msgid "Delete marker"
 msgstr ""
 
 #: includes/features/redirects.php:503
@@ -3250,6 +3258,10 @@ msgstr ""
 msgid "No images to restore."
 msgstr ""
 
+#: includes/features/analytics.php:606
+msgid "No markers in this time range."
+msgstr ""
+
 #: includes/features/media-image-opt.php:2262
 #: includes/features/media-image-opt.php:2606
 msgid "No optimized images found."
@@ -3291,6 +3303,10 @@ msgstr ""
 
 #: includes/features/media-image-opt.php:2773
 msgid "Not an image file."
+msgstr ""
+
+#: includes/features/analytics.php:600
+msgid "Note"
 msgstr ""
 
 #: includes/features/smtp-settings.php:837
@@ -3609,8 +3625,16 @@ msgstr ""
 msgid "Please accept cookies to see the contents of this iframe."
 msgstr ""
 
+#: includes/features/analytics.php:344
+msgid "Please enter a note for the marker."
+msgstr ""
+
 #: includes/features/redirects.php:300
 msgid "Please enter a source path."
+msgstr ""
+
+#: includes/features/analytics.php:342
+msgid "Please enter a valid date."
 msgstr ""
 
 #: includes/features/redirects.php:302
@@ -5752,6 +5776,10 @@ msgstr ""
 msgid "done"
 msgstr ""
 
+#: includes/features/analytics.php:601
+msgid "e.g. Published new blog post"
+msgstr ""
+
 #: includes/features/cookie-banner.php:694
 #: includes/features/cookie-banner.php:903
 msgid "e.g., Analytics for tracking site usage"
@@ -5881,4 +5909,3 @@ msgstr ""
 #: includes/features/media-image-opt.php:2841
 msgid "🔍 Debug: Raw Metadata"
 msgstr ""
-

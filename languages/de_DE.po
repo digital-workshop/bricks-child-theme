@@ -204,6 +204,10 @@ msgstr "Aktiv"
 msgid "Add IP Address"
 msgstr "IP-Adresse hinzufügen"
 
+#: includes/features/analytics.php:603
+msgid "Add Marker"
+msgstr "Marker hinzufügen"
+
 #: includes/features/custom-field-settings.php:1151
 #: includes/features/custom-field-settings.php:1978
 #: includes/features/custom-field-settings.php:2028
@@ -1379,6 +1383,10 @@ msgstr "Originaldateien jetzt löschen (Debug)"
 #: includes/features/media-image-opt.php:2213
 msgid "Delete Originals to Save Space"
 msgstr "Originale löschen, um Speicherplatz zu sparen"
+
+#: includes/features/analytics.php:616
+msgid "Delete marker"
+msgstr "Marker löschen"
 
 #: includes/features/redirects.php:503
 msgid "Delete this redirect?"
@@ -3298,6 +3306,10 @@ msgstr "Keine Bilder zu optimieren. Bitte zuerst scannen."
 msgid "No images to restore."
 msgstr "Keine Bilder zum Wiederherstellen."
 
+#: includes/features/analytics.php:606
+msgid "No markers in this time range."
+msgstr "Keine Marker in diesem Zeitraum."
+
 #: includes/features/media-image-opt.php:2262
 #: includes/features/media-image-opt.php:2606
 msgid "No optimized images found."
@@ -3344,6 +3356,10 @@ msgstr "Keine Bilddatei."
 #: includes/features/analytics.php
 msgid "Not enough data for this time range."
 msgstr "Nicht genug Daten für diesen Zeitraum."
+
+#: includes/features/analytics.php:600
+msgid "Note"
+msgstr "Notiz"
 
 #: includes/features/smtp-settings.php:837
 msgid "Note - PHP Warnings encountered:"
@@ -3677,9 +3693,17 @@ msgstr "Pixel-Dither (Auflösen)"
 msgid "Please accept cookies to see the contents of this iframe."
 msgstr "Bitte akzeptiere Cookies, um den Inhalt dieses iFrames zu sehen."
 
+#: includes/features/analytics.php:344
+msgid "Please enter a note for the marker."
+msgstr "Bitte gib eine Notiz für den Marker ein."
+
 #: includes/features/redirects.php:300
 msgid "Please enter a source path."
 msgstr "Bitte gib einen Quellpfad ein."
+
+#: includes/features/analytics.php:342
+msgid "Please enter a valid date."
+msgstr "Bitte gib ein gültiges Datum ein."
 
 #: includes/features/redirects.php:302
 msgid "Please enter a valid target URL or path."
@@ -5864,6 +5888,10 @@ msgstr "gelöscht"
 msgid "done"
 msgstr "fertig"
 
+#: includes/features/analytics.php:601
+msgid "e.g. Published new blog post"
+msgstr "z. B. Neuen Blogbeitrag veröffentlicht"
+
 #: includes/features/cookie-banner.php:694
 #: includes/features/cookie-banner.php:903
 msgid "e.g., Analytics for tracking site usage"
@@ -5993,4 +6021,3 @@ msgstr "⚠ WARNUNG – Du kannst mehrere Rollen zuweisen, aber sich überlappen
 #: includes/features/media-image-opt.php:2841
 msgid "🔍 Debug: Raw Metadata"
 msgstr "🔍 Debug: Rohe Metadaten"
-
