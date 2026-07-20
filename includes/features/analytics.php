@@ -305,6 +305,34 @@ function snn_analytics_query_top( $column, $start, $end, $limit = 10 ) {
     ), ARRAY_A );
 }
 
+/**
+ * Top blog posts (post_type "post") by pageviews. Pulls a generous pool of
+ * top page_path candidates, then resolves each one to a post via WordPress's
+ * own permalink-to-ID logic and keeps only actual blog posts -- this stays
+ * accurate across any permalink structure without needing a separate
+ * post-ID column in the tracking table.
+ */
+function snn_analytics_query_top_posts( $start, $end, $limit = 10 ) {
+    $candidates = snn_analytics_query_top( 'page_path', $start, $end, 200 );
+
+    $posts = array();
+    foreach ( $candidates as $row ) {
+        $post_id = url_to_postid( home_url( $row['label'] ) );
+        if ( ! $post_id || 'post' !== get_post_type( $post_id ) ) {
+            continue;
+        }
+        $posts[] = array(
+            'label' => get_the_title( $post_id ),
+            'path'  => $row['label'],
+            'c'     => (int) $row['c'],
+        );
+        if ( count( $posts ) >= $limit ) {
+            break;
+        }
+    }
+    return $posts;
+}
+
 // ----------------------------------------------------------------------
 // Social media traffic
 // ----------------------------------------------------------------------
@@ -576,6 +604,7 @@ function snn_analytics_page() {
     $stats           = snn_analytics_query_stats( $start, $end );
     $daily_counts    = snn_analytics_query_daily_counts( $start, $end );
     $top_pages       = snn_analytics_query_top( 'page_path', $start, $end );
+    $top_posts       = snn_analytics_query_top_posts( $start, $end );
     $top_referrers   = snn_analytics_query_top( 'referrer_host', $start, $end );
     $social_summary  = snn_analytics_query_social_summary( $start, $end );
     $social_platforms = snn_analytics_query_social_breakdown( $start, $end );
@@ -631,6 +660,19 @@ function snn_analytics_page() {
                             <tr><td colspan="2"><?php esc_html_e( 'No data.', 'snn' ); ?></td></tr>
                         <?php else : foreach ( $top_pages as $row ) : ?>
                             <tr><td><?php echo esc_html( $row['label'] ); ?></td><td><?php echo esc_html( number_format_i18n( (int) $row['c'] ) ); ?></td></tr>
+                        <?php endforeach; endif; ?>
+                    </tbody>
+                </table>
+            </div>
+            <div class="postbox">
+                <h2 class="hndle" style="padding: 10px 0;"><?php esc_html_e( 'Top 10 Blog Posts', 'snn' ); ?></h2>
+                <table class="widefat striped">
+                    <thead><tr><th><?php esc_html_e( 'Post', 'snn' ); ?></th><th><?php esc_html_e( 'Views', 'snn' ); ?></th></tr></thead>
+                    <tbody>
+                        <?php if ( empty( $top_posts ) ) : ?>
+                            <tr><td colspan="2"><?php esc_html_e( 'No data.', 'snn' ); ?></td></tr>
+                        <?php else : foreach ( $top_posts as $row ) : ?>
+                            <tr><td><?php echo esc_html( $row['label'] ); ?></td><td><?php echo esc_html( number_format_i18n( $row['c'] ) ); ?></td></tr>
                         <?php endforeach; endif; ?>
                     </tbody>
                 </table>
