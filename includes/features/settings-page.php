@@ -37,7 +37,6 @@ function snn_settings_page_callback() {
                 array('slug' => 'snn-cookie-settings',        'label' => __('Cookie Settings', 'snn'),                  'dashicon' => 'dashicons-admin-site'),
                 array('slug' => 'snn-interactions',           'label' => __('Interactions', 'snn'),                     'dashicon' => 'dashicons-table-col-after'),
                 array('slug' => 'snn-custom-codes-snippets',  'label' => __('Code Snippets', 'snn'),                    'dashicon' => 'dashicons-editor-code'),
-                array('slug' => 'snn-block-editor-settings',  'label' => __('Block Editor Settings', 'snn'),            'dashicon' => 'dashicons-admin-customizer'),
             );
             
             foreach ($menu_items as $item) {
@@ -60,7 +59,7 @@ function snn_settings_page_callback() {
                 <?php _e('and', 'snn'); ?>
                 <a href="https://bricksbuilder.io/" target="_blank"><?php _e('Bricks Builder', 'snn'); ?></a>.
                 <?php _e('Post Types, Custom Fields, Taxonomies, SMTP Mail Setting, Custom Login Design,
-                Math Chaptcha for Login/Register, Security Features, 404 Logs, 301 Redirects and some Block Editor Features.
+                Math Chaptcha for Login/Register, Security Features, Code Snippets and Cookie Consent.
                 Everything is straightforward and ready to use.', 'snn'); ?>
                 <br><br>
                 <?php _e('Enjoy building your site.', 'snn'); ?><br><br>
