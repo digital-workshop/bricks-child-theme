@@ -35,6 +35,8 @@ Basiert auf [SNN-BRX](https://github.com/sinanisler/snn-brx-child-theme) von [si
 
     ![Eigenständiges Admin-UI](docs/screenshots/admin-ui-custom-fields.png)
 
+*   **Weiterleitungen (301/302/307) & gruppiertes 404-Log:** Ersetzt das Plugin [Redirection](https://redirection.me/). Eigene Verwaltungsseite unter *SNN Settings → Redirects* mit Weiterleitungsliste (Quelle, Ziel, HTTP-Code, Treffer, Ein/Aus-Schalter), Wildcard-Unterstützung (`/alter-bereich/*` → `/neuer-bereich/*`) und einer eigenen 404-Übersicht, die alle nicht gefundenen URLs nach Adresse gruppiert zählt (Treffer, zuerst/zuletzt gesehen) statt jeden einzelnen Aufruf separat zu loggen. Direkt aus der 404-Liste heraus lässt sich per Klick eine Weiterleitung für genau diese URL anlegen — der Eintrag verschwindet danach automatisch aus dem 404-Log. Bot-Traffic kann von der 404-Zählung ausgeschlossen werden, alte Einträge werden per täglichem Cron automatisch bereinigt (konfigurierbare Aufbewahrungsfrist).
+
 ## Key Features (Stripped)
 
 

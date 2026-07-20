@@ -19,6 +19,7 @@ function snn_admin_ui_design_page_slugs() {
         'editor-settings',
         'snn-mail-customizer',
         'snn-cookie-settings',
+        'snn-redirects',
     );
 }
 

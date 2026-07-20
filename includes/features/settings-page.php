@@ -37,6 +37,7 @@ function snn_settings_page_callback() {
                 array('slug' => 'snn-cookie-settings',        'label' => __('Cookie Settings', 'snn'),                  'dashicon' => 'dashicons-admin-site'),
                 array('slug' => 'snn-interactions',           'label' => __('Interactions', 'snn'),                     'dashicon' => 'dashicons-table-col-after'),
                 array('slug' => 'snn-custom-codes-snippets',  'label' => __('Code Snippets', 'snn'),                    'dashicon' => 'dashicons-editor-code'),
+                array('slug' => 'snn-redirects',              'label' => __('Redirects', 'snn'),                        'dashicon' => 'dashicons-randomize'),
             );
             
             foreach ($menu_items as $item) {
