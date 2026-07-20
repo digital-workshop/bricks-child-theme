@@ -280,6 +280,19 @@ function snn_analytics_query_stats( $start, $end ) {
     );
 }
 
+// Fills in zero-count days so a chart series is a continuous, gap-free range.
+function snn_analytics_fill_daily_series( $counts, $start, $end ) {
+    $out    = array();
+    $cursor = strtotime( substr( $start, 0, 10 ) );
+    $end_ts = strtotime( substr( $end, 0, 10 ) );
+    while ( $cursor <= $end_ts ) {
+        $d         = gmdate( 'Y-m-d', $cursor );
+        $out[ $d ] = $counts[ $d ] ?? 0;
+        $cursor   += DAY_IN_SECONDS;
+    }
+    return $out;
+}
+
 function snn_analytics_query_daily_counts( $start, $end ) {
     global $wpdb;
     $table = snn_analytics_table();
@@ -293,17 +306,23 @@ function snn_analytics_query_daily_counts( $start, $end ) {
     foreach ( $rows as $row ) {
         $counts[ $row['d'] ] = (int) $row['c'];
     }
+    return snn_analytics_fill_daily_series( $counts, $start, $end );
+}
 
-    // Fill in zero-count days so the chart is a continuous series.
-    $out      = array();
-    $cursor   = strtotime( substr( $start, 0, 10 ) );
-    $end_ts   = strtotime( substr( $end, 0, 10 ) );
-    while ( $cursor <= $end_ts ) {
-        $d          = gmdate( 'Y-m-d', $cursor );
-        $out[ $d ]  = $counts[ $d ] ?? 0;
-        $cursor    += DAY_IN_SECONDS;
+function snn_analytics_query_daily_visitors( $start, $end ) {
+    global $wpdb;
+    $table = snn_analytics_table();
+
+    $rows = $wpdb->get_results( $wpdb->prepare(
+        "SELECT DATE(created_at) as d, COUNT(DISTINCT visitor_hash) as c FROM {$table} WHERE created_at BETWEEN %s AND %s GROUP BY DATE(created_at)",
+        $start, $end
+    ), ARRAY_A );
+
+    $counts = array();
+    foreach ( $rows as $row ) {
+        $counts[ $row['d'] ] = (int) $row['c'];
     }
-    return $out;
+    return snn_analytics_fill_daily_series( $counts, $start, $end );
 }
 
 // ----------------------------------------------------------------------
@@ -587,9 +606,44 @@ function snn_analytics_mb_chart() {
     $markers = snn_analytics_get_markers( $start, $end );
 
     settings_errors( 'snn-analytics-marker' );
-
-    echo snn_analytics_render_line_chart( snn_analytics_query_daily_counts( $start, $end ), $markers );
     ?>
+    <div class="snn-analytics-chart-toggles">
+        <label class="snn-analytics-chart-toggle-item">
+            <input type="checkbox" id="snn_analytics_toggle_pageviews" checked>
+            <span class="snn-analytics-legend-swatch snn-analytics-legend-swatch-pageviews"></span>
+            <span><?php esc_html_e( 'Pageviews', 'snn' ); ?></span>
+        </label>
+        <label class="snn-analytics-chart-toggle-item">
+            <input type="checkbox" id="snn_analytics_toggle_visitors" checked>
+            <span class="snn-analytics-legend-swatch snn-analytics-legend-swatch-visitors"></span>
+            <span><?php esc_html_e( 'Visitors', 'snn' ); ?></span>
+        </label>
+    </div>
+    <?php
+    echo snn_analytics_render_line_chart(
+        snn_analytics_query_daily_counts( $start, $end ),
+        snn_analytics_query_daily_visitors( $start, $end ),
+        $markers
+    );
+    ?>
+    <script>
+    ( function() {
+        var pvToggle  = document.getElementById( 'snn_analytics_toggle_pageviews' );
+        var visToggle = document.getElementById( 'snn_analytics_toggle_visitors' );
+        var pvLine    = document.querySelector( '.snn-analytics-chart-line-pageviews' );
+        var visLine   = document.querySelector( '.snn-analytics-chart-line-visitors' );
+        if ( pvToggle && pvLine ) {
+            pvToggle.addEventListener( 'change', function() {
+                pvLine.style.display = pvToggle.checked ? '' : 'none';
+            } );
+        }
+        if ( visToggle && visLine ) {
+            visToggle.addEventListener( 'change', function() {
+                visLine.style.display = visToggle.checked ? '' : 'none';
+            } );
+        }
+    } )();
+    </script>
     <form method="post" class="snn-analytics-marker-form">
         <?php wp_nonce_field( 'snn_analytics_marker_action', 'snn_analytics_marker_nonce' ); ?>
         <div class="field">
@@ -759,25 +813,36 @@ function snn_analytics_handle_form_submit() {
 }
 add_action( 'admin_init', 'snn_analytics_handle_form_submit' );
 
-function snn_analytics_render_line_chart( $daily_counts, $markers = array() ) {
-    $values = array_values( $daily_counts );
-    $labels = array_keys( $daily_counts );
-    $n      = count( $values );
-    if ( $n < 2 ) {
-        return '<p>' . esc_html__( 'Not enough data for this time range.', 'snn' ) . '</p>';
-    }
-
-    $w = 700; $h = 220; $pad_l = 34; $pad_b = 26; $pad_t = 12; $pad_r = 10;
-    $max     = max( 1, max( $values ) );
-    $plot_w  = $w - $pad_l - $pad_r;
-    $plot_h  = $h - $pad_t - $pad_b;
-
+/**
+ * Builds points for one series against a shared scale, so pageviews and
+ * visitors can be plotted on the same axes.
+ */
+function snn_analytics_chart_series_points( $values, $n, $max, $pad_l, $pad_t, $plot_w, $plot_h ) {
     $points = array();
     foreach ( $values as $i => $v ) {
         $x        = $pad_l + ( 0 === $i && $n === 1 ? 0 : ( $i / ( $n - 1 ) ) * $plot_w );
         $y        = $pad_t + $plot_h - ( $v / $max ) * $plot_h;
         $points[] = round( $x, 1 ) . ',' . round( $y, 1 );
     }
+    return $points;
+}
+
+function snn_analytics_render_line_chart( $daily_pageviews, $daily_visitors, $markers = array() ) {
+    $pv_values = array_values( $daily_pageviews );
+    $vis_values = array_values( $daily_visitors );
+    $labels     = array_keys( $daily_pageviews );
+    $n          = count( $pv_values );
+    if ( $n < 2 ) {
+        return '<p>' . esc_html__( 'Not enough data for this time range.', 'snn' ) . '</p>';
+    }
+
+    $w = 700; $h = 220; $pad_l = 34; $pad_b = 26; $pad_t = 12; $pad_r = 10;
+    $max     = max( 1, max( $pv_values ), max( $vis_values ) );
+    $plot_w  = $w - $pad_l - $pad_r;
+    $plot_h  = $h - $pad_t - $pad_b;
+
+    $pv_points  = snn_analytics_chart_series_points( $pv_values, $n, $max, $pad_l, $pad_t, $plot_w, $plot_h );
+    $vis_points = snn_analytics_chart_series_points( $vis_values, $n, $max, $pad_l, $pad_t, $plot_w, $plot_h );
 
     // Group markers by date so multiple notes on the same day share one line.
     $notes_by_date = array();
@@ -785,7 +850,7 @@ function snn_analytics_render_line_chart( $daily_counts, $markers = array() ) {
         $notes_by_date[ $marker['marker_date'] ][] = $marker['note'];
     }
 
-    $svg = '<svg viewBox="0 0 ' . $w . ' ' . $h . '" class="snn-analytics-chart" role="img" aria-label="' . esc_attr__( 'Pageviews per day', 'snn' ) . '">';
+    $svg = '<svg viewBox="0 0 ' . $w . ' ' . $h . '" class="snn-analytics-chart" role="img" aria-label="' . esc_attr__( 'Pageviews and visitors per day', 'snn' ) . '">';
 
     for ( $i = 0; $i <= 4; $i++ ) {
         $y    = $pad_t + $plot_h - ( $i / 4 ) * $plot_h;
@@ -808,7 +873,8 @@ function snn_analytics_render_line_chart( $daily_counts, $markers = array() ) {
             . '</g>';
     }
 
-    $svg .= '<polyline points="' . esc_attr( implode( ' ', $points ) ) . '" class="snn-analytics-chart-line" />';
+    $svg .= '<polyline points="' . esc_attr( implode( ' ', $vis_points ) ) . '" class="snn-analytics-chart-line-visitors" />';
+    $svg .= '<polyline points="' . esc_attr( implode( ' ', $pv_points ) ) . '" class="snn-analytics-chart-line-pageviews" />';
 
     $label_indexes = array_unique( array( 0, intdiv( $n, 2 ), $n - 1 ) );
     foreach ( $label_indexes as $i ) {
@@ -832,11 +898,19 @@ function snn_analytics_admin_styles() {
         .snn-analytics-stat-card .label { color: #646970; }
         .snn-analytics-chart { width: 100%; height: auto; }
         .snn-analytics-chart-grid { stroke: #eee; stroke-width: 1; }
-        .snn-analytics-chart-line { fill: none; stroke: #2271b1; stroke-width: 2; }
+        .snn-analytics-chart-line-pageviews { fill: none; stroke: #2271b1; stroke-width: 2; }
+        .snn-analytics-chart-line-visitors { fill: none; stroke: #00a32a; stroke-width: 2; }
         .snn-analytics-chart-axis { font-size: 10px; fill: #646970; }
         .snn-analytics-chart-marker-line { stroke: #d63638; stroke-width: 1; stroke-dasharray: 3 2; }
         .snn-analytics-chart-marker-dot { fill: #d63638; cursor: pointer; }
         .snn-analytics-chart-marker:hover .snn-analytics-chart-marker-line { stroke-width: 1.5; }
+        .snn-analytics-chart-toggles { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 8px; }
+        .snn-analytics-chart-toggle-item { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; cursor: pointer; user-select: none; }
+        .snn-analytics-legend-swatch { display: inline-block; width: 12px; height: 12px; border-radius: 2px; }
+        .snn-analytics-legend-swatch-pageviews { background: #2271b1; }
+        .snn-analytics-legend-swatch-visitors { background: #00a32a; }
+        .snn-analytics-chart-toggle-item input:not(:checked) ~ .snn-analytics-legend-swatch { opacity: .3; }
+        .snn-analytics-chart-toggle-item input:not(:checked) ~ span:last-child { color: #a7aaad; }
         .snn-analytics-marker-form { display: flex; gap: 8px; align-items: flex-end; flex-wrap: wrap; margin: 16px 0 12px; padding-top: 12px; border-top: 1px solid #eee; }
         .snn-analytics-marker-form .field label { display: block; font-size: 12px; font-weight: 600; margin-bottom: 4px; }
         .snn-analytics-marker-list { margin: 0; }

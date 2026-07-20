@@ -3531,6 +3531,10 @@ msgstr ""
 msgid "Page content is empty"
 msgstr ""
 
+#: includes/features/analytics.php:853
+msgid "Pageviews and visitors per day"
+msgstr ""
+
 #: includes/elements/gsap-text-animations.php:57
 msgid "Paragraph"
 msgstr ""
@@ -5909,3 +5913,4 @@ msgstr ""
 #: includes/features/media-image-opt.php:2841
 msgid "🔍 Debug: Raw Metadata"
 msgstr ""
+

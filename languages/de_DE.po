@@ -3595,6 +3595,10 @@ msgstr "Seiteninhalt ist leer"
 msgid "Pageviews"
 msgstr "Seitenaufrufe"
 
+#: includes/features/analytics.php:853
+msgid "Pageviews and visitors per day"
+msgstr "Seitenaufrufe und Besucher pro Tag"
+
 #: includes/features/analytics.php
 msgid "Pageviews per day"
 msgstr "Seitenaufrufe pro Tag"
@@ -6021,3 +6025,4 @@ msgstr "⚠ WARNUNG – Du kannst mehrere Rollen zuweisen, aber sich überlappen
 #: includes/features/media-image-opt.php:2841
 msgid "🔍 Debug: Raw Metadata"
 msgstr "🔍 Debug: Rohe Metadaten"
+
