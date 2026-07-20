@@ -5880,6 +5880,10 @@ msgstr ""
 msgid "or"
 msgstr ""
 
+#: includes/features/analytics.php:918
+msgid "pageviews"
+msgstr ""
+
 #: includes/features/post-types-settings.php:131
 #: includes/features/post-types-settings.php:284
 msgid "post-slug"
@@ -5930,6 +5934,10 @@ msgstr ""
 msgid "value:label"
 msgstr ""
 
+#: includes/features/analytics.php:917
+msgid "visitors"
+msgstr ""
+
 #: includes/features/smtp-settings.php:1019
 msgid "you@example.com"
 msgstr ""
@@ -5941,3 +5949,4 @@ msgstr ""
 #: includes/features/media-image-opt.php:2841
 msgid "🔍 Debug: Raw Metadata"
 msgstr ""
+

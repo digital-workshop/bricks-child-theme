@@ -642,6 +642,27 @@ function snn_analytics_mb_chart() {
                 visLine.style.display = visToggle.checked ? '' : 'none';
             } );
         }
+
+        // Delegated (not queried immediately) because the marker list further
+        // down the page hasn't been parsed into the DOM yet at this point.
+        document.addEventListener( 'click', function( e ) {
+            var row = e.target.closest( '.snn-analytics-marker-row' );
+            if ( ! row || e.target.closest( 'form' ) ) {
+                return;
+            }
+            var date = row.getAttribute( 'data-marker-date' );
+            if ( ! date ) {
+                return;
+            }
+            document.querySelectorAll( '.snn-analytics-chart-marker--active' ).forEach( function( el ) {
+                el.classList.remove( 'snn-analytics-chart-marker--active' );
+            } );
+            var marker = document.getElementById( 'snn-chart-marker-' + date );
+            if ( marker ) {
+                marker.classList.add( 'snn-analytics-chart-marker--active' );
+                marker.scrollIntoView( { behavior: 'smooth', block: 'center' } );
+            }
+        } );
     } )();
     </script>
     <form method="post" class="snn-analytics-marker-form">
@@ -661,7 +682,7 @@ function snn_analytics_mb_chart() {
     <?php else : ?>
         <ul class="snn-analytics-marker-list">
             <?php foreach ( $markers as $marker ) : ?>
-                <li>
+                <li class="snn-analytics-marker-row" data-marker-date="<?php echo esc_attr( $marker['marker_date'] ); ?>">
                     <span class="snn-analytics-marker-date"><?php echo esc_html( date_i18n( get_option( 'date_format' ), strtotime( $marker['marker_date'] ) ) ); ?></span>
                     <span class="snn-analytics-marker-note"><?php echo esc_html( $marker['note'] ); ?></span>
                     <form method="post" class="snn-analytics-marker-delete">
@@ -827,6 +848,24 @@ function snn_analytics_chart_series_points( $values, $n, $max, $pad_l, $pad_t, $
     return $points;
 }
 
+/**
+ * Renders one small hoverable dot per data point, each with a native SVG
+ * tooltip showing the exact date and value -- the line shape alone makes
+ * exact numbers hard to read off, especially over longer ranges.
+ */
+function snn_analytics_chart_series_dots( $values, $labels, $n, $max, $pad_l, $pad_t, $plot_w, $plot_h, $css_class, $series_label ) {
+    $svg = '';
+    foreach ( $values as $i => $v ) {
+        $x    = $pad_l + ( 0 === $i && $n === 1 ? 0 : ( $i / ( $n - 1 ) ) * $plot_w );
+        $y    = $pad_t + $plot_h - ( $v / $max ) * $plot_h;
+        $date = esc_html( date_i18n( get_option( 'date_format' ), strtotime( $labels[ $i ] ) ) );
+        $svg .= '<circle cx="' . round( $x, 1 ) . '" cy="' . round( $y, 1 ) . '" r="3.5" class="' . esc_attr( $css_class ) . '">'
+            . '<title>' . $date . ': ' . esc_html( number_format_i18n( $v ) ) . ' ' . esc_html( $series_label ) . '</title>'
+            . '</circle>';
+    }
+    return $svg;
+}
+
 function snn_analytics_render_line_chart( $daily_pageviews, $daily_visitors, $markers = array() ) {
     $pv_values = array_values( $daily_pageviews );
     $vis_values = array_values( $daily_visitors );
@@ -866,7 +905,7 @@ function snn_analytics_render_line_chart( $daily_pageviews, $daily_visitors, $ma
         $x       = $pad_l + ( 0 === $idx && $n === 1 ? 0 : ( $idx / ( $n - 1 ) ) * $plot_w );
         $x       = round( $x, 1 );
         $tooltip = esc_html( date_i18n( get_option( 'date_format' ), strtotime( $date ) ) ) . "\n" . esc_html( implode( "\n", $notes ) );
-        $svg    .= '<g class="snn-analytics-chart-marker">'
+        $svg    .= '<g class="snn-analytics-chart-marker" id="snn-chart-marker-' . esc_attr( $date ) . '" data-marker-date="' . esc_attr( $date ) . '">'
             . '<line x1="' . $x . '" y1="' . $pad_t . '" x2="' . $x . '" y2="' . ( $pad_t + $plot_h ) . '" class="snn-analytics-chart-marker-line" />'
             . '<circle cx="' . $x . '" cy="' . $pad_t . '" r="4" class="snn-analytics-chart-marker-dot" />'
             . '<title>' . $tooltip . '</title>'
@@ -875,6 +914,8 @@ function snn_analytics_render_line_chart( $daily_pageviews, $daily_visitors, $ma
 
     $svg .= '<polyline points="' . esc_attr( implode( ' ', $vis_points ) ) . '" class="snn-analytics-chart-line-visitors" />';
     $svg .= '<polyline points="' . esc_attr( implode( ' ', $pv_points ) ) . '" class="snn-analytics-chart-line-pageviews" />';
+    $svg .= snn_analytics_chart_series_dots( $vis_values, $labels, $n, $max, $pad_l, $pad_t, $plot_w, $plot_h, 'snn-analytics-chart-dot-visitors', __( 'visitors', 'snn' ) );
+    $svg .= snn_analytics_chart_series_dots( $pv_values, $labels, $n, $max, $pad_l, $pad_t, $plot_w, $plot_h, 'snn-analytics-chart-dot-pageviews', __( 'pageviews', 'snn' ) );
 
     $label_indexes = array_unique( array( 0, intdiv( $n, 2 ), $n - 1 ) );
     foreach ( $label_indexes as $i ) {
@@ -901,9 +942,14 @@ function snn_analytics_admin_styles() {
         .snn-analytics-chart-line-pageviews { fill: none; stroke: #2271b1; stroke-width: 2; }
         .snn-analytics-chart-line-visitors { fill: none; stroke: #00a32a; stroke-width: 2; }
         .snn-analytics-chart-axis { font-size: 10px; fill: #646970; }
-        .snn-analytics-chart-marker-line { stroke: #d63638; stroke-width: 1; stroke-dasharray: 3 2; }
-        .snn-analytics-chart-marker-dot { fill: #d63638; cursor: pointer; }
+        .snn-analytics-chart-marker-line { stroke: #d63638; stroke-width: 1; stroke-dasharray: 3 2; transition: stroke-width .15s ease, stroke .15s ease; }
+        .snn-analytics-chart-marker-dot { fill: #d63638; cursor: pointer; transition: r .15s ease; }
         .snn-analytics-chart-marker:hover .snn-analytics-chart-marker-line { stroke-width: 1.5; }
+        .snn-analytics-chart-marker--active .snn-analytics-chart-marker-line { stroke-width: 2.5; stroke: #e65054; }
+        .snn-analytics-chart-marker--active .snn-analytics-chart-marker-dot { r: 6; }
+        .snn-analytics-chart-dot-pageviews { fill: #2271b1; stroke: #fff; stroke-width: 1; }
+        .snn-analytics-chart-dot-visitors { fill: #00a32a; stroke: #fff; stroke-width: 1; }
+        .snn-analytics-chart-dot-pageviews, .snn-analytics-chart-dot-visitors { cursor: default; }
         .snn-analytics-chart-toggles { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 8px; }
         .snn-analytics-chart-toggle-item { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; cursor: pointer; user-select: none; }
         .snn-analytics-legend-swatch { display: inline-block; width: 12px; height: 12px; border-radius: 2px; }
@@ -914,7 +960,8 @@ function snn_analytics_admin_styles() {
         .snn-analytics-marker-form { display: flex; gap: 8px; align-items: flex-end; flex-wrap: wrap; margin: 16px 0 12px; padding-top: 12px; border-top: 1px solid #eee; }
         .snn-analytics-marker-form .field label { display: block; font-size: 12px; font-weight: 600; margin-bottom: 4px; }
         .snn-analytics-marker-list { margin: 0; }
-        .snn-analytics-marker-list li { display: flex; align-items: center; gap: 10px; padding: 6px 0; border-bottom: 1px solid #f0f0f1; }
+        .snn-analytics-marker-list li { display: flex; align-items: center; gap: 10px; padding: 6px 4px; border-bottom: 1px solid #f0f0f1; cursor: pointer; border-radius: 3px; }
+        .snn-analytics-marker-list li:hover { background: #f6f7f7; }
         .snn-analytics-marker-list li:last-child { border-bottom: none; }
         .snn-analytics-marker-date { color: #646970; white-space: nowrap; font-variant-numeric: tabular-nums; }
         .snn-analytics-marker-note { flex: 1; }
