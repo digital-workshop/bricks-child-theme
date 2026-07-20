@@ -960,6 +960,8 @@ function snn_analytics_page() {
             <div class="notice notice-warning"><p><?php esc_html_e( 'Tracking is currently disabled. Existing data below is still shown, but no new pageviews are being recorded.', 'snn' ); ?></p></div>
         <?php endif; ?>
 
+        <?php do_action( 'snn_analytics_page_notices' ); ?>
+
         <nav class="snn-analytics-range">
             <?php foreach ( $range_labels as $key => $label ) :
                 $url = add_query_arg( array( 'page' => 'snn-analytics', 'range' => $key ), admin_url( 'admin.php' ) );

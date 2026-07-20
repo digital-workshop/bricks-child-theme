@@ -1543,6 +1543,10 @@ msgstr "Diesen Hinweis ausblenden"
 msgid "Div"
 msgstr "Div"
 
+#: includes/features/analytics-import-iawp.php:295
+msgid "Don't Import"
+msgstr "Nicht importieren"
+
 #: includes/features/media-image-opt.php:1687
 #: includes/features/media-image-opt.php:2097
 msgid "Done"
@@ -2830,9 +2834,21 @@ msgstr "Bilder werden direkt in deinem Browser mithilfe deiner CPU optimiert. Ha
 msgid "Import"
 msgstr "Import"
 
+#: includes/features/analytics-import-iawp.php:294
+msgid "Import Now"
+msgstr "Jetzt importieren"
+
 #: includes/features/custom-code-snippets.php:1307
 msgid "Import Snippets"
 msgstr "Snippets importieren"
+
+#: includes/features/analytics-import-iawp.php:343
+msgid "Import complete:"
+msgstr "Import abgeschlossen:"
+
+#: includes/features/analytics-import-iawp.php:334
+msgid "Import failed. Please try again."
+msgstr "Import fehlgeschlagen. Bitte erneut versuchen."
 
 #: includes/features/custom-code-snippets.php:1319
 msgid "Imported"
@@ -2853,6 +2869,14 @@ msgstr "Bereits optimierte Bilder einbeziehen (für Neuoptimierung)"
 #: includes/features/two-factor-auth.php:286
 msgid "Incorrect code. Please try again."
 msgstr "Falscher Code. Bitte versuche es erneut."
+
+#: includes/features/analytics-import-iawp.php:233
+msgid "Independent Analytics data not found."
+msgstr "Keine Daten von Independent Analytics gefunden."
+
+#: includes/features/analytics-import-iawp.php:291
+msgid "Independent Analytics data was found on this site. Would you like to import its historical pageview data into this Analytics tool?"
+msgstr "Auf dieser Seite wurden Daten von Independent Analytics gefunden. Möchtest du die Verlaufsdaten in dieses Analytics-Tool importieren?"
 
 #: includes/features/interactions.php:264
 msgid "Infinite Scroll"
@@ -5955,6 +5979,10 @@ msgstr "Bild(er) über deinen Browser?"
 msgid "images"
 msgstr "Bilder"
 
+#: includes/features/analytics-import-iawp.php:322
+msgid "imported"
+msgstr "importiert"
+
 #: includes/features/media-image-opt.php:2146
 msgid "optimized"
 msgstr "optimiert"
@@ -6025,4 +6053,3 @@ msgstr "⚠ WARNUNG – Du kannst mehrere Rollen zuweisen, aber sich überlappen
 #: includes/features/media-image-opt.php:2841
 msgid "🔍 Debug: Raw Metadata"
 msgstr "🔍 Debug: Rohe Metadaten"
-
