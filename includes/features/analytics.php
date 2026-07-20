@@ -449,7 +449,7 @@ function snn_analytics_add_submenu() {
     // Own top-level menu item, positioned right after "Dashboard" (position 2)
     // and before "Posts" (position 5), so it's immediately visible without
     // digging into theme settings or the Dashboard submenu flyout.
-    add_menu_page(
+    $hook = add_menu_page(
         __( 'Analytics', 'snn' ),
         __( 'Analytics', 'snn' ),
         'manage_options',
@@ -458,8 +458,147 @@ function snn_analytics_add_submenu() {
         'dashicons-chart-line',
         3
     );
+    // Meta boxes must be registered on this exact hook -- using the value
+    // add_menu_page() actually returned rather than guessing the screen ID
+    // string (a guessed ID bit us elsewhere in this codebase before).
+    add_action( "load-{$hook}", 'snn_analytics_register_meta_boxes' );
 }
 add_action( 'admin_menu', 'snn_analytics_add_submenu' );
+
+/**
+ * Registers each dashboard section as a real WP meta box so it gets native
+ * drag-to-reorder, collapse, and a per-user remembered position/column --
+ * all handled by core (postboxes.js + the built-in meta-box-order /
+ * closedpostboxes user-option ajax handlers), no custom JS needed here.
+ */
+function snn_analytics_register_meta_boxes() {
+    $screen = get_current_screen();
+
+    add_meta_box( 'snn_analytics_overview', __( 'Overview', 'snn' ), 'snn_analytics_mb_overview', $screen, 'normal', 'default' );
+    add_meta_box( 'snn_analytics_chart', __( 'Pageviews per day', 'snn' ), 'snn_analytics_mb_chart', $screen, 'normal', 'default' );
+    add_meta_box( 'snn_analytics_top_pages', __( 'Top 10 Pages', 'snn' ), 'snn_analytics_mb_top_pages', $screen, 'normal', 'default' );
+    add_meta_box( 'snn_analytics_top_posts', __( 'Top 10 Blog Posts', 'snn' ), 'snn_analytics_mb_top_posts', $screen, 'normal', 'default' );
+    add_meta_box( 'snn_analytics_referrers', __( 'Top 10 Referrers', 'snn' ), 'snn_analytics_mb_referrers', $screen, 'side', 'default' );
+    add_meta_box( 'snn_analytics_social', __( 'Social Media Traffic', 'snn' ), 'snn_analytics_mb_social', $screen, 'side', 'default' );
+
+    wp_enqueue_script( 'postbox' );
+}
+
+function snn_analytics_current_range_bounds() {
+    $range        = isset( $_GET['range'] ) ? sanitize_key( $_GET['range'] ) : '7d';
+    $valid_ranges = array( 'today', '7d', '30d', 'year' );
+    if ( ! in_array( $range, $valid_ranges, true ) ) {
+        $range = '7d';
+    }
+    list( $start, $end ) = snn_analytics_get_range_bounds( $range );
+    return array( $range, $start, $end );
+}
+
+function snn_analytics_mb_overview() {
+    list( , $start, $end ) = snn_analytics_current_range_bounds();
+    $stats = snn_analytics_query_stats( $start, $end );
+    ?>
+    <div class="snn-analytics-overview-stats">
+        <div class="snn-analytics-stat-card">
+            <div class="value"><?php echo esc_html( number_format_i18n( $stats['pageviews'] ) ); ?></div>
+            <div class="label"><?php esc_html_e( 'Pageviews', 'snn' ); ?></div>
+        </div>
+        <div class="snn-analytics-stat-card">
+            <div class="value"><?php echo esc_html( number_format_i18n( $stats['visitors'] ) ); ?></div>
+            <div class="label"><?php esc_html_e( 'Visitors', 'snn' ); ?></div>
+        </div>
+    </div>
+    <?php
+}
+
+function snn_analytics_mb_chart() {
+    list( , $start, $end ) = snn_analytics_current_range_bounds();
+    echo snn_analytics_render_line_chart( snn_analytics_query_daily_counts( $start, $end ) );
+}
+
+function snn_analytics_mb_top_pages() {
+    list( , $start, $end ) = snn_analytics_current_range_bounds();
+    $top_pages = snn_analytics_query_top( 'page_path', $start, $end );
+    ?>
+    <table class="widefat striped">
+        <thead><tr><th><?php esc_html_e( 'Page', 'snn' ); ?></th><th><?php esc_html_e( 'Views', 'snn' ); ?></th></tr></thead>
+        <tbody>
+            <?php if ( empty( $top_pages ) ) : ?>
+                <tr><td colspan="2"><?php esc_html_e( 'No data.', 'snn' ); ?></td></tr>
+            <?php else : foreach ( $top_pages as $row ) : ?>
+                <tr><td><?php echo esc_html( $row['label'] ); ?></td><td><?php echo esc_html( number_format_i18n( (int) $row['c'] ) ); ?></td></tr>
+            <?php endforeach; endif; ?>
+        </tbody>
+    </table>
+    <?php
+}
+
+function snn_analytics_mb_top_posts() {
+    list( , $start, $end ) = snn_analytics_current_range_bounds();
+    $top_posts = snn_analytics_query_top_posts( $start, $end );
+    ?>
+    <table class="widefat striped">
+        <thead><tr><th><?php esc_html_e( 'Post', 'snn' ); ?></th><th><?php esc_html_e( 'Views', 'snn' ); ?></th></tr></thead>
+        <tbody>
+            <?php if ( empty( $top_posts ) ) : ?>
+                <tr><td colspan="2"><?php esc_html_e( 'No data.', 'snn' ); ?></td></tr>
+            <?php else : foreach ( $top_posts as $row ) : ?>
+                <tr><td><?php echo esc_html( $row['label'] ); ?></td><td><?php echo esc_html( number_format_i18n( $row['c'] ) ); ?></td></tr>
+            <?php endforeach; endif; ?>
+        </tbody>
+    </table>
+    <?php
+}
+
+function snn_analytics_mb_referrers() {
+    list( , $start, $end ) = snn_analytics_current_range_bounds();
+    $top_referrers = snn_analytics_query_top( 'referrer_host', $start, $end );
+    ?>
+    <table class="widefat striped">
+        <thead><tr><th><?php esc_html_e( 'Source', 'snn' ); ?></th><th><?php esc_html_e( 'Views', 'snn' ); ?></th></tr></thead>
+        <tbody>
+            <?php if ( empty( $top_referrers ) ) : ?>
+                <tr><td colspan="2"><?php esc_html_e( 'No external referrals.', 'snn' ); ?></td></tr>
+            <?php else : foreach ( $top_referrers as $row ) : ?>
+                <tr><td><?php echo esc_html( $row['label'] ); ?></td><td><?php echo esc_html( number_format_i18n( (int) $row['c'] ) ); ?></td></tr>
+            <?php endforeach; endif; ?>
+        </tbody>
+    </table>
+    <?php
+}
+
+function snn_analytics_mb_social() {
+    list( , $start, $end ) = snn_analytics_current_range_bounds();
+    $social_summary   = snn_analytics_query_social_summary( $start, $end );
+    $social_platforms = snn_analytics_query_social_breakdown( $start, $end );
+    ?>
+    <div class="snn-analytics-social-stats">
+        <div class="snn-analytics-stat-card">
+            <div class="value"><?php echo esc_html( number_format_i18n( $social_summary['visitors'] ) ); ?></div>
+            <div class="label"><?php esc_html_e( 'Visitors from Social Media', 'snn' ); ?></div>
+        </div>
+        <div class="snn-analytics-stat-card">
+            <div class="value"><?php echo esc_html( number_format_i18n( $social_summary['views'] ) ); ?></div>
+            <div class="label"><?php esc_html_e( 'Views from Social Media', 'snn' ); ?></div>
+        </div>
+    </div>
+    <?php if ( empty( $social_platforms ) ) : ?>
+        <p class="snn-analytics-social-empty"><?php esc_html_e( 'No social media referrals in this period.', 'snn' ); ?></p>
+    <?php else : ?>
+        <table class="widefat striped">
+            <thead><tr><th><?php esc_html_e( 'Platform', 'snn' ); ?></th><th><?php esc_html_e( 'Visitors', 'snn' ); ?></th><th><?php esc_html_e( 'Views', 'snn' ); ?></th></tr></thead>
+            <tbody>
+                <?php foreach ( $social_platforms as $row ) : ?>
+                    <tr>
+                        <td><?php echo esc_html( $row['label'] ); ?></td>
+                        <td><?php echo esc_html( number_format_i18n( $row['visitors'] ) ); ?></td>
+                        <td><?php echo esc_html( number_format_i18n( $row['views'] ) ); ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    <?php endif;
+}
 
 function snn_analytics_add_settings_submenu() {
     // Configuration (exclusions, retention, on/off) lives with the rest of
@@ -561,23 +700,17 @@ function snn_analytics_admin_styles() {
         .snn-analytics-range { margin: 14px 0; }
         .snn-analytics-range a { margin-right: 4px; }
         .snn-analytics-range a.button-primary { pointer-events: none; }
-        .snn-analytics-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; align-items: start; }
-        .snn-analytics-grid .snn-analytics-span-2 { grid-column: 1 / -1; }
-        .snn-analytics-stat-card { background: #fff; border: 1px solid #ccd0d4; border-radius: 4px; padding: 16px 20px; }
+        .snn-analytics-overview-stats { display: flex; gap: 16px; flex-wrap: wrap; }
+        .snn-analytics-stat-card { background: #f6f7f7; border: 1px solid #ccd0d4; border-radius: 4px; padding: 16px 20px; flex: 1; min-width: 140px; }
         .snn-analytics-stat-card .value { font-size: 28px; font-weight: 600; line-height: 1.2; }
         .snn-analytics-stat-card .label { color: #646970; }
-        .snn-analytics-chart-wrap { background: #fff; border: 1px solid #ccd0d4; border-radius: 4px; padding: 16px 20px; }
         .snn-analytics-chart { width: 100%; height: auto; }
         .snn-analytics-chart-grid { stroke: #eee; stroke-width: 1; }
         .snn-analytics-chart-line { fill: none; stroke: #2271b1; stroke-width: 2; }
         .snn-analytics-chart-axis { font-size: 10px; fill: #646970; }
-        .snn-analytics-grid .postbox { padding: 0 12px 12px; margin: 0; }
-        .snn-analytics-social-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 12px; }
+        .snn-analytics-social-stats { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 12px; }
         .snn-analytics-social-stats .snn-analytics-stat-card { border-style: dashed; }
         .snn-analytics-social-empty { color: #646970; }
-        @media (max-width: 782px) {
-            .snn-analytics-grid, .snn-analytics-social-stats { grid-template-columns: 1fr; }
-        }
         .snn-analytics-settings-wrap { max-width: 700px; }
         #snn_analytics_ip_wrap .button .dashicons { line-height: 1 !important; vertical-align: middle; }
         #snn_analytics_ip_wrap .snn-analytics-ip-row { display: flex; align-items: center; gap: 8px; margin-top: 10px; }
@@ -594,20 +727,7 @@ function snn_analytics_page() {
 
     snn_analytics_admin_styles();
 
-    $range         = isset( $_GET['range'] ) ? sanitize_key( $_GET['range'] ) : '7d';
-    $valid_ranges  = array( 'today', '7d', '30d', 'year' );
-    if ( ! in_array( $range, $valid_ranges, true ) ) {
-        $range = '7d';
-    }
-    list( $start, $end ) = snn_analytics_get_range_bounds( $range );
-
-    $stats           = snn_analytics_query_stats( $start, $end );
-    $daily_counts    = snn_analytics_query_daily_counts( $start, $end );
-    $top_pages       = snn_analytics_query_top( 'page_path', $start, $end );
-    $top_posts       = snn_analytics_query_top_posts( $start, $end );
-    $top_referrers   = snn_analytics_query_top( 'referrer_host', $start, $end );
-    $social_summary  = snn_analytics_query_social_summary( $start, $end );
-    $social_platforms = snn_analytics_query_social_breakdown( $start, $end );
+    list( $range, , ) = snn_analytics_current_range_bounds();
 
     $range_labels = array(
         'today' => __( 'Today', 'snn' ),
@@ -617,6 +737,7 @@ function snn_analytics_page() {
     );
 
     $options = snn_analytics_get_options();
+    $screen  = get_current_screen();
     ?>
     <div class="wrap">
         <h1>
@@ -636,92 +757,23 @@ function snn_analytics_page() {
             <?php endforeach; ?>
         </nav>
 
-        <div class="snn-analytics-grid">
-            <div class="snn-analytics-stat-card">
-                <div class="value"><?php echo esc_html( number_format_i18n( $stats['pageviews'] ) ); ?></div>
-                <div class="label"><?php esc_html_e( 'Pageviews', 'snn' ); ?></div>
-            </div>
-            <div class="snn-analytics-stat-card">
-                <div class="value"><?php echo esc_html( number_format_i18n( $stats['visitors'] ) ); ?></div>
-                <div class="label"><?php esc_html_e( 'Visitors', 'snn' ); ?></div>
-            </div>
-
-            <div class="snn-analytics-chart-wrap snn-analytics-span-2">
-                <h2><?php esc_html_e( 'Pageviews per day', 'snn' ); ?></h2>
-                <?php echo snn_analytics_render_line_chart( $daily_counts ); ?>
-            </div>
-
-            <div class="postbox">
-                <h2 class="hndle" style="padding: 10px 0;"><?php esc_html_e( 'Top 10 Pages', 'snn' ); ?></h2>
-                <table class="widefat striped">
-                    <thead><tr><th><?php esc_html_e( 'Page', 'snn' ); ?></th><th><?php esc_html_e( 'Views', 'snn' ); ?></th></tr></thead>
-                    <tbody>
-                        <?php if ( empty( $top_pages ) ) : ?>
-                            <tr><td colspan="2"><?php esc_html_e( 'No data.', 'snn' ); ?></td></tr>
-                        <?php else : foreach ( $top_pages as $row ) : ?>
-                            <tr><td><?php echo esc_html( $row['label'] ); ?></td><td><?php echo esc_html( number_format_i18n( (int) $row['c'] ) ); ?></td></tr>
-                        <?php endforeach; endif; ?>
-                    </tbody>
-                </table>
-            </div>
-            <div class="postbox">
-                <h2 class="hndle" style="padding: 10px 0;"><?php esc_html_e( 'Top 10 Blog Posts', 'snn' ); ?></h2>
-                <table class="widefat striped">
-                    <thead><tr><th><?php esc_html_e( 'Post', 'snn' ); ?></th><th><?php esc_html_e( 'Views', 'snn' ); ?></th></tr></thead>
-                    <tbody>
-                        <?php if ( empty( $top_posts ) ) : ?>
-                            <tr><td colspan="2"><?php esc_html_e( 'No data.', 'snn' ); ?></td></tr>
-                        <?php else : foreach ( $top_posts as $row ) : ?>
-                            <tr><td><?php echo esc_html( $row['label'] ); ?></td><td><?php echo esc_html( number_format_i18n( $row['c'] ) ); ?></td></tr>
-                        <?php endforeach; endif; ?>
-                    </tbody>
-                </table>
-            </div>
-            <div class="postbox">
-                <h2 class="hndle" style="padding: 10px 0;"><?php esc_html_e( 'Top 10 Referrers', 'snn' ); ?></h2>
-                <table class="widefat striped">
-                    <thead><tr><th><?php esc_html_e( 'Source', 'snn' ); ?></th><th><?php esc_html_e( 'Views', 'snn' ); ?></th></tr></thead>
-                    <tbody>
-                        <?php if ( empty( $top_referrers ) ) : ?>
-                            <tr><td colspan="2"><?php esc_html_e( 'No external referrals.', 'snn' ); ?></td></tr>
-                        <?php else : foreach ( $top_referrers as $row ) : ?>
-                            <tr><td><?php echo esc_html( $row['label'] ); ?></td><td><?php echo esc_html( number_format_i18n( (int) $row['c'] ) ); ?></td></tr>
-                        <?php endforeach; endif; ?>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="postbox snn-analytics-span-2">
-                <h2 class="hndle" style="padding: 10px 0;"><?php esc_html_e( 'Social Media Traffic', 'snn' ); ?></h2>
-                <div class="snn-analytics-social-stats">
-                    <div class="snn-analytics-stat-card">
-                        <div class="value"><?php echo esc_html( number_format_i18n( $social_summary['visitors'] ) ); ?></div>
-                        <div class="label"><?php esc_html_e( 'Visitors from Social Media', 'snn' ); ?></div>
-                    </div>
-                    <div class="snn-analytics-stat-card">
-                        <div class="value"><?php echo esc_html( number_format_i18n( $social_summary['views'] ) ); ?></div>
-                        <div class="label"><?php esc_html_e( 'Views from Social Media', 'snn' ); ?></div>
-                    </div>
+        <div id="poststuff">
+            <div id="post-body" class="metabox-holder columns-2">
+                <div id="postbox-container-1" class="postbox-container">
+                    <?php do_meta_boxes( $screen->id, 'normal', null ); ?>
                 </div>
-                <?php if ( empty( $social_platforms ) ) : ?>
-                    <p class="snn-analytics-social-empty"><?php esc_html_e( 'No social media referrals in this period.', 'snn' ); ?></p>
-                <?php else : ?>
-                    <table class="widefat striped">
-                        <thead><tr><th><?php esc_html_e( 'Platform', 'snn' ); ?></th><th><?php esc_html_e( 'Visitors', 'snn' ); ?></th><th><?php esc_html_e( 'Views', 'snn' ); ?></th></tr></thead>
-                        <tbody>
-                            <?php foreach ( $social_platforms as $row ) : ?>
-                                <tr>
-                                    <td><?php echo esc_html( $row['label'] ); ?></td>
-                                    <td><?php echo esc_html( number_format_i18n( $row['visitors'] ) ); ?></td>
-                                    <td><?php echo esc_html( number_format_i18n( $row['views'] ) ); ?></td>
-                                </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
-                <?php endif; ?>
+                <div id="postbox-container-2" class="postbox-container">
+                    <?php do_meta_boxes( $screen->id, 'side', null ); ?>
+                </div>
             </div>
+            <br class="clear">
         </div>
     </div>
+    <script>
+    jQuery( document ).ready( function( $ ) {
+        postboxes.add_postbox_toggles( '<?php echo esc_js( $screen->id ); ?>' );
+    } );
+    </script>
     <?php
 }
 
