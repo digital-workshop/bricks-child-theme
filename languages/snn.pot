@@ -2778,6 +2778,10 @@ msgstr ""
 msgid "Ignore"
 msgstr ""
 
+#: includes/features/redirects.php:566
+msgid "Ignore selected"
+msgstr ""
+
 #: includes/features/redirects.php:595
 msgid "Ignored URLs (%d)"
 msgstr ""
@@ -4531,6 +4535,10 @@ msgstr ""
 msgid "Select a page from the list below (start typing to search)"
 msgstr ""
 
+#: includes/features/redirects.php:576
+msgid "Select all"
+msgstr ""
+
 #: includes/features/login-settings.php:84
 msgid "Select an image or paste a URL"
 msgstr ""
@@ -5965,3 +5973,4 @@ msgstr ""
 #: includes/features/media-image-opt.php:2841
 msgid "🔍 Debug: Raw Metadata"
 msgstr ""
+

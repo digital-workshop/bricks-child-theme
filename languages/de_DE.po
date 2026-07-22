@@ -2810,6 +2810,10 @@ msgstr "Gefundene Iframes:"
 msgid "Ignore"
 msgstr "Ignorieren"
 
+#: includes/features/redirects.php:566
+msgid "Ignore selected"
+msgstr "Ausgewählte ignorieren"
+
 #: includes/features/redirects.php:595
 msgid "Ignored URLs (%d)"
 msgstr "Ignorierte URLs (%d)"
@@ -4603,6 +4607,10 @@ msgstr "Ein Hintergrundbild für die Login-Seite auswählen. Leer lassen, um das
 msgid "Select a page from the list below (start typing to search)"
 msgstr "Wähle eine Seite aus der Liste unten aus (zum Suchen einfach tippen)"
 
+#: includes/features/redirects.php:576
+msgid "Select all"
+msgstr "Alle auswählen"
+
 #: includes/features/login-settings.php:84
 msgid "Select an image or paste a URL"
 msgstr "Ein Bild auswählen oder eine URL einfügen"
@@ -6077,3 +6085,4 @@ msgstr "⚠ WARNUNG – Du kannst mehrere Rollen zuweisen, aber sich überlappen
 #: includes/features/media-image-opt.php:2841
 msgid "🔍 Debug: Raw Metadata"
 msgstr "🔍 Debug: Rohe Metadaten"
+

@@ -384,6 +384,18 @@ function snn_redirects_handle_actions() {
         $wpdb->update( snn_404_log_table(), array( 'ignored' => 0 ), array( 'id' => absint( $_POST['snn_404_id'] ?? 0 ) ), array( '%d' ), array( '%d' ) );
     }
 
+    // Ignore several 404 log entries at once (checkbox selection), so
+    // clearing out a batch of recurring bot/scanner noise doesn't require
+    // one click per row.
+    if ( isset( $_POST['snn_404_bulk_ignore'] ) && check_admin_referer( 'snn_404_bulk_ignore_action', 'snn_404_bulk_ignore_nonce' ) ) {
+        global $wpdb;
+        $ids = isset( $_POST['snn_404_ids'] ) ? array_filter( array_map( 'absint', (array) wp_unslash( $_POST['snn_404_ids'] ) ) ) : array();
+        if ( $ids ) {
+            $placeholders = implode( ',', array_fill( 0, count( $ids ), '%d' ) );
+            $wpdb->query( $wpdb->prepare( "UPDATE " . snn_404_log_table() . " SET ignored = 1 WHERE id IN ({$placeholders})", $ids ) );
+        }
+    }
+
     // Clear all 404 log entries.
     if ( isset( $_POST['snn_404_clear_all'] ) && check_admin_referer( 'snn_404_clear_action', 'snn_404_clear_nonce' ) ) {
         global $wpdb;
@@ -427,6 +439,8 @@ function snn_redirects_admin_styles() {
         .snn-redirects-table th.snn-sorted-asc::after { content: "\2191"; color: #2271b1; }
         .snn-redirects-table th.snn-sorted-desc::after { content: "\2193"; color: #2271b1; }
         .snn-redirects-settings-row { display: flex; gap: 24px; flex-wrap: wrap; align-items: center; margin: 12px 0; }
+        .snn-redirects-table th.snn-redirects-checkbox-col, .snn-redirects-table td.snn-redirects-checkbox-col { width: 28px; text-align: center; }
+        #snn-404-bulk-ignore-btn { margin-left: 6px; }
     </style>
     <?php
 }
@@ -541,11 +555,15 @@ function snn_redirects_page() {
 
         <div id="snn-404-tab" class="snn-redirects-tab-content">
             <?php if ( ! empty( $log_404 ) ) : ?>
+                <form method="post" id="snn-404-bulk-form" style="display:none;">
+                    <?php wp_nonce_field( 'snn_404_bulk_ignore_action', 'snn_404_bulk_ignore_nonce' ); ?>
+                </form>
                 <p>
-                    <form method="post" onsubmit="return confirm('<?php echo esc_js( __( 'Clear the entire 404 log?', 'snn' ) ); ?>');">
+                    <form method="post" style="display:inline;" onsubmit="return confirm('<?php echo esc_js( __( 'Clear the entire 404 log?', 'snn' ) ); ?>');">
                         <?php wp_nonce_field( 'snn_404_clear_action', 'snn_404_clear_nonce' ); ?>
                         <button type="submit" name="snn_404_clear_all" class="button"><?php esc_html_e( 'Clear All', 'snn' ); ?></button>
                     </form>
+                    <button type="submit" form="snn-404-bulk-form" name="snn_404_bulk_ignore" id="snn-404-bulk-ignore-btn" class="button" disabled><?php esc_html_e( 'Ignore selected', 'snn' ); ?><span id="snn-404-bulk-count"></span></button>
                 </p>
             <?php endif; ?>
 
@@ -555,6 +573,7 @@ function snn_redirects_page() {
                 <table class="widefat striped snn-redirects-table">
                     <thead>
                         <tr>
+                            <th class="snn-redirects-checkbox-col"><input type="checkbox" id="snn-404-select-all" aria-label="<?php esc_attr_e( 'Select all', 'snn' ); ?>"></th>
                             <th><?php esc_html_e( 'URL', 'snn' ); ?></th>
                             <th class="snn-sortable"><?php esc_html_e( 'Hits', 'snn' ); ?></th>
                             <th class="snn-sortable"><?php esc_html_e( 'First Seen', 'snn' ); ?></th>
@@ -565,6 +584,7 @@ function snn_redirects_page() {
                     <tbody>
                         <?php foreach ( $log_404 as $log ) : ?>
                             <tr>
+                                <td class="snn-redirects-checkbox-col"><input type="checkbox" class="snn-404-row-checkbox" name="snn_404_ids[]" form="snn-404-bulk-form" value="<?php echo esc_attr( $log['id'] ); ?>"></td>
                                 <td>
                                     <a href="<?php echo esc_url( home_url( $log['url'] ) ); ?>" target="_blank"><code><?php echo esc_html( $log['url'] ); ?></code></a>
                                 </td>
@@ -656,9 +676,11 @@ function snn_redirects_page() {
     document.addEventListener('DOMContentLoaded', function() {
         var tabLinks = document.querySelectorAll('.snn-redirects-tabs .nav-tab');
         var tabContents = document.querySelectorAll('.snn-redirects-tab-content');
+        var TAB_STORAGE_KEY = 'snn_redirects_active_tab';
         function activateTab(id) {
             tabLinks.forEach(function(l) { l.classList.toggle('nav-tab-active', l.dataset.tab === id); });
             tabContents.forEach(function(c) { c.classList.toggle('active', c.id === id); });
+            try { sessionStorage.setItem(TAB_STORAGE_KEY, id); } catch (e) {}
         }
         tabLinks.forEach(function(link) {
             link.addEventListener('click', function(e) {
@@ -666,6 +688,16 @@ function snn_redirects_page() {
                 activateTab(this.dataset.tab);
             });
         });
+        // Every action on this page (ignore, delete, toggle, ...) is a real
+        // form POST that reloads the page -- without this, the reload always
+        // landed back on the first tab, no matter which tab the action was
+        // performed from. Remember the active tab across the reload.
+        try {
+            var storedTab = sessionStorage.getItem(TAB_STORAGE_KEY);
+            if (storedTab && document.getElementById(storedTab)) {
+                activateTab(storedTab);
+            }
+        } catch (e) {}
 
         var form        = document.getElementById('snn-redirect-add-form');
         var idField      = document.getElementById('snn_redirect_id');
@@ -696,6 +728,34 @@ function snn_redirects_page() {
         if (cancelBtn) {
             cancelBtn.addEventListener('click', resetForm);
         }
+
+        // Bulk-select 404 rows to ignore several at once instead of one
+        // click per row.
+        var selectAll     = document.getElementById('snn-404-select-all');
+        var rowCheckboxes  = document.querySelectorAll('.snn-404-row-checkbox');
+        var bulkIgnoreBtn  = document.getElementById('snn-404-bulk-ignore-btn');
+        var bulkCountLabel = document.getElementById('snn-404-bulk-count');
+        function updateBulkState() {
+            var checked = document.querySelectorAll('.snn-404-row-checkbox:checked');
+            if (bulkIgnoreBtn) {
+                bulkIgnoreBtn.disabled = checked.length === 0;
+            }
+            if (bulkCountLabel) {
+                bulkCountLabel.textContent = checked.length ? ' (' + checked.length + ')' : '';
+            }
+            if (selectAll) {
+                selectAll.checked = checked.length > 0 && checked.length === rowCheckboxes.length;
+            }
+        }
+        if (selectAll) {
+            selectAll.addEventListener('change', function() {
+                rowCheckboxes.forEach(function(cb) { cb.checked = selectAll.checked; });
+                updateBulkState();
+            });
+        }
+        rowCheckboxes.forEach(function(cb) {
+            cb.addEventListener('change', updateBulkState);
+        });
 
         document.querySelectorAll('.snn-404-add-redirect-btn').forEach(function(btn) {
             btn.addEventListener('click', function() {
