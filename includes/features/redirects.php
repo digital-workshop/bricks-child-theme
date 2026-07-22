@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 define( 'SNN_REDIRECTS_DB_VERSION_OPTION', 'snn_redirects_db_version' );
 // Bump whenever the table schema changes -- snn_redirects_maybe_upgrade_db()
 // re-runs dbDelta() automatically the next time an admin page loads.
-define( 'SNN_REDIRECTS_DB_VERSION', 1 );
+define( 'SNN_REDIRECTS_DB_VERSION', 2 );
 
 // ----------------------------------------------------------------------
 // Table + options helpers
@@ -58,11 +58,13 @@ function snn_redirects_maybe_upgrade_db() {
         id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
         url VARCHAR(191) NOT NULL,
         hits BIGINT UNSIGNED NOT NULL DEFAULT 1,
+        ignored TINYINT(1) UNSIGNED NOT NULL DEFAULT 0,
         first_seen DATETIME NOT NULL,
         last_seen DATETIME NOT NULL,
         PRIMARY KEY  (id),
         UNIQUE KEY url (url),
-        KEY last_seen (last_seen)
+        KEY last_seen (last_seen),
+        KEY ignored (ignored)
     ) {$charset_collate};";
 
     require_once ABSPATH . 'wp-admin/includes/upgrade.php';
@@ -368,6 +370,20 @@ function snn_redirects_handle_actions() {
         $wpdb->delete( snn_404_log_table(), array( 'id' => absint( $_POST['snn_404_id'] ?? 0 ) ), array( '%d' ) );
     }
 
+    // Ignore/un-ignore a single 404 log entry -- for known noise (bot
+    // probes, scanner requests) that keeps reappearing after being
+    // deleted, since a later hit to the same URL just re-inserts it.
+    // Ignoring instead just hides it from the default list while still
+    // tracking hits/last_seen, and can be undone.
+    if ( isset( $_POST['snn_404_ignore'] ) && check_admin_referer( 'snn_404_ignore_action', 'snn_404_ignore_nonce' ) ) {
+        global $wpdb;
+        $wpdb->update( snn_404_log_table(), array( 'ignored' => 1 ), array( 'id' => absint( $_POST['snn_404_id'] ?? 0 ) ), array( '%d' ), array( '%d' ) );
+    }
+    if ( isset( $_POST['snn_404_unignore'] ) && check_admin_referer( 'snn_404_unignore_action', 'snn_404_unignore_nonce' ) ) {
+        global $wpdb;
+        $wpdb->update( snn_404_log_table(), array( 'ignored' => 0 ), array( 'id' => absint( $_POST['snn_404_id'] ?? 0 ) ), array( '%d' ), array( '%d' ) );
+    }
+
     // Clear all 404 log entries.
     if ( isset( $_POST['snn_404_clear_all'] ) && check_admin_referer( 'snn_404_clear_action', 'snn_404_clear_nonce' ) ) {
         global $wpdb;
@@ -401,6 +417,10 @@ function snn_redirects_admin_styles() {
         .snn-redirects-field-row input[type="text"], .snn-redirects-field-row select { width: 100%; box-sizing: border-box; }
         table.snn-redirects-table td { vertical-align: middle; }
         .snn-redirects-hits { color: #646970; }
+        .snn-redirects-ignored-details { margin-top: 20px; }
+        .snn-redirects-ignored-details summary { cursor: pointer; color: #646970; padding: 8px 0; }
+        .snn-redirects-ignored-details summary:hover { color: #2271b1; }
+        .snn-redirects-ignored-details table { margin-top: 10px; }
         .snn-redirects-table th.snn-sortable { cursor: pointer; user-select: none; white-space: nowrap; }
         .snn-redirects-table th.snn-sortable:hover { color: #2271b1; }
         .snn-redirects-table th.snn-sortable::after { content: "\2195"; margin-left: 4px; color: #c3c4c7; font-weight: normal; }
@@ -424,8 +444,9 @@ function snn_redirects_page() {
     $log_table       = snn_404_log_table();
     $options         = snn_redirects_get_options();
 
-    $redirects = $wpdb->get_results( "SELECT * FROM {$redirects_table} ORDER BY created_at DESC", ARRAY_A );
-    $log_404   = $wpdb->get_results( "SELECT * FROM {$log_table} ORDER BY last_seen DESC LIMIT 200", ARRAY_A );
+    $redirects   = $wpdb->get_results( "SELECT * FROM {$redirects_table} ORDER BY created_at DESC", ARRAY_A );
+    $log_404     = $wpdb->get_results( "SELECT * FROM {$log_table} WHERE ignored = 0 ORDER BY last_seen DESC LIMIT 200", ARRAY_A );
+    $ignored_404 = $wpdb->get_results( "SELECT * FROM {$log_table} WHERE ignored = 1 ORDER BY last_seen DESC LIMIT 200", ARRAY_A );
     ?>
     <div class="wrap">
         <h1><?php esc_html_e( 'Redirects', 'snn' ); ?></h1>
@@ -553,6 +574,11 @@ function snn_redirects_page() {
                                 <td>
                                     <button type="button" class="button button-small snn-404-add-redirect-btn" data-url="<?php echo esc_attr( $log['url'] ); ?>"><?php esc_html_e( 'Add Redirect', 'snn' ); ?></button>
                                     <form method="post" style="display:inline;">
+                                        <?php wp_nonce_field( 'snn_404_ignore_action', 'snn_404_ignore_nonce' ); ?>
+                                        <input type="hidden" name="snn_404_id" value="<?php echo esc_attr( $log['id'] ); ?>">
+                                        <button type="submit" name="snn_404_ignore" class="button button-small" title="<?php esc_attr_e( 'Hide this URL from the list -- future hits still count, but it will not show up here again unless you un-ignore it.', 'snn' ); ?>"><?php esc_html_e( 'Ignore', 'snn' ); ?></button>
+                                    </form>
+                                    <form method="post" style="display:inline;">
                                         <?php wp_nonce_field( 'snn_404_delete_action', 'snn_404_delete_nonce' ); ?>
                                         <input type="hidden" name="snn_404_id" value="<?php echo esc_attr( $log['id'] ); ?>">
                                         <button type="submit" name="snn_404_delete" class="button button-small button-link-delete"><?php esc_html_e( 'Delete', 'snn' ); ?></button>
@@ -562,6 +588,43 @@ function snn_redirects_page() {
                         <?php endforeach; ?>
                     </tbody>
                 </table>
+            <?php endif; ?>
+
+            <?php if ( ! empty( $ignored_404 ) ) : ?>
+                <details class="snn-redirects-ignored-details">
+                    <summary><?php echo esc_html( sprintf( __( 'Ignored URLs (%d)', 'snn' ), count( $ignored_404 ) ) ); ?></summary>
+                    <table class="widefat striped snn-redirects-table">
+                        <thead>
+                            <tr>
+                                <th><?php esc_html_e( 'URL', 'snn' ); ?></th>
+                                <th class="snn-sortable"><?php esc_html_e( 'Hits', 'snn' ); ?></th>
+                                <th class="snn-sortable"><?php esc_html_e( 'Last Seen', 'snn' ); ?></th>
+                                <th><?php esc_html_e( 'Actions', 'snn' ); ?></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ( $ignored_404 as $log ) : ?>
+                                <tr>
+                                    <td><code><?php echo esc_html( $log['url'] ); ?></code></td>
+                                    <td class="snn-redirects-hits" data-sort-value="<?php echo (int) $log['hits']; ?>"><?php echo esc_html( number_format_i18n( (int) $log['hits'] ) ); ?></td>
+                                    <td data-sort-value="<?php echo (int) strtotime( $log['last_seen'] ); ?>"><?php echo esc_html( $log['last_seen'] ); ?></td>
+                                    <td>
+                                        <form method="post" style="display:inline;">
+                                            <?php wp_nonce_field( 'snn_404_unignore_action', 'snn_404_unignore_nonce' ); ?>
+                                            <input type="hidden" name="snn_404_id" value="<?php echo esc_attr( $log['id'] ); ?>">
+                                            <button type="submit" name="snn_404_unignore" class="button button-small"><?php esc_html_e( 'Un-ignore', 'snn' ); ?></button>
+                                        </form>
+                                        <form method="post" style="display:inline;">
+                                            <?php wp_nonce_field( 'snn_404_delete_action', 'snn_404_delete_nonce' ); ?>
+                                            <input type="hidden" name="snn_404_id" value="<?php echo esc_attr( $log['id'] ); ?>">
+                                            <button type="submit" name="snn_404_delete" class="button button-small button-link-delete"><?php esc_html_e( 'Delete', 'snn' ); ?></button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </details>
             <?php endif; ?>
         </div>
 

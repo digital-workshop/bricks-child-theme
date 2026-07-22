@@ -2727,6 +2727,10 @@ msgstr "Blöcke ausblenden"
 msgid "Hide Elements Icons on Bricks Editor"
 msgstr "Element-Icons im Bricks-Editor ausblenden"
 
+#: includes/features/redirects.php:579
+msgid "Hide this URL from the list -- future hits still count, but it will not show up here again unless you un-ignore it."
+msgstr "Blendet diese URL aus der Liste aus -- weitere Treffer werden weiterhin gezählt, sie taucht hier aber nicht mehr auf, bis du sie wiederherstellst."
+
 #: includes/features/post-types-settings.php:44
 #: includes/features/post-types-settings.php:198
 #: includes/features/taxonomy-settings.php:114
@@ -2801,6 +2805,14 @@ msgstr "Iframe-Blockierungstext"
 #: includes/features/cookie-banner.php:794
 msgid "Iframes Found:"
 msgstr "Gefundene Iframes:"
+
+#: includes/features/redirects.php:579
+msgid "Ignore"
+msgstr "Ignorieren"
+
+#: includes/features/redirects.php:595
+msgid "Ignored URLs (%d)"
+msgstr "Ignorierte URLs (%d)"
 
 #: includes/features/editor-settings-panel-bricks.php:204
 #: includes/features/media-image-opt.php:218
@@ -5533,6 +5545,10 @@ msgstr "URL"
 msgid "URL Coming Soon Bypass"
 msgstr "URL zum Umgehen des Coming-Soon-Modus"
 
+#: includes/features/redirects.php:615
+msgid "Un-ignore"
+msgstr "Wiederherstellen"
+
 #: includes/features/custom-code-snippets.php:1430
 #: includes/features/custom-code-snippets.php:1522
 msgid "Unknown"
@@ -6061,4 +6077,3 @@ msgstr "⚠ WARNUNG – Du kannst mehrere Rollen zuweisen, aber sich überlappen
 #: includes/features/media-image-opt.php:2841
 msgid "🔍 Debug: Raw Metadata"
 msgstr "🔍 Debug: Rohe Metadaten"
-

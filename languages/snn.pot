@@ -2695,6 +2695,10 @@ msgstr ""
 msgid "Hide Elements Icons on Bricks Editor"
 msgstr ""
 
+#: includes/features/redirects.php:579
+msgid "Hide this URL from the list -- future hits still count, but it will not show up here again unless you un-ignore it."
+msgstr ""
+
 #: includes/features/post-types-settings.php:44
 #: includes/features/post-types-settings.php:198
 #: includes/features/taxonomy-settings.php:114
@@ -2768,6 +2772,14 @@ msgstr ""
 
 #: includes/features/cookie-banner.php:794
 msgid "Iframes Found:"
+msgstr ""
+
+#: includes/features/redirects.php:579
+msgid "Ignore"
+msgstr ""
+
+#: includes/features/redirects.php:595
+msgid "Ignored URLs (%d)"
 msgstr ""
 
 #: includes/features/editor-settings-panel-bricks.php:204
@@ -5433,6 +5445,10 @@ msgstr ""
 msgid "URL Coming Soon Bypass"
 msgstr ""
 
+#: includes/features/redirects.php:615
+msgid "Un-ignore"
+msgstr ""
+
 #: includes/features/custom-code-snippets.php:1430
 #: includes/features/custom-code-snippets.php:1522
 msgid "Unknown"
@@ -5949,4 +5965,3 @@ msgstr ""
 #: includes/features/media-image-opt.php:2841
 msgid "🔍 Debug: Raw Metadata"
 msgstr ""
-
