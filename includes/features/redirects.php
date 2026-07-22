@@ -401,6 +401,11 @@ function snn_redirects_admin_styles() {
         .snn-redirects-field-row input[type="text"], .snn-redirects-field-row select { width: 100%; box-sizing: border-box; }
         table.snn-redirects-table td { vertical-align: middle; }
         .snn-redirects-hits { color: #646970; }
+        .snn-redirects-table th.snn-sortable { cursor: pointer; user-select: none; white-space: nowrap; }
+        .snn-redirects-table th.snn-sortable:hover { color: #2271b1; }
+        .snn-redirects-table th.snn-sortable::after { content: "\2195"; margin-left: 4px; color: #c3c4c7; font-weight: normal; }
+        .snn-redirects-table th.snn-sorted-asc::after { content: "\2191"; color: #2271b1; }
+        .snn-redirects-table th.snn-sorted-desc::after { content: "\2193"; color: #2271b1; }
         .snn-redirects-settings-row { display: flex; gap: 24px; flex-wrap: wrap; align-items: center; margin: 12px 0; }
     </style>
     <?php
@@ -472,7 +477,7 @@ function snn_redirects_page() {
                             <th><?php esc_html_e( 'Source', 'snn' ); ?></th>
                             <th><?php esc_html_e( 'Target', 'snn' ); ?></th>
                             <th><?php esc_html_e( 'Code', 'snn' ); ?></th>
-                            <th><?php esc_html_e( 'Hits', 'snn' ); ?></th>
+                            <th class="snn-sortable"><?php esc_html_e( 'Hits', 'snn' ); ?></th>
                             <th><?php esc_html_e( 'Active', 'snn' ); ?></th>
                             <th><?php esc_html_e( 'Actions', 'snn' ); ?></th>
                         </tr>
@@ -483,7 +488,7 @@ function snn_redirects_page() {
                                 <td><code><?php echo esc_html( $r['source'] ); ?></code></td>
                                 <td><code><?php echo esc_html( $r['target'] ); ?></code></td>
                                 <td><?php echo esc_html( $r['http_code'] ); ?></td>
-                                <td class="snn-redirects-hits"><?php echo esc_html( number_format_i18n( (int) $r['hits'] ) ); ?></td>
+                                <td class="snn-redirects-hits" data-sort-value="<?php echo (int) $r['hits']; ?>"><?php echo esc_html( number_format_i18n( (int) $r['hits'] ) ); ?></td>
                                 <td>
                                     <form method="post" style="display:inline;" onchange="this.requestSubmit()">
                                         <?php wp_nonce_field( 'snn_redirect_toggle_action', 'snn_redirect_toggle_nonce' ); ?>
@@ -530,9 +535,9 @@ function snn_redirects_page() {
                     <thead>
                         <tr>
                             <th><?php esc_html_e( 'URL', 'snn' ); ?></th>
-                            <th><?php esc_html_e( 'Hits', 'snn' ); ?></th>
-                            <th><?php esc_html_e( 'First Seen', 'snn' ); ?></th>
-                            <th><?php esc_html_e( 'Last Seen', 'snn' ); ?></th>
+                            <th class="snn-sortable"><?php esc_html_e( 'Hits', 'snn' ); ?></th>
+                            <th class="snn-sortable"><?php esc_html_e( 'First Seen', 'snn' ); ?></th>
+                            <th class="snn-sortable"><?php esc_html_e( 'Last Seen', 'snn' ); ?></th>
                             <th><?php esc_html_e( 'Actions', 'snn' ); ?></th>
                         </tr>
                     </thead>
@@ -542,9 +547,9 @@ function snn_redirects_page() {
                                 <td>
                                     <a href="<?php echo esc_url( home_url( $log['url'] ) ); ?>" target="_blank"><code><?php echo esc_html( $log['url'] ); ?></code></a>
                                 </td>
-                                <td class="snn-redirects-hits"><?php echo esc_html( number_format_i18n( (int) $log['hits'] ) ); ?></td>
-                                <td><?php echo esc_html( $log['first_seen'] ); ?></td>
-                                <td><?php echo esc_html( $log['last_seen'] ); ?></td>
+                                <td class="snn-redirects-hits" data-sort-value="<?php echo (int) $log['hits']; ?>"><?php echo esc_html( number_format_i18n( (int) $log['hits'] ) ); ?></td>
+                                <td data-sort-value="<?php echo (int) strtotime( $log['first_seen'] ); ?>"><?php echo esc_html( $log['first_seen'] ); ?></td>
+                                <td data-sort-value="<?php echo (int) strtotime( $log['last_seen'] ); ?>"><?php echo esc_html( $log['last_seen'] ); ?></td>
                                 <td>
                                     <button type="button" class="button button-small snn-404-add-redirect-btn" data-url="<?php echo esc_attr( $log['url'] ); ?>"><?php esc_html_e( 'Add Redirect', 'snn' ); ?></button>
                                     <form method="post" style="display:inline;">
@@ -638,6 +643,38 @@ function snn_redirects_page() {
                 sourceField.scrollIntoView({ behavior: 'smooth', block: 'center' });
             });
         });
+
+        // Click-to-sort table columns (Hits / First Seen / Last Seen) --
+        // client-side since the data is already fully rendered (max 200
+        // rows) and this avoids a page reload resetting the active tab.
+        document.querySelectorAll( '.snn-redirects-table th.snn-sortable' ).forEach( function( th ) {
+            th.addEventListener( 'click', function() {
+                var table   = th.closest( 'table' );
+                var tbody   = table.querySelector( 'tbody' );
+                var headers = Array.prototype.slice.call( th.parentElement.children );
+                var index   = headers.indexOf( th );
+                var rows    = Array.prototype.slice.call( tbody.querySelectorAll( 'tr' ) );
+                var nextDir = th.getAttribute( 'data-sort-dir' ) === 'desc' ? 'asc' : 'desc';
+
+                headers.forEach( function( h ) {
+                    h.removeAttribute( 'data-sort-dir' );
+                    h.classList.remove( 'snn-sorted-asc', 'snn-sorted-desc' );
+                } );
+                th.setAttribute( 'data-sort-dir', nextDir );
+                th.classList.add( 'asc' === nextDir ? 'snn-sorted-asc' : 'snn-sorted-desc' );
+
+                rows.sort( function( a, b ) {
+                    var aCell = a.children[ index ];
+                    var bCell = b.children[ index ];
+                    var aVal  = aCell.hasAttribute( 'data-sort-value' ) ? parseFloat( aCell.getAttribute( 'data-sort-value' ) ) : aCell.textContent.trim().toLowerCase();
+                    var bVal  = bCell.hasAttribute( 'data-sort-value' ) ? parseFloat( bCell.getAttribute( 'data-sort-value' ) ) : bCell.textContent.trim().toLowerCase();
+                    if ( aVal < bVal ) { return 'asc' === nextDir ? -1 : 1; }
+                    if ( aVal > bVal ) { return 'asc' === nextDir ? 1 : -1; }
+                    return 0;
+                } );
+                rows.forEach( function( row ) { tbody.appendChild( row ); } );
+            } );
+        } );
     });
     </script>
     <?php
