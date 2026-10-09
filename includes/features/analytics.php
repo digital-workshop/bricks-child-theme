@@ -29,9 +29,27 @@ function snn_analytics_get_options() {
         'excluded_roles' => array( 'administrator' ),
         'ip_exclusion'   => array(),
         'retention_days' => 400,
+        'view_roles'     => array( 'administrator' ),
     );
     $options = get_option( SNN_ANALYTICS_OPTIONS_KEY, array() );
     return wp_parse_args( is_array( $options ) ? $options : array(), $defaults );
+}
+
+/**
+ * Who may open the Analytics dashboard: admins (manage_options) always,
+ * plus any logged-in user with at least one role ticked under "Who Can
+ * View Statistics". Settings and markers stay admin-only regardless.
+ */
+function snn_analytics_current_user_can_view() {
+    if ( current_user_can( 'manage_options' ) ) {
+        return true;
+    }
+    if ( ! is_user_logged_in() ) {
+        return false;
+    }
+    $allowed = (array) snn_analytics_get_options()['view_roles'];
+    $roles   = (array) wp_get_current_user()->roles;
+    return ! empty( array_intersect( $roles, $allowed ) );
 }
 
 /**
@@ -539,10 +557,12 @@ function snn_analytics_add_submenu() {
     // Own top-level menu item, positioned right after "Dashboard" (position 2)
     // and before "Posts" (position 5), so it's immediately visible without
     // digging into theme settings or the Dashboard submenu flyout.
+    // Role-based visibility is decided by snn_analytics_current_user_can_view();
+    // 'read' just lets WP show the menu to those users at all.
     $hook = add_menu_page(
         __( 'Analytics', 'snn' ),
         __( 'Analytics', 'snn' ),
-        'manage_options',
+        snn_analytics_current_user_can_view() ? 'read' : 'manage_options',
         'snn-analytics',
         'snn_analytics_page',
         'dashicons-chart-line',
@@ -665,6 +685,8 @@ function snn_analytics_mb_chart() {
         } );
     } )();
     </script>
+    <?php $can_manage_markers = current_user_can( 'manage_options' ); ?>
+    <?php if ( $can_manage_markers ) : ?>
     <form method="post" class="snn-analytics-marker-form">
         <?php wp_nonce_field( 'snn_analytics_marker_action', 'snn_analytics_marker_nonce' ); ?>
         <div class="field">
@@ -677,6 +699,7 @@ function snn_analytics_mb_chart() {
         </div>
         <button type="submit" name="snn_analytics_add_marker" class="button"><?php esc_html_e( 'Add Marker', 'snn' ); ?></button>
     </form>
+    <?php endif; ?>
     <?php if ( empty( $markers ) ) : ?>
         <p class="description"><?php esc_html_e( 'No markers in this time range.', 'snn' ); ?></p>
     <?php else : ?>
@@ -685,11 +708,13 @@ function snn_analytics_mb_chart() {
                 <li class="snn-analytics-marker-row" data-marker-date="<?php echo esc_attr( $marker['marker_date'] ); ?>">
                     <span class="snn-analytics-marker-date"><?php echo esc_html( date_i18n( get_option( 'date_format' ), strtotime( $marker['marker_date'] ) ) ); ?></span>
                     <span class="snn-analytics-marker-note"><?php echo esc_html( $marker['note'] ); ?></span>
+                    <?php if ( $can_manage_markers ) : ?>
                     <form method="post" class="snn-analytics-marker-delete">
                         <?php wp_nonce_field( 'snn_analytics_marker_delete_action', 'snn_analytics_marker_delete_nonce' ); ?>
                         <input type="hidden" name="marker_id" value="<?php echo esc_attr( $marker['id'] ); ?>">
                         <button type="submit" name="snn_analytics_delete_marker" class="button-link-delete" aria-label="<?php esc_attr_e( 'Delete marker', 'snn' ); ?>">&times;</button>
                     </form>
+                    <?php endif; ?>
                 </li>
             <?php endforeach; ?>
         </ul>
@@ -820,6 +845,13 @@ function snn_analytics_handle_form_submit() {
         }
     }
 
+    // Administrators always keep access, so it's stored even if the (disabled)
+    // checkbox for it isn't submitted.
+    $view_roles = array( 'administrator' );
+    if ( isset( $_POST['view_roles'] ) && is_array( $_POST['view_roles'] ) ) {
+        $view_roles = array_values( array_unique( array_merge( $view_roles, array_map( 'sanitize_key', wp_unslash( $_POST['view_roles'] ) ) ) ) );
+    }
+
     $retention_days = isset( $_POST['retention_days'] ) ? max( 1, absint( $_POST['retention_days'] ) ) : 400;
     $enabled        = isset( $_POST['enabled'] ) ? 1 : 0;
 
@@ -828,6 +860,7 @@ function snn_analytics_handle_form_submit() {
         'excluded_roles' => $excluded_roles,
         'ip_exclusion'   => $ip_exclusion,
         'retention_days' => $retention_days,
+        'view_roles'     => $view_roles,
     ) );
 
     add_settings_error( 'snn-analytics-settings', 'settings_saved', __( 'Settings saved.', 'snn' ), 'updated' );
@@ -979,7 +1012,7 @@ function snn_analytics_admin_styles() {
 }
 
 function snn_analytics_page() {
-    if ( ! current_user_can( 'manage_options' ) ) {
+    if ( ! snn_analytics_current_user_can_view() ) {
         return;
     }
 
@@ -1000,7 +1033,9 @@ function snn_analytics_page() {
     <div class="wrap">
         <h1>
             <?php esc_html_e( 'Analytics', 'snn' ); ?>
-            <a href="<?php echo esc_url( admin_url( 'admin.php?page=snn-analytics-settings' ) ); ?>" class="page-title-action"><?php esc_html_e( 'Settings', 'snn' ); ?></a>
+            <?php if ( current_user_can( 'manage_options' ) ) : ?>
+                <a href="<?php echo esc_url( admin_url( 'admin.php?page=snn-analytics-settings' ) ); ?>" class="page-title-action"><?php esc_html_e( 'Settings', 'snn' ); ?></a>
+            <?php endif; ?>
         </h1>
 
         <?php if ( empty( $options['enabled'] ) ) : ?>
@@ -1074,6 +1109,20 @@ function snn_analytics_settings_page() {
                             </label>
                         <?php endforeach; ?>
                         <p class="description"><?php esc_html_e( 'Logged-in users whose role(s) are all checked here are not counted.', 'snn' ); ?></p>
+                    </td>
+                </tr>
+                <tr>
+                    <th><?php esc_html_e( 'Who Can View Statistics', 'snn' ); ?></th>
+                    <td>
+                        <?php foreach ( wp_roles()->get_names() as $role_key => $role_label ) :
+                            $is_admin_role = ( 'administrator' === $role_key );
+                            ?>
+                            <label style="display:block;margin-bottom:4px;">
+                                <input type="checkbox" name="view_roles[]" value="<?php echo esc_attr( $role_key ); ?>" <?php checked( $is_admin_role || in_array( $role_key, (array) $options['view_roles'], true ) ); ?> <?php disabled( $is_admin_role ); ?>>
+                                <?php echo esc_html( translate_user_role( $role_label ) ); ?>
+                            </label>
+                        <?php endforeach; ?>
+                        <p class="description"><?php esc_html_e( 'Users with any of these roles can open the Analytics dashboard. Administrators always have access. Only administrators can change settings and add or delete markers.', 'snn' ); ?></p>
                     </td>
                 </tr>
                 <tr>

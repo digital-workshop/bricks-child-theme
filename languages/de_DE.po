@@ -5619,6 +5619,10 @@ msgstr "Verwende diesen Tab, um Dienste hinzuzufügen oder zu ändern und sicher
 msgid "User Roles (multiple allowed)"
 msgstr "Benutzerrollen (mehrere erlaubt)"
 
+#: includes/features/analytics.php
+msgid "Users with any of these roles can open the Analytics dashboard. Administrators always have access. Only administrators can change settings and add or delete markers."
+msgstr "Benutzer mit einer dieser Rollen können das Analytics-Dashboard öffnen. Administratoren haben immer Zugriff. Nur Administratoren können Einstellungen ändern sowie Markierungen hinzufügen oder löschen."
+
 #: includes/features/smtp-settings.php:565
 msgid "Valid SMTP port is required. Please configure your SMTP settings."
 msgstr "Ein gültiger SMTP-Port ist erforderlich. Bitte konfiguriere deine SMTP-Einstellungen."
@@ -5712,6 +5716,10 @@ msgstr "Wo auf der Seite das Skript eingefügt werden soll (Head, Body Top oder 
 #: includes/features/settings-page.php:162
 msgid "White Label Name"
 msgstr "White Label Name"
+
+#: includes/features/analytics.php
+msgid "Who Can View Statistics"
+msgstr "Wer darf die Statistiken sehen"
 
 #: includes/features/custom-field-settings.php:135
 #: includes/features/custom-field-settings.php:404

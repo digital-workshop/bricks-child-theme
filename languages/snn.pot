@@ -5519,6 +5519,10 @@ msgstr ""
 msgid "User Roles (multiple allowed)"
 msgstr ""
 
+#: includes/features/analytics.php
+msgid "Users with any of these roles can open the Analytics dashboard. Administrators always have access. Only administrators can change settings and add or delete markers."
+msgstr ""
+
 #: includes/features/smtp-settings.php:565
 msgid "Valid SMTP port is required. Please configure your SMTP settings."
 msgstr ""
@@ -5599,6 +5603,10 @@ msgstr ""
 
 #: includes/features/settings-page.php:162
 msgid "White Label Name"
+msgstr ""
+
+#: includes/features/analytics.php
+msgid "Who Can View Statistics"
 msgstr ""
 
 #: includes/features/custom-field-settings.php:135

@@ -277,7 +277,7 @@ function snn_analytics_iawp_ajax_dismiss() {
 add_action( 'wp_ajax_snn_analytics_iawp_dismiss', 'snn_analytics_iawp_ajax_dismiss' );
 
 function snn_analytics_iawp_render_notice() {
-    if ( ! snn_analytics_iawp_detected() ) {
+    if ( ! current_user_can( 'manage_options' ) || ! snn_analytics_iawp_detected() ) {
         return;
     }
     $status = snn_analytics_iawp_get_status();
