@@ -750,6 +750,11 @@ function snn_snippets_ensure_protected_dir() {
  * never sees a half-written compiled file mid-save.
  */
 function snn_snippets_write_file_atomic( $path, $contents ) {
+    // wp_tempnam() lives in an admin include that isn't loaded on front-end/init requests.
+    if ( ! function_exists( 'wp_tempnam' ) ) {
+        require_once ABSPATH . 'wp-admin/includes/file.php';
+    }
+
     $dir  = trailingslashit( dirname( $path ) );
     $temp = wp_tempnam( basename( $path ), $dir );
     if ( ! $temp || false === @file_put_contents( $temp, $contents ) ) {
