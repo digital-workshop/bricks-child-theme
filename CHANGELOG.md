@@ -2,6 +2,12 @@
 
 Alle wichtigen Änderungen am Theme. Ältere Versionen (vor 1.0) sind auf der [Releases-Seite](https://github.com/digital-workshop/bricks-child-theme/releases) dokumentiert.
 
+## [1.0.1] – 2026-10-20
+
+### Behoben
+
+- **Theme-Aktivierung:** Beim Aktivieren des Themes kam ein Fatal Error (`Call to undefined function wp_tempnam()`). Die Code Snippets laden die nötige WordPress-Datei jetzt selbst.
+
 ## [1.0] – 2026-10-09
 
 Mit diesem Release ist das Theme stabil. Die eigenen Funktionen ersetzen jetzt mehrere Plugins:
@@ -17,4 +23,5 @@ Mit diesem Release ist das Theme stabil. Die eigenen Funktionen ersetzen jetzt m
   - Einstellungen ändern sowie Markierungen hinzufügen oder löschen dürfen weiterhin nur Administratoren.
   - Ohne Änderung der Einstellung bleibt alles wie bisher, also nur Administratoren.
 
+[1.0.1]: https://github.com/digital-workshop/bricks-child-theme/releases/tag/v1.0.1
 [1.0]: https://github.com/digital-workshop/bricks-child-theme/releases/tag/v1.0
