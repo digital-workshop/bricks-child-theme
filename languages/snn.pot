@@ -862,6 +862,18 @@ msgstr ""
 msgid "Change Cookie Settings"
 msgstr ""
 
+#: includes/features/mcp-server-abilities.php:1532
+msgid "Change SEOPress sitemap settings"
+msgstr ""
+
+#: includes/features/mcp-server-abilities.php:1528
+msgid "Change SEOPress social settings"
+msgstr ""
+
+#: includes/features/mcp-server-abilities.php:1524
+msgid "Change SEOPress titles & metas"
+msgstr ""
+
 #: includes/features/mcp-server-admin.php:248
 msgid "Changes content"
 msgstr ""
@@ -4502,6 +4514,10 @@ msgstr ""
 msgid "SEOPress"
 msgstr ""
 
+#: includes/features/mcp-server-abilities.php:42
+msgid "SEOPress settings"
+msgstr ""
+
 #: includes/features/smtp-settings.php:38
 msgid "SMTP Host"
 msgstr ""
@@ -5025,6 +5041,10 @@ msgstr ""
 
 #: includes/features/smtp-settings.php:106
 msgid "Simple SMTP Settings for bypassing PHP mailler or eliminating falling to spam issues."
+msgstr ""
+
+#: includes/features/mcp-server-abilities.php:43
+msgid "Site-wide SEOPress titles, social and sitemap settings."
 msgstr ""
 
 #: includes/features/media-image-opt.php:1417

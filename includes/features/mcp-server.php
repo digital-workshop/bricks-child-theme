@@ -1188,6 +1188,10 @@ function snn_mcp_object_ref( array $args ) {
             $parts[] = $key . '=' . sanitize_text_field( (string) $args[ $key ] );
         }
     }
+    // SEOPress settings: log which keys were changed.
+    if ( isset( $args['settings'] ) && is_array( $args['settings'] ) ) {
+        $parts[] = 'settings=' . sanitize_text_field( implode( ',', array_map( 'strval', array_keys( $args['settings'] ) ) ) );
+    }
     return mb_substr( implode( ' ', $parts ), 0, 191 );
 }
 

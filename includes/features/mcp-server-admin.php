@@ -230,6 +230,7 @@ function snn_mcp_group_label( $namespace ) {
         'snn-wp'     => __( 'WordPress content', 'snn' ),
         'snn-acf'    => __( 'ACF', 'snn' ),
         'snn-bricks' => __( 'Bricks Builder', 'snn' ),
+        'snn-seo'    => __( 'SEOPress settings', 'snn' ),
         'core'       => __( 'WordPress core', 'snn' ),
         'seopress'   => __( 'SEOPress', 'snn' ),
     );
@@ -320,7 +321,7 @@ function snn_mcp_settings_page() {
     }
     // Our own groups first, then core, then everything else alphabetically.
     uksort( $groups, function ( $a, $b ) {
-        $order = array( 'snn-wp', 'snn-acf', 'snn-bricks', 'seopress', 'core' );
+        $order = array( 'snn-wp', 'snn-acf', 'snn-bricks', 'seopress', 'snn-seo', 'core' );
         $ia    = array_search( $a, $order, true );
         $ib    = array_search( $b, $order, true );
         $ia    = false === $ia ? 99 : $ia;

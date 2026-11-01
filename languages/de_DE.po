@@ -882,6 +882,18 @@ msgstr "Cookie-Einstellungen ändern"
 msgid "Change Cookie Settings"
 msgstr "Cookie-Einstellungen ändern"
 
+#: includes/features/mcp-server-abilities.php:1532
+msgid "Change SEOPress sitemap settings"
+msgstr "SEOPress-Sitemap-Einstellungen ändern"
+
+#: includes/features/mcp-server-abilities.php:1528
+msgid "Change SEOPress social settings"
+msgstr "SEOPress-Social-Einstellungen ändern"
+
+#: includes/features/mcp-server-abilities.php:1524
+msgid "Change SEOPress titles & metas"
+msgstr "SEOPress-Titel & Metas ändern"
+
 #: includes/features/mcp-server-admin.php:248
 msgid "Changes content"
 msgstr "Ändert Inhalte"
@@ -4574,6 +4586,10 @@ msgstr "S"
 msgid "SEOPress"
 msgstr "SEOPress"
 
+#: includes/features/mcp-server-abilities.php:42
+msgid "SEOPress settings"
+msgstr "SEOPress-Einstellungen"
+
 #: includes/features/smtp-settings.php:38
 msgid "SMTP Host"
 msgstr "SMTP-Host"
@@ -5098,6 +5114,10 @@ msgstr "Ähnlich wie das CSS-overscroll-behavior. Standard: aktiviert"
 #: includes/features/smtp-settings.php:106
 msgid "Simple SMTP Settings for bypassing PHP mailler or eliminating falling to spam issues."
 msgstr "Einfache SMTP-Einstellungen zum Umgehen des PHP-Mailers oder zur Vermeidung von Spam-Problemen."
+
+#: includes/features/mcp-server-abilities.php:43
+msgid "Site-wide SEOPress titles, social and sitemap settings."
+msgstr "Website-weite SEOPress-Einstellungen für Titel, Social Media und Sitemaps."
 
 #: includes/features/media-image-opt.php:1417
 msgid "Size"

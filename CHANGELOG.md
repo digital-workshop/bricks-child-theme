@@ -15,6 +15,7 @@ Alle wichtigen Änderungen am Theme. Ältere Versionen (vor 1.0) sind auf der [R
   - Immer gesperrt: Plugins, Themes, Benutzer und Rollen, Einstellungen, Dateien und Code. Löschen verschiebt nur in den Papierkorb.
   - Verbindungen enden nach 30 Tagen ohne Nutzung. Jede Verbindung lässt sich einzeln trennen.
   - Jede Aktion der KI landet in einem Protokoll (90 Tage).
+  - Die KI kann die globalen SEOPress-Einstellungen ändern: Titel & Metas, Social Media und Sitemaps. Das geht nur mit Admin-Rechten. Instant Indexing und Analytics bleiben gesperrt.
 
 ## [1.0.1] – 2026-10-20
 

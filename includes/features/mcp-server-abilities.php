@@ -10,6 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *   snn-wp/...     posts, pages, custom post types, media, terms, menus, comments
  *   snn-acf/...    ACF field groups and field values
  *   snn-bricks/... Bricks page layouts (read-only)
+ *   snn-seo/...    SEOPress global settings (titles, social, sitemaps)
  *
  * Every permission callback checks the real WordPress capability for the
  * exact object, so these abilities stay safe even when called outside MCP.
@@ -36,6 +37,10 @@ function snn_mcp_register_ability_categories() {
     wp_register_ability_category( 'snn-bricks', array(
         'label'       => __( 'Bricks Builder', 'snn' ),
         'description' => __( 'Read-only access to Bricks page layouts.', 'snn' ),
+    ) );
+    wp_register_ability_category( 'snn-seo', array(
+        'label'       => __( 'SEOPress settings', 'snn' ),
+        'description' => __( 'Site-wide SEOPress titles, social and sitemap settings.', 'snn' ),
     ) );
 }
 add_action( 'wp_abilities_api_categories_init', 'snn_mcp_register_ability_categories' );
@@ -1064,6 +1069,134 @@ function snn_mcp_bricks_get_page_content( $input ) {
 }
 
 // ----------------------------------------------------------------------
+// SEOPress global settings (titles, social, sitemaps)
+// ----------------------------------------------------------------------
+
+/**
+ * The SEOPress options the AI may change, keyed by the ability suffix. Each
+ * maps to its option name and the prefix every key in it must carry.
+ * Left out on purpose: Instant Indexing (API keys), Analytics (tracking
+ * scripts end up in the page unescaped), Advanced and the Pro/license options.
+ */
+function snn_mcp_seopress_option_map() {
+    return array(
+        'titles'  => array( 'option' => 'seopress_titles_option_name', 'prefix' => 'seopress_titles_' ),
+        'social'  => array( 'option' => 'seopress_social_option_name', 'prefix' => 'seopress_social_' ),
+        'sitemap' => array( 'option' => 'seopress_xml_sitemap_option_name', 'prefix' => 'seopress_xml_sitemap_' ),
+    );
+}
+
+/**
+ * Plain text only: tags stripped, max 2000 chars. Not sanitize_text_field(),
+ * which strips "%xx" sequences and would break templates like %%date%%.
+ * true -> "1" (SEOPress checkboxes), null/false -> remove the key (= off).
+ *
+ * @return array|string|null|WP_Error
+ */
+function snn_mcp_seopress_clean_value( $value, $depth = 0 ) {
+    if ( null === $value || false === $value ) {
+        return null;
+    }
+    if ( true === $value ) {
+        return '1';
+    }
+    if ( is_int( $value ) || is_float( $value ) ) {
+        return (string) $value;
+    }
+    if ( is_string( $value ) ) {
+        $value = wp_check_invalid_utf8( $value );
+        $value = preg_replace( '/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/', '', wp_strip_all_tags( $value ) );
+        return mb_substr( trim( $value ), 0, 2000 );
+    }
+    if ( is_array( $value ) ) {
+        if ( $depth >= 2 ) {
+            return new WP_Error( 'snn_mcp_too_deep', 'Settings are nested too deeply.' );
+        }
+        $clean = array();
+        foreach ( $value as $key => $item ) {
+            if ( ! preg_match( '/^[a-z0-9_-]{1,64}$/', (string) $key ) ) {
+                return new WP_Error( 'snn_mcp_bad_key', sprintf( 'Invalid key "%s".', mb_substr( (string) $key, 0, 64 ) ) );
+            }
+            $item = snn_mcp_seopress_clean_value( $item, $depth + 1 );
+            if ( is_wp_error( $item ) ) {
+                return $item;
+            }
+            $clean[ $key ] = $item;
+        }
+        return $clean;
+    }
+    return new WP_Error( 'snn_mcp_bad_value', 'Unsupported value type.' );
+}
+
+/**
+ * Merges $changes into $current. Nested arrays are merged key by key, so
+ * changing one post type's title leaves the others alone; null removes a key.
+ */
+function snn_mcp_seopress_merge( array $current, array $changes ) {
+    foreach ( $changes as $key => $value ) {
+        if ( null === $value ) {
+            unset( $current[ $key ] );
+        } elseif ( is_array( $value ) ) {
+            $current[ $key ] = snn_mcp_seopress_merge( is_array( $current[ $key ] ?? null ) ? $current[ $key ] : array(), $value );
+        } else {
+            $current[ $key ] = $value;
+        }
+    }
+    return $current;
+}
+
+function snn_mcp_seopress_update_settings( $which, array $input ) {
+    $map = snn_mcp_seopress_option_map()[ $which ];
+    if ( empty( $input['settings'] ) || ! is_array( $input['settings'] ) ) {
+        return new WP_Error( 'snn_mcp_empty', 'Pass at least one setting to change.' );
+    }
+    if ( count( $input['settings'] ) > 100 ) {
+        return new WP_Error( 'snn_mcp_too_many', 'At most 100 settings per call.' );
+    }
+
+    $changes = array();
+    foreach ( $input['settings'] as $key => $value ) {
+        $key = (string) $key;
+        if ( 0 !== strpos( $key, $map['prefix'] ) || ! preg_match( '/^[a-z0-9_]{1,100}$/', $key ) ) {
+            return new WP_Error( 'snn_mcp_bad_key', sprintf( 'Key "%1$s" is not allowed here. Keys must start with "%2$s".', mb_substr( $key, 0, 100 ), $map['prefix'] ) );
+        }
+        $value = snn_mcp_seopress_clean_value( $value );
+        if ( is_wp_error( $value ) ) {
+            return $value;
+        }
+        $changes[ $key ] = $value;
+    }
+
+    $current = get_option( $map['option'], array() );
+    $current = is_array( $current ) ? $current : array();
+    $updated = snn_mcp_seopress_merge( $current, $changes );
+    update_option( $map['option'], $updated );
+
+    if ( 'sitemap' === $which ) {
+        // SEOPress adds its sitemap rewrite rules on init from this option;
+        // dropping the cached rules makes the next request rebuild them.
+        delete_option( 'rewrite_rules' );
+    }
+
+    $result = array();
+    foreach ( array_keys( $changes ) as $key ) {
+        $result[ $key ] = $updated[ $key ] ?? null;
+    }
+    return array( 'updated' => $result );
+}
+
+/**
+ * The guard denies manage_options during MCP requests, so current_user_can()
+ * would always say no here. These abilities are the one deliberate exception:
+ * they check the user's own stored capability instead -- only someone who may
+ * change SEOPress settings in wp-admin may let the AI do it.
+ */
+function snn_mcp_seopress_settings_permission() {
+    $user = wp_get_current_user();
+    return $user->exists() && ( ! empty( $user->allcaps['manage_options'] ) || is_super_admin( $user->ID ) );
+}
+
+// ----------------------------------------------------------------------
 // Register everything
 // ----------------------------------------------------------------------
 
@@ -1382,5 +1515,42 @@ function snn_mcp_register_abilities() {
         ) ),
         array( 'id' ), 'snn_mcp_bricks_get_page_content', $can_edit
     );
+
+    // --- SEOPress global settings ---
+
+    if ( defined( 'SEOPRESS_VERSION' ) ) {
+        $seopress = array(
+            'titles'  => array(
+                __( 'Change SEOPress titles & metas', 'snn' ),
+                'Changes the site-wide SEOPress title and meta description settings (option seopress_titles_option_name): separator, home page title/description, title/description templates per post type (seopress_titles_single_titles), archive, taxonomy (seopress_titles_tax_titles) and special pages, and their noindex flags. Read the current values with seopress/get-global-titles-settings first.',
+            ),
+            'social'  => array(
+                __( 'Change SEOPress social settings', 'snn' ),
+                'Changes the site-wide SEOPress social settings (option seopress_social_option_name): Knowledge Graph identity (type, name, logo, contact), social profile URLs, default Open Graph and X/Twitter card settings. Read the current values with seopress/get-global-social-settings first.',
+            ),
+            'sitemap' => array(
+                __( 'Change SEOPress sitemap settings', 'snn' ),
+                'Changes the SEOPress XML/HTML sitemap settings (option seopress_xml_sitemap_option_name): enabling sitemaps, which post types and taxonomies are included, HTML sitemap options. Read the current values with seopress/get-sitemap-settings first.',
+            ),
+        );
+        foreach ( $seopress as $which => $texts ) {
+            $prefix = snn_mcp_seopress_option_map()[ $which ]['prefix'];
+            snn_mcp_add_ability( 'snn-seo/update-' . $which . '-settings', 'snn-seo', 'write',
+                $texts[0],
+                $texts[1] . ' Only the keys you pass change; nested objects are merged key by key. Checkboxes: "1" = on, null = off (removes the key).',
+                array(
+                    'settings' => array(
+                        'type'        => 'object',
+                        'description' => 'Setting key => new value. Keys must start with "' . $prefix . '", e.g. {"' . $prefix . '...": "value"}. Values: text, "1", null, or an object for nested settings (max 2 levels).',
+                    ),
+                ),
+                array( 'settings' ),
+                function ( $input ) use ( $which ) {
+                    return snn_mcp_seopress_update_settings( $which, (array) $input );
+                },
+                'snn_mcp_seopress_settings_permission'
+            );
+        }
+    }
 }
 add_action( 'wp_abilities_api_init', 'snn_mcp_register_abilities' );
