@@ -25,6 +25,10 @@ msgstr "vor %1$s von %2$s"
 msgid "%d file(s) could not be deleted."
 msgstr "%d Datei(en) konnten nicht gelöscht werden."
 
+#: includes/features/mcp-server-admin.php:346
+msgid "%d new"
+msgstr "%d neu"
+
 #: includes/features/two-factor-auth.php:368
 msgid "&larr; Back to login"
 msgstr "&larr; Zurück zum Login"
@@ -134,6 +138,10 @@ msgstr "<strong>Hinweis:</strong> Administratoren sind immer ausgeschlossen und 
 msgid "A code snippet was automatically disabled"
 msgstr "Ein Code-Snippet wurde automatisch deaktiviert"
 
+#: includes/features/mcp-server-admin.php:453
+msgid "A connection ends by itself after 30 days without use."
+msgstr "Eine Verbindung endet von selbst nach 30 Tagen ohne Nutzung."
+
 #: includes/features/two-factor-auth.php:313
 msgid "A new code has been sent."
 msgstr "Ein neuer Code wurde gesendet."
@@ -145,6 +153,18 @@ msgstr "Für diese Quelle existiert bereits eine Weiterleitung."
 #: includes/features/custom-code-snippets.php:995
 msgid "A snippet caused a fatal PHP error, so it was switched off automatically to keep the rest of the site running. All other snippets are unaffected."
 msgstr "Ein Snippet hat einen fatalen PHP-Fehler verursacht und wurde automatisch deaktiviert, damit der Rest der Seite weiterläuft. Alle anderen Snippets sind davon nicht betroffen."
+
+#: includes/features/mcp-server-admin.php:231
+msgid "ACF"
+msgstr "ACF"
+
+#: includes/features/mcp-server-abilities.php:33
+msgid "ACF fields"
+msgstr "ACF-Felder"
+
+#: includes/features/mcp-server-admin.php:19
+msgid "AI Connection (MCP)"
+msgstr "KI-Verbindung (MCP)"
 
 #: includes/features/media-image-opt.php:2984
 msgid "AJAX Error:"
@@ -187,6 +207,10 @@ msgstr "Akzeptieren"
 msgid "Accept Button Text"
 msgstr "Text der Akzeptieren-Schaltfläche"
 
+#: includes/features/mcp-server-admin.php:506
+msgid "Action"
+msgstr "Aktion"
+
 #: includes/features/media-image-opt.php:2628
 #: includes/features/media-image-opt.php:2634
 msgid "Action cancelled. Original files were not deleted."
@@ -199,6 +223,10 @@ msgstr "Aktionen"
 #: includes/features/redirects.php:476
 msgid "Active"
 msgstr "Aktiv"
+
+#: includes/features/mcp-server-admin.php:120
+msgid "Acts as"
+msgstr "Handelt als"
 
 #: includes/features/security-page.php:250
 msgid "Add IP Address"
@@ -243,6 +271,10 @@ msgstr "Dienst hinzufügen"
 msgid "Add a mega menu icon as the first item in the admin bar (admins only)"
 msgstr "Ein Mega-Menü-Symbol als erstes Element in der Admin-Leiste hinzufügen (nur für Administratoren)"
 
+#: includes/features/mcp-server-abilities.php:1292
+msgid "Add menu item"
+msgstr "Menüpunkt hinzufügen"
+
 #: includes/features/security-page.php:235
 msgid "Add my IP"
 msgstr "Meine IP hinzufügen"
@@ -271,6 +303,10 @@ msgstr "Admin-Head"
 msgid "Admin Mega Menu Position Priority"
 msgstr "Positionspriorität des Admin-Mega-Menüs"
 
+#: includes/features/mcp-server-abilities.php:34
+msgid "Advanced Custom Fields groups and values."
+msgstr "Feldgruppen und Werte von Advanced Custom Fields."
+
 #: includes/features/interactions.php:256
 #: includes/features/interactions.php:326
 msgid "Advanced Settings"
@@ -292,6 +328,10 @@ msgstr "Alle gesperrten IPs wurden erfolgreich entfernt."
 msgid "All changes from the draft have been applied to this post. The draft has been moved to trash."
 msgstr "Alle Änderungen aus dem Entwurf wurden auf diesen Beitrag übertragen. Der Entwurf wurde in den Papierkorb verschoben."
 
+#: includes/features/mcp-server-admin.php:204
+msgid "All connections removed."
+msgstr "Alle Verbindungen getrennt."
+
 #: includes/features/custom-code-snippets.php:1076
 msgid "All error logs have been cleared."
 msgstr "Alle Fehlerprotokolle wurden gelöscht."
@@ -303,6 +343,22 @@ msgstr "Alle Originale wurden bereits gelöscht."
 #: includes/features/custom-code-snippets.php:1128
 msgid "All snippet execution is currently disabled by the %s constant. To re-enable execution, remove it from wp-config.php."
 msgstr "Die Ausführung aller Snippets ist aktuell durch die Konstante %s deaktiviert. Um die Ausführung wieder zu aktivieren, entferne sie aus der wp-config.php."
+
+#: includes/features/mcp-server-admin.php:131
+msgid "Allow"
+msgstr "Erlauben"
+
+#: includes/features/mcp-server-admin.php:27
+msgid "Allow AI connection"
+msgstr "KI-Verbindung erlauben"
+
+#: includes/features/mcp-server-admin.php:114
+msgid "Allow AI connection?"
+msgstr "KI-Verbindung erlauben?"
+
+#: includes/features/mcp-server-admin.php:376
+msgid "Allow AI connections"
+msgstr "KI-Verbindungen erlauben"
 
 #: includes/features/custom-code-snippets.php:1413
 msgid "Allow Direct Output"
@@ -333,6 +389,10 @@ msgstr "Alpha-Qualität (0-100):"
 #: includes/features/cookie-banner.php:810
 msgid "Already Blocked"
 msgstr "Bereits blockiert"
+
+#: includes/features/mcp-server-admin.php:402
+msgid "Always blocked"
+msgstr "Immer gesperrt"
 
 #: includes/features/analytics.php
 msgid "Analytics"
@@ -616,6 +676,10 @@ msgstr "Einstellungen für den Block-Editor"
 msgid "Block Selected Resources"
 msgstr "Ausgewählte Ressourcen blockieren"
 
+#: includes/features/mcp-server-admin.php:437
+msgid "Blocked"
+msgstr "Gesperrt"
+
 #: includes/features/security-page.php:50
 msgid "Blocked IPs Management"
 msgstr "Verwaltung gesperrter IPs"
@@ -817,6 +881,10 @@ msgstr "Cookie-Einstellungen ändern"
 #: includes/features/cookie-banner.php:414
 msgid "Change Cookie Settings"
 msgstr "Cookie-Einstellungen ändern"
+
+#: includes/features/mcp-server-admin.php:248
+msgid "Changes content"
+msgstr "Ändert Inhalte"
 
 #: includes/features/block-editor-settings.php:55
 msgid "Check any of the following to change the default:"
@@ -1062,6 +1130,10 @@ msgstr "Konfiguriere unten die Animations- und Interaktionseinstellungen für de
 msgid "Configure your security settings below:"
 msgstr "Deine Sicherheitseinstellungen unten konfigurieren:"
 
+#: includes/features/mcp-server-admin.php:462
+msgid "Connected"
+msgstr "Verbunden"
+
 #: includes/features/smtp-settings.php:616
 msgid "Connection Exception: %s"
 msgstr "Verbindungsausnahme: %s"
@@ -1078,9 +1150,21 @@ msgstr "Verbindung abgelehnt: Server %s hat die Verbindung auf Port %d abgelehnt
 msgid "Connection Timeout: Could not connect to %s on port %d. The port may be blocked by your hosting firewall or the server is not responding."
 msgstr "Verbindungs-Timeout: Verbindung zu %s auf Port %d konnte nicht hergestellt werden. Der Port könnte von der Firewall deines Hosters blockiert sein, oder der Server antwortet nicht."
 
+#: includes/features/mcp-server.php:652
+msgid "Connection not possible"
+msgstr "Verbindung nicht möglich"
+
+#: includes/features/mcp-server-admin.php:199
+msgid "Connection removed."
+msgstr "Verbindung getrennt."
+
 #: includes/features/smtp-settings.php:835
 msgid "Connection test successful! All checks passed."
 msgstr "Verbindungstest erfolgreich! Alle Prüfungen bestanden."
+
+#: includes/features/mcp-server-admin.php:350
+msgid "Connections (%d)"
+msgstr "Verbindungen (%d)"
 
 #: includes/elements/gsap-multi-element-register.php:308
 msgid "Contrast In"
@@ -1129,6 +1213,14 @@ msgstr "Cookie-Präferenzen"
 msgid "Cookie Settings"
 msgstr "Cookie-Einstellungen"
 
+#: includes/features/mcp-server-admin.php:582
+msgid "Copied"
+msgstr "Kopiert"
+
+#: includes/features/mcp-server-admin.php:384
+msgid "Copy"
+msgstr "Kopieren"
+
 #: includes/features/two-factor-auth.php:316
 msgid "Could not send a new code. Please try again shortly."
 msgstr "Neuer Code konnte nicht gesendet werden. Bitte versuche es in Kürze erneut."
@@ -1136,6 +1228,14 @@ msgstr "Neuer Code konnte nicht gesendet werden. Bitte versuche es in Kürze ern
 #: includes/features/draft-revision.php:70
 msgid "Create Revision"
 msgstr "Revision erstellen"
+
+#: includes/features/mcp-server-abilities.php:1132
+msgid "Create post"
+msgstr "Beitrag erstellen"
+
+#: includes/features/mcp-server-abilities.php:1260
+msgid "Create term"
+msgstr "Begriff erstellen"
 
 #: includes/elements/gsap-multi-element-register.php:127
 #: includes/elements/gsap-multi-element-register.php:334
@@ -1534,6 +1634,14 @@ msgstr "Alle Kommentare website-weit deaktivieren"
 #: includes/features/cookie-banner.php:314
 msgid "Disable for Logged-In Users"
 msgstr "Für eingeloggte Benutzer deaktivieren"
+
+#: includes/features/mcp-server-admin.php:481
+msgid "Disconnect"
+msgstr "Trennen"
+
+#: includes/features/mcp-server-admin.php:490
+msgid "Disconnect all"
+msgstr "Alle trennen"
 
 #: includes/features/custom-code-snippets.php:1013
 msgid "Dismiss This Notice"
@@ -2002,6 +2110,10 @@ msgstr "Aktivieren, um Kartenmarker aus einem benutzerdefinierten Beitragstyp zu
 msgid "Enable to serve the WordPress login page at a custom URL and block direct /wp-login.php access."
 msgstr "Aktivieren, um die WordPress-Login-Seite unter einer benutzerdefinierten URL bereitzustellen und den direkten Zugriff auf /wp-login.php zu blockieren."
 
+#: includes/features/mcp-server-admin.php:122
+msgid "Enabled tools"
+msgstr "Freigeschaltete Tools"
+
 #: includes/features/other-settings.php:281
 msgid "Enabling this adds a toggle button to the admin bar and keyboard shortcut (Ctrl+I) to show/hide the admin bar on the frontend."
 msgstr "Diese Option fügt einen Umschalt-Button zur Admin-Leiste sowie eine Tastenkombination (Strg+I) hinzu, um die Admin-Leiste im Frontend ein-/auszublenden."
@@ -2256,6 +2368,10 @@ msgstr "Bots/Crawler von der 404-Protokollierung ausschließen"
 #: includes/features/custom-code-snippets.php:1125
 msgid "Execution Disabled by Constant:"
 msgstr "Ausführung durch Konstante deaktiviert:"
+
+#: includes/features/mcp-server-admin.php:464
+msgid "Expires"
+msgstr "Läuft ab"
 
 #: includes/elements/gsap-multi-element-register.php:160
 msgid "Explode In"
@@ -2612,6 +2728,22 @@ msgstr "Generiere CSS-clamp()-Werte für responsive Typografie und Abstände. Ko
 msgid "Gesture Orientation"
 msgstr "Gesten-Ausrichtung"
 
+#: includes/features/mcp-server-abilities.php:1357
+msgid "Get ACF field values"
+msgstr "ACF-Feldwerte abrufen"
+
+#: includes/features/mcp-server-abilities.php:1174
+msgid "Get media"
+msgstr "Mediendatei abrufen"
+
+#: includes/features/mcp-server-abilities.php:1286
+msgid "Get menu"
+msgstr "Menü abrufen"
+
+#: includes/features/mcp-server-abilities.php:1122
+msgid "Get post"
+msgstr "Beitrag abrufen"
+
 #: includes/features/media-image-opt.php:2833
 msgid "Go to Bulk Optimizer"
 msgstr "Zum Massenoptimierer"
@@ -2774,6 +2906,10 @@ msgstr "Farbton drehen (Hue Rotate)"
 msgid "INFO:"
 msgstr "INFO:"
 
+#: includes/features/mcp-server-admin.php:465
+msgid "IP"
+msgstr "IP"
+
 #: includes/elements/custom-maps.php:59
 msgid "Icon"
 msgstr "Icon"
@@ -2878,6 +3014,10 @@ msgstr "Importiertes Snippet"
 msgid "Imprint"
 msgstr "Impressum"
 
+#: includes/features/mcp-server-admin.php:386
+msgid "In claude.ai: Settings → Connectors → Add custom connector, paste this URL. Leave the OAuth fields empty."
+msgstr "In claude.ai: Einstellungen → Connectors → Eigenen Connector hinzufügen, diese URL einfügen. Die OAuth-Felder leer lassen."
+
 #: includes/features/media-image-opt.php:1364
 msgid "Include already optimized images (for re-optimization)"
 msgstr "Bereits optimierte Bilder einbeziehen (für Neuoptimierung)"
@@ -2918,6 +3058,10 @@ msgstr "Eingabe 2"
 msgid "Input field value changed:"
 msgstr "Eingabefeldwert geändert:"
 
+#: includes/features/mcp-server-admin.php:403
+msgid "Installing or changing plugins and themes, users and roles, site settings, files and code (including Code Snippets). Deleting only ever moves things to the trash."
+msgstr "Plugins und Themes installieren oder ändern, Benutzer und Rollen, Website-Einstellungen, Dateien und Code (auch Code Snippets). Löschen verschiebt immer nur in den Papierkorb."
+
 #: includes/features/interactions.php:6
 #: includes/features/interactions.php:7
 #: includes/features/settings-page.php:38
@@ -2931,6 +3075,10 @@ msgstr "Interaktionen & Animationen"
 #: includes/features/custom-code-snippets.php:826
 msgid "Invalid JSON."
 msgstr "Ungültiges JSON."
+
+#: includes/features/mcp-server.php:670
+msgid "Invalid request method."
+msgstr "Ungültige Anfrage-Methode."
 
 #: includes/features/interactions.php:300
 msgid "Iris Circle"
@@ -2959,6 +3107,10 @@ msgstr "404-Log-Einträge aufbewahren für"
 #: includes/features/redirects.php:535
 msgid "Last Seen"
 msgstr "Zuletzt gesehen"
+
+#: includes/features/mcp-server-admin.php:463
+msgid "Last used"
+msgstr "Zuletzt genutzt"
 
 #: includes/features/auto-update-snn-brx-github.php:127
 msgid "Latest release information from GitHub."
@@ -3000,6 +3152,10 @@ msgstr "Lerp (Weichheit)"
 msgid "Lerp applied during syncTouch inertia. Default: 0.075"
 msgstr "Lerp-Wert, der während der syncTouch-Trägheit angewendet wird. Standard: 0.075"
 
+#: includes/features/mcp-server-admin.php:338
+msgid "Lets Claude work with this site: content, media, menus, comments, ACF fields and SEOPress. Plugins, themes, users, settings and files are always blocked."
+msgstr "Lässt Claude mit dieser Seite arbeiten: Inhalte, Medien, Menüs, Kommentare, ACF-Felder und SEOPress. Plugins, Themes, Benutzer, Einstellungen und Dateien sind immer gesperrt."
+
 #: includes/elements/gsap-multi-element-register.php:150
 msgid "Light Speed In Left"
 msgstr "Lichtgeschwindigkeit rein links"
@@ -3037,6 +3193,38 @@ msgstr "Intensität der linearen Interpolation (0.01 bis 1). Niedriger = weicher
 msgid "Link Post Types"
 msgstr "Beitragstypen verlinken"
 
+#: includes/features/mcp-server-abilities.php:1348
+msgid "List ACF field groups"
+msgstr "ACF-Feldgruppen auflisten"
+
+#: includes/features/mcp-server-abilities.php:1311
+msgid "List comments"
+msgstr "Kommentare auflisten"
+
+#: includes/features/mcp-server-abilities.php:1161
+msgid "List media"
+msgstr "Medien auflisten"
+
+#: includes/features/mcp-server-abilities.php:1280
+msgid "List menus"
+msgstr "Menüs auflisten"
+
+#: includes/features/mcp-server-abilities.php:1097
+msgid "List post types"
+msgstr "Inhaltstypen auflisten"
+
+#: includes/features/mcp-server-abilities.php:1106
+msgid "List posts"
+msgstr "Beiträge auflisten"
+
+#: includes/features/mcp-server-abilities.php:1229
+msgid "List taxonomies"
+msgstr "Taxonomien auflisten"
+
+#: includes/features/mcp-server-abilities.php:1238
+msgid "List terms"
+msgstr "Begriffe auflisten"
+
 #: includes/features/custom-code-snippets.php:1436
 msgid "Load Revision & Save"
 msgstr "Revision laden & speichern"
@@ -3053,6 +3241,10 @@ msgstr "Ort"
 #: includes/features/security-page.php:175
 msgid "Locked out (e.g. the code email isn't arriving)? Add %s to wp-config.php to force this off, no database access needed."
 msgstr "Ausgesperrt (z. B. weil die Code-E-Mail nicht ankommt)? Füge %s zur wp-config.php hinzu, um dies ohne Datenbankzugriff zu erzwingen."
+
+#: includes/features/mcp-server-admin.php:351
+msgid "Log"
+msgstr "Protokoll"
 
 #: includes/features/redirects.php:569
 msgid "Log 404 errors"
@@ -3133,6 +3325,10 @@ msgstr "Hauptinhalt-Selektor"
 msgid "Main Settings"
 msgstr "Haupteinstellungen"
 
+#: includes/features/mcp-server-admin.php:373
+msgid "Main switch"
+msgstr "Hauptschalter"
+
 #: includes/features/editor-settings-bricks.php:168
 msgid "Make Elements Compact But Keep Icons"
 msgstr "Elemente kompakt darstellen, Icons aber behalten"
@@ -3209,6 +3405,14 @@ msgstr "Maximale Login-Versuche"
 msgid "Media"
 msgstr "Medien"
 
+#: includes/features/mcp-server-admin.php:405
+msgid "Media files have no trash on this site, so the AI cannot remove media. To allow it, add <code>define( 'MEDIA_TRASH', true );</code> to wp-config.php."
+msgstr "Mediendateien haben auf dieser Seite keinen Papierkorb. Darum kann die KI keine Medien entfernen. Um das zu erlauben, füge <code>define( 'MEDIA_TRASH', true );</code> in die wp-config.php ein."
+
+#: includes/features/mcp-server-admin.php:509
+msgid "Message"
+msgstr "Meldung"
+
 #: includes/features/media-image-opt.php:1310
 msgid "Method (0-6):"
 msgstr "Methode (0-6):"
@@ -3229,6 +3433,10 @@ msgstr "Fehlende Revisions-ID."
 #: includes/elements/gsap-multi-element-register.php:602
 msgid "Mobile False"
 msgstr "Mobil Falsch"
+
+#: includes/features/mcp-server-abilities.php:1322
+msgid "Moderate comment"
+msgstr "Kommentar moderieren"
 
 #: includes/elements/gsap-multi-element-register.php:140
 msgid "Morph In"
@@ -3264,6 +3472,14 @@ msgstr "Nach unten verschieben"
 msgid "Move Up"
 msgstr "Nach oben verschieben"
 
+#: includes/features/mcp-server-abilities.php:1218
+msgid "Move media to trash"
+msgstr "Mediendatei in den Papierkorb"
+
+#: includes/features/mcp-server-abilities.php:1149
+msgid "Move post to trash"
+msgstr "Beitrag in den Papierkorb"
+
 #: includes/features/custom-code-snippets.php:1537
 msgid "N/A"
 msgstr "N. Z. (Nicht zutreffend)"
@@ -3275,6 +3491,10 @@ msgstr "Nahezu verlustfrei"
 #: includes/features/media-image-opt.php:1338
 msgid "Near-Lossless (0-100):"
 msgstr "Nahezu verlustfrei (0-100):"
+
+#: includes/features/mcp-server-admin.php:438
+msgid "New"
+msgstr "Neu"
 
 #: includes/features/custom-code-snippets.php:28
 msgid "New Code Snippet"
@@ -3299,6 +3519,10 @@ msgstr "Nein"
 #: includes/features/redirects.php:527
 msgid "No 404s logged."
 msgstr "Keine 404er protokolliert."
+
+#: includes/features/mcp-server-admin.php:455
+msgid "No active connections."
+msgstr "Keine aktiven Verbindungen."
 
 #: includes/features/custom-field-settings.php:1580
 #: includes/features/custom-field-settings.php:1599
@@ -3380,6 +3604,10 @@ msgstr "Noch keine Snippets vorhanden. Klicke auf „Neues Snippet\", um eines z
 msgid "No unoptimized JPG or PNG images found."
 msgstr "Keine unoptimierten JPG- oder PNG-Bilder gefunden."
 
+#: includes/features/mcp-server-admin.php:363
+msgid "No user is ticked below yet, so nobody can allow a connection."
+msgstr "Unten ist noch kein Benutzer angehakt. Darum kann niemand eine Verbindung erlauben."
+
 #: includes/features/custom-code-snippets.php:708
 #: includes/features/custom-code-snippets.php:739
 msgid "Nonce verification failed."
@@ -3410,10 +3638,18 @@ msgstr "Hinweis – PHP-Warnungen aufgetreten:"
 msgid "Notes"
 msgstr "Notizen"
 
+#: includes/features/mcp-server-admin.php:499
+msgid "Nothing logged yet."
+msgstr "Noch nichts protokolliert."
+
 #: includes/features/custom-field-settings.php:145
 #: includes/features/custom-field-settings.php:409
 msgid "Number"
 msgstr "Zahl (Number)"
+
+#: includes/features/mcp-server-admin.php:508
+msgid "Object"
+msgstr "Objekt"
 
 #: includes/features/analytics.php
 msgid "Older records are automatically deleted daily."
@@ -3423,9 +3659,21 @@ msgstr "Ältere Datensätze werden täglich automatisch gelöscht."
 msgid "Once True"
 msgstr "Einmal Wahr"
 
+#: includes/features/mcp-server-admin.php:125
+msgid "Only click \"Allow\" if you just started this connection in Claude yourself. The AI can then use the enabled tools with your user rights until you disconnect it."
+msgstr "Klicke nur auf „Erlauben“, wenn du diese Verbindung gerade selbst in Claude gestartet hast. Die KI kann dann die freigeschalteten Tools mit deinen Benutzerrechten nutzen, bis du die Verbindung trennst."
+
 #: includes/features/editor-settings-bricks.php:291
 msgid "Only letters, numbers, <code>-</code> and <code>_</code> are allowed."
 msgstr "Nur Buchstaben, Zahlen, <code>-</code> und <code>_</code> sind erlaubt."
+
+#: includes/features/mcp-server-admin.php:392
+msgid "Only these users see the \"Allow\" screen. The AI then acts with that user's rights. Removing a user ends their connections."
+msgstr "Nur diese Benutzer sehen die „Erlauben“-Seite. Die KI handelt dann mit den Rechten dieses Benutzers. Wenn du einen Benutzer entfernst, enden seine Verbindungen."
+
+#: includes/features/mcp-server-admin.php:415
+msgid "Only tools that are switched on are offered to the AI. New tools (e.g. after a plugin update) always start switched off."
+msgstr "Die KI bekommt nur Tools, die eingeschaltet sind. Neue Tools (z. B. nach einem Plugin-Update) sind immer erst ausgeschaltet."
 
 #: includes/elements/gsap-multi-element-register.php:233
 #: includes/elements/gsap-text-animations.php:100
@@ -3820,6 +4068,10 @@ msgstr "Beitragstypen, Custom Fields, Taxonomien, SMTP-Mail-Einstellungen, indiv
 msgid "Post not found"
 msgstr "Beitrag nicht gefunden"
 
+#: includes/features/mcp-server-abilities.php:30
+msgid "Posts, pages, media, terms, menus and comments."
+msgstr "Beiträge, Seiten, Medien, Begriffe, Menüs und Kommentare."
+
 #: includes/features/cookie-banner.php:248
 #: includes/features/cookie-banner.php:1245
 msgid "Preferences"
@@ -3871,6 +4123,10 @@ msgstr "Verarbeitung"
 msgid "Processing..."
 msgstr "Wird verarbeitet …"
 
+#: includes/features/mcp-server-admin.php:116
+msgid "Program"
+msgstr "Programm"
+
 #: includes/elements/gsap-multi-element-register.php:162
 msgid "Puff In"
 msgstr "Puff rein"
@@ -3921,6 +4177,22 @@ msgstr "Zufällig Wahr"
 #: includes/features/media-image-opt.php:2825
 msgid "Re-optimize"
 msgstr "Erneut optimieren"
+
+#: includes/features/mcp-server-abilities.php:1378
+msgid "Read Bricks layout"
+msgstr "Bricks-Layout lesen"
+
+#: includes/features/mcp-server-admin.php:242
+msgid "Read only"
+msgstr "Nur lesen"
+
+#: includes/features/mcp-server-abilities.php:38
+msgid "Read-only access to Bricks page layouts."
+msgstr "Nur-Lese-Zugriff auf Bricks-Seitenlayouts."
+
+#: includes/features/mcp-server-admin.php:490
+msgid "Really end all connections?"
+msgstr "Wirklich alle Verbindungen beenden?"
 
 #: includes/features/smtp-settings.php:1013
 msgid "Recipient Email"
@@ -4019,10 +4291,18 @@ msgstr "Taxonomie entfernen"
 msgid "Remove/Hide WP Version"
 msgstr "WP-Version entfernen/ausblenden"
 
+#: includes/features/mcp-server-admin.php:245
+msgid "Removes / moderates"
+msgstr "Entfernt / moderiert"
+
 #: includes/features/custom-field-settings.php:207
 #: includes/features/custom-field-settings.php:444
 msgid "Repeater"
 msgstr "Repeater"
+
+#: includes/features/mcp-server-abilities.php:1329
+msgid "Reply to comment"
+msgstr "Auf Kommentar antworten"
 
 #: includes/features/security-page.php:252
 msgid "Requests from these IP addresses skip two-factor authentication entirely, for every account -- useful for a trusted office or VPN IP. One address or CIDR range (e.g. 203.0.113.0/24) per field."
@@ -4096,6 +4376,10 @@ msgstr "Wird wiederhergestellt"
 #: includes/features/media-image-opt.php:2918
 msgid "Restoring..."
 msgstr "Wird wiederhergestellt …"
+
+#: includes/features/mcp-server-admin.php:507
+msgid "Result"
+msgstr "Ergebnis"
 
 #: includes/features/analytics.php
 msgid "Retention Period (Days)"
@@ -4286,6 +4570,10 @@ msgstr "Gummiband (Rubber Band)"
 msgid "S"
 msgstr "S"
 
+#: includes/features/mcp-server-admin.php:234
+msgid "SEOPress"
+msgstr "SEOPress"
+
 #: includes/features/smtp-settings.php:38
 msgid "SMTP Host"
 msgstr "SMTP-Host"
@@ -4368,6 +4656,10 @@ msgstr "Snippet speichern"
 #: includes/features/taxonomy-settings.php:129
 msgid "Save Taxonomies"
 msgstr "Taxonomien speichern"
+
+#: includes/features/mcp-server-admin.php:447
+msgid "Save Tools"
+msgstr "Tools speichern"
 
 #: includes/features/media-image-opt.php:1419
 msgid "Saved"
@@ -4681,9 +4973,17 @@ msgstr "Sende eine Test-E-Mail mit den gespeicherten SMTP-Einstellungen. Das Pro
 msgid "Sending..."
 msgstr "Wird gesendet …"
 
+#: includes/features/mcp-server-admin.php:118
+msgid "Sends you back to"
+msgstr "Schickt dich zurück zu"
+
 #: includes/elements/gsap-multi-element-register.php:306
 msgid "Sepia In"
 msgstr "Sepia rein"
+
+#: includes/features/mcp-server-admin.php:381
+msgid "Server URL for Claude:"
+msgstr "Server-URL für Claude:"
 
 #: includes/features/cookie-banner.php:452
 #: includes/features/cookie-banner.php:482
@@ -5196,6 +5496,10 @@ msgstr "%d Datei(en) erfolgreich gelöscht und %s Speicherplatz freigegeben."
 msgid "Swing"
 msgstr "Schwingen (Swing)"
 
+#: includes/features/mcp-server-admin.php:378
+msgid "Switching this off immediately ends every connection. Claude then has to be connected again."
+msgstr "Ausschalten beendet sofort alle Verbindungen. Claude muss danach neu verbunden werden."
+
 #: includes/features/interactions.php:260
 msgid "Sync Touch"
 msgstr "Sync Touch"
@@ -5293,6 +5597,14 @@ msgstr "Textbereich 1"
 msgid "Textarea 2"
 msgstr "Textbereich 2"
 
+#: includes/features/mcp-server-admin.php:50
+msgid "The AI connection is switched off on this site."
+msgstr "Die KI-Verbindung ist auf dieser Seite ausgeschaltet."
+
+#: includes/features/mcp-server-admin.php:366
+msgid "The Easy MCP AI plugin is still active. Both can run side by side; deactivate the plugin once you no longer need it."
+msgstr "Das Plugin Easy MCP AI ist noch aktiv. Beide können parallel laufen. Deaktiviere das Plugin, sobald du es nicht mehr brauchst."
+
 #: includes/features/interactions.php:282
 msgid "The View Transition API provides a mechanism for easily creating animated transitions between different website pages. It allows you to create seamless visual transitions when navigating between pages, improving the user experience."
 msgstr "Die View Transition API bietet einen Mechanismus, um auf einfache Weise animierte Übergänge zwischen verschiedenen Seiten deiner Website zu erstellen. Damit kannst du nahtlose visuelle Übergänge beim Navigieren zwischen Seiten erzeugen und so die Nutzererfahrung verbessern."
@@ -5309,6 +5621,10 @@ msgstr "Der Banner-Text"
 msgid "The cookie banner container"
 msgstr "Der Cookie-Banner-Container"
 
+#: includes/features/mcp-server-admin.php:497
+msgid "The last 200 actions. Entries are deleted after %d days."
+msgstr "Die letzten 200 Aktionen. Einträge werden nach %d Tagen gelöscht."
+
 #: includes/features/cookie-banner.php:1066
 msgid "The list of services"
 msgstr "Die Liste der Dienste"
@@ -5320,6 +5636,10 @@ msgstr "Der Name des Dienstes (z. B. Google Analytics)."
 #: includes/features/cookie-banner.php:1062
 msgid "The preferences content container inside the banner"
 msgstr "Der Container für den Präferenzen-Inhalt innerhalb des Banners"
+
+#: includes/features/mcp-server.php:692
+msgid "The redirect address does not match the registered client."
+msgstr "Die Rücksprung-Adresse passt nicht zum angemeldeten Programm."
 
 #: includes/features/cookie-banner.php:427
 msgid "The script or HTML code that will be executed when the user accepts cookies."
@@ -5333,6 +5653,10 @@ msgstr "Der Titel im Präferenzen-Inhalt"
 msgid "The visibility state is saved in your browser and persists across page loads. Useful for taking screenshots or viewing the site without the admin bar."
 msgstr "Der Sichtbarkeitsstatus wird in deinem Browser gespeichert und bleibt auch nach dem Neuladen der Seite erhalten. Nützlich, um Screenshots zu erstellen oder die Website ohne Admin-Leiste anzusehen."
 
+#: includes/features/mcp-server-admin.php:360
+msgid "This WordPress version has no Abilities API. WordPress 6.9 or newer is required."
+msgstr "Diese WordPress-Version hat keine Abilities API. Nötig ist WordPress 6.9 oder neuer."
+
 #: includes/features/analytics.php
 msgid "This Year"
 msgstr "Dieses Jahr"
@@ -5344,6 +5668,10 @@ msgstr "Damit kannst du Entwurfsrevisionen von Beiträgen erstellen, bearbeiten 
 #: includes/features/other-settings.php:253
 msgid "This allows you to see the featured image of each post directly in the list view."
 msgstr "Dies ermöglicht es dir, das Beitragsbild jedes Beitrags direkt in der Listenansicht zu sehen."
+
+#: includes/features/mcp-server-admin.php:56
+msgid "This connection request has expired. Please start the connection again in Claude."
+msgstr "Diese Verbindungsanfrage ist abgelaufen. Bitte starte die Verbindung in Claude neu."
 
 #: includes/features/disable-wp-json-if-not-logged-in.php:263
 msgid "This endpoint is not available for non-logged-in users."
@@ -5380,6 +5708,10 @@ msgstr "Dies ist eine Test-E-Mail, die über deine SMTP-Einstellungen gesendet w
 #: includes/features/custom-code-snippets.php:1498
 msgid "This log shows the last %d errors recorded from snippet executions. A fatal error automatically disables only the snippet that caused it."
 msgstr "Dieses Protokoll zeigt die letzten %d aufgezeichneten Fehler aus Snippet-Ausführungen. Ein fataler Fehler deaktiviert automatisch nur das verursachende Snippet."
+
+#: includes/features/mcp-server-admin.php:357
+msgid "This site does not use HTTPS. The AI connection only works over HTTPS."
+msgstr "Diese Seite nutzt kein HTTPS. Die KI-Verbindung funktioniert nur über HTTPS."
 
 #: includes/features/cookie-banner.php:717
 msgid "This text will be displayed inside blocked iframes until the user accepts cookies."
@@ -5444,9 +5776,21 @@ msgstr "Titel"
 msgid "Today"
 msgstr "Heute"
 
+#: includes/features/mcp-server.php:673
+msgid "Too many attempts. Please wait a few minutes."
+msgstr "Zu viele Versuche. Bitte warte ein paar Minuten."
+
 #: includes/features/two-factor-auth.php:281
 msgid "Too many incorrect attempts. Please log in again."
 msgstr "Zu viele falsche Versuche. Bitte melde dich erneut an."
+
+#: includes/features/mcp-server-admin.php:344
+msgid "Tools (%1$d of %2$d on)"
+msgstr "Tools (%1$d von %2$d an)"
+
+#: includes/features/mcp-server-admin.php:193
+msgid "Tools saved."
+msgstr "Tools gespeichert."
 
 #: includes/features/cookie-banner.php:1017
 msgid "Top"
@@ -5562,6 +5906,14 @@ msgstr "Wiederherstellen"
 msgid "Unknown"
 msgstr "Unbekannt"
 
+#: includes/features/mcp-server.php:686
+msgid "Unknown client. Please remove the connector and add it again."
+msgstr "Unbekanntes Programm. Bitte entferne den Connector und füge ihn neu hinzu."
+
+#: includes/features/mcp-server-admin.php:250
+msgid "Unknown effect"
+msgstr "Wirkung unbekannt"
+
 #: includes/features/media-image-opt.php:2978
 msgid "Unknown error"
 msgstr "Unbekannter Fehler"
@@ -5578,9 +5930,29 @@ msgstr "Alle abwählen"
 msgid "Untitled Snippet"
 msgstr "Unbenanntes Snippet"
 
+#: includes/features/mcp-server-abilities.php:1363
+msgid "Update ACF field values"
+msgstr "ACF-Feldwerte ändern"
+
 #: includes/features/interactions.php:332
 msgid "Update Mode"
 msgstr "Update-Modus"
+
+#: includes/features/mcp-server-abilities.php:1184
+msgid "Update media"
+msgstr "Mediendatei ändern"
+
+#: includes/features/mcp-server-abilities.php:1299
+msgid "Update menu item"
+msgstr "Menüpunkt ändern"
+
+#: includes/features/mcp-server-abilities.php:1142
+msgid "Update post"
+msgstr "Beitrag ändern"
+
+#: includes/features/mcp-server-abilities.php:1269
+msgid "Update term"
+msgstr "Begriff ändern"
 
 #: includes/features/custom-code-snippets.php:1196
 msgid "Updated At"
@@ -5589,6 +5961,10 @@ msgstr "Aktualisiert am"
 #: includes/features/media-image-opt.php:222
 msgid "Upload Optimized Media"
 msgstr "Optimierte Medien hochladen"
+
+#: includes/features/mcp-server-abilities.php:1196
+msgid "Upload media from URL"
+msgstr "Mediendatei von URL hochladen"
 
 #: includes/elements/custom-maps.php:185
 msgid "Use Post Type for Markers"
@@ -5614,6 +5990,10 @@ msgstr "Dieses Bild verwenden"
 #: includes/features/cookie-banner.php:423
 msgid "Use this tab to add or modify services to ensure they load according to user consent preferences."
 msgstr "Verwende diesen Tab, um Dienste hinzuzufügen oder zu ändern und sicherzustellen, dass sie gemäß den Zustimmungspräferenzen des Benutzers geladen werden."
+
+#: includes/features/mcp-server-admin.php:460
+msgid "User"
+msgstr "Benutzer"
 
 #: includes/features/utils.php:171
 msgid "User Roles (multiple allowed)"
@@ -5721,6 +6101,10 @@ msgstr "White Label Name"
 msgid "Who Can View Statistics"
 msgstr "Wer darf die Statistiken sehen"
 
+#: includes/features/mcp-server-admin.php:391
+msgid "Who may allow a connection"
+msgstr "Wer eine Verbindung erlauben darf"
+
 #: includes/features/custom-field-settings.php:135
 #: includes/features/custom-field-settings.php:404
 msgid "Width (%)"
@@ -5773,6 +6157,14 @@ msgstr "WordPress"
 #: includes/features/smtp-settings.php:952
 msgid "WordPress Error:"
 msgstr "WordPress-Fehler:"
+
+#: includes/features/mcp-server-abilities.php:29
+msgid "WordPress content"
+msgstr "WordPress-Inhalte"
+
+#: includes/features/mcp-server-admin.php:233
+msgid "WordPress core"
+msgstr "WordPress-Kern"
 
 #: includes/features/editor-settings-panel-bricks.php:199
 msgid "X"
@@ -5858,6 +6250,10 @@ msgstr "Das Passwort deines E-Mail-Kontos oder ein API-Schlüssel (manche Anbiet
 #: includes/features/smtp-settings.php:141
 msgid "Your mail server address. mail.yourdomain.com"
 msgstr "Die Adresse deines Mailservers. mail.yourdomain.com"
+
+#: includes/features/mcp-server-admin.php:62
+msgid "Your user account may not allow AI connections. An administrator can change this under SNN Settings → AI Connection (MCP)."
+msgstr "Dein Benutzerkonto darf keine KI-Verbindungen erlauben. Ein Administrator kann das unter SNN Settings → KI-Verbindung (MCP) ändern."
 
 #: includes/elements/gsap-multi-element-register.php:42
 msgid "Zoom In"
@@ -6056,6 +6452,10 @@ msgstr "Snippet(s)."
 #: includes/features/media-image-opt.php:2743
 msgid "succeeded"
 msgstr "erfolgreich"
+
+#: includes/features/mcp-server-admin.php:119
+msgid "this computer (Claude Code / Claude Desktop)"
+msgstr "diesem Computer (Claude Code / Claude Desktop)"
 
 #: includes/features/cookie-banner.php:411
 msgid "to any button or link on your website. When clicked, it will reopen the cookie banner allowing users to modify their preferences."

@@ -20,6 +20,7 @@ function snn_admin_ui_design_page_slugs() {
         'snn-mail-customizer',
         'snn-cookie-settings',
         'snn-redirects',
+        'snn-mcp',
     );
 }
 

@@ -38,6 +38,7 @@ function snn_settings_page_callback() {
                 array('slug' => 'snn-interactions',           'label' => __('Interactions', 'snn'),                     'dashicon' => 'dashicons-table-col-after'),
                 array('slug' => 'snn-custom-codes-snippets',  'label' => __('Code Snippets', 'snn'),                    'dashicon' => 'dashicons-editor-code'),
                 array('slug' => 'snn-redirects',              'label' => __('Redirects', 'snn'),                        'dashicon' => 'dashicons-randomize'),
+                array('slug' => 'snn-mcp',                    'label' => __('AI Connection (MCP)', 'snn'),              'dashicon' => 'dashicons-superhero'),
             );
             
             foreach ($menu_items as $item) {

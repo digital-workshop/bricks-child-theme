@@ -70,6 +70,17 @@ Snippets are stored as a custom post type (`snn_code_snippet`, one per snippet, 
 
 Each PHP snippet is syntax-validated individually before compiling (wrapped in a uniquely-named never-called function inside try/catch(ParseError) — catches parse errors `token_get_all()` alone misses) and function-name-collision-checked against every other active snippet and the current PHP process (catches the case where the same function is declared by an external plugin too — see `snn_snippets_get_function_collisions()`). A broken/colliding snippet is auto-disabled (set to draft) rather than taking down the whole compiled file.
 
+### MCP server (`mcp-server.php` + `mcp-server-abilities.php` + `mcp-server-admin.php`)
+
+Theme-native replacement for the Easy MCP AI plugin. The MCP endpoint, OAuth 2.1 server (DCR + PKCE S256) and discovery docs are all served from `home_url('/dw-mcp')` by a path router on `wp_loaded` — not the REST API (avoids the theme's own "disable REST for guests" filter and REST cookie/nonce auth), and not the root `/.well-known/` URLs (Easy MCP owns those while both run). Tools come from the WordPress **Abilities API** (core since 6.9): every registered ability can be switched on per name in the settings; new ones default off. The theme registers its own abilities under the `snn-wp/`, `snn-acf/`, `snn-bricks/` namespaces with `show_in_rest => false`.
+
+Security invariants to keep when extending:
+- `snn_mcp_guard_caps()` (a `map_meta_cap` filter, so it binds super admins too) denies plugin/theme/user/option/file/unfiltered_html caps for the whole MCP request; `snn_mcp_is_hard_blocked()` additionally hides abilities by name. A new ability that needs one of those caps simply won't work over MCP — that's intended.
+- The guard flag must be set **before** `wp_set_current_user()`, because that re-runs `kses_init()`.
+- Client IDs are HMAC-signed and stateless (`snn_mcp_secret` option); turning the main switch off rotates the secret and deletes all connections. Tokens are stored only as SHA-256 hashes; refresh tokens rotate and reuse of an old one revokes the connection.
+- Only Claude redirect URIs are accepted (`snn_mcp_redirect_uri_allowed()`, filterable). The consent screen is a wp-admin page rendered on `admin_init` with `X-Frame-Options: DENY`.
+- "Delete" never deletes permanently: trash only, and media trash is refused unless `MEDIA_TRASH` is on. The `snn_code_snippet` post type is excluded from the content tools (snippets are executable PHP).
+
 ### Analytics chart rendering (`analytics.php`)
 
 The "Pageviews per day" chart is a hand-rolled SVG line chart (`snn_analytics_render_line_chart()`) — no JS charting library. Multiple series (pageviews, visitors) share one scale computed from the combined min/max; per-point hover values use native `<title>` tags inside `<circle>` elements rather than a JS tooltip library. Date markers are rendered as dashed vertical lines with matching IDs (`#snn-chart-marker-{date}`) so the marker list below the chart can highlight/scroll to one on click via plain DOM class toggling. Follow this pattern (SVG + native tooltips + ID-based cross-referencing) rather than reaching for a charting dependency if this chart needs to grow.
