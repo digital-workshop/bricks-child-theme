@@ -14,7 +14,7 @@ The theme also carries a large set of stock features inherited unchanged from th
 
 **Lint a changed PHP file** (Windows/Laravel Herd environment):
 ```
-/c/Users/Mario/.config/herd/bin/php.bat -l path/to/file.php
+~/.config/herd/bin/php.bat -l path/to/file.php
 ```
 
 **Grep-sweep for the `?>`-in-comment bug** (see "PHP gotcha" below) — run on every touched PHP file before considering work done:

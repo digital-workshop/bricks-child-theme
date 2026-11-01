@@ -45,6 +45,14 @@ Basiert auf [SNN-BRX](https://github.com/sinanisler/snn-brx-child-theme) von [si
 
     ![Weiterleitungen und 404-Log](docs/screenshots/redirects.png)
 
+*   **KI-Verbindung (MCP) für Claude:** Ersetzt das Plugin [Easy MCP AI](https://wordpress.org/plugins/easy-mcp-ai/). Ein eigener MCP-Server im Theme, über den Claude (claude.ai-Connector, Desktop-App, Claude Code) mit der Seite arbeiten kann. Einstellungen unter *SNN Settings → KI-Verbindung (MCP)*, die Server-URL ist `https://deine-seite/dw-mcp`. Standardmäßig deaktiviert. Baut auf der Abilities API von WordPress (ab 6.9) auf. Darum stehen alle Fähigkeiten, die Plugins wie SEOPress selbst anmelden, automatisch zur Auswahl.
+    *   **Eigene Tools:** Beiträge, Seiten und eigene Inhaltstypen (lesen, anlegen, ändern, in den Papierkorb), Medien (inkl. Upload von einer URL), Kategorien/Tags/eigene Taxonomien, Menüs, Kommentare (moderieren, antworten), ACF-Felder (Feldgruppen und Werte von Beiträgen und Begriffen) sowie Bricks-Layouts (nur lesen).
+    *   **Anmeldung per OAuth:** Claude leitet beim Verbinden auf eine „Erlauben“-Seite im wp-admin weiter (mit dem normalen Login inkl. 2FA). Nur Benutzer, die in den Einstellungen angehakt sind, dürfen eine Verbindung erlauben. Nur Claude-Adressen (claude.ai, claude.com, localhost) können sich anmelden. PKCE ist Pflicht.
+    *   **Jedes Tool einzeln schaltbar:** Alle Tools sind nach Herkunft gruppiert (WordPress, ACF, Bricks, SEOPress, …), mit Gruppen-Schalter und Kennzeichnung „Nur lesen“ / „Ändert Inhalte“ / „Entfernt“. Neue Tools, z. B. nach einem Plugin-Update, sind immer erst ausgeschaltet.
+    *   **Fest gesperrt:** Plugins, Themes, Core-Updates, Benutzer und Rollen, Website-Einstellungen, Dateien und Code (auch Code Snippets). Die Sperre gilt doppelt: Solche Tools werden gar nicht angeboten, und die passenden WordPress-Rechte werden für jede KI-Anfrage entzogen. Ungefiltertes HTML ist ebenfalls gesperrt, Skripte in Inhalten werden entfernt.
+    *   **Nichts wird endgültig gelöscht:** Löschen verschiebt immer nur in den Papierkorb. Für Medien nur, wenn `MEDIA_TRASH` in der `wp-config.php` aktiv ist, sonst wird das Löschen verweigert.
+    *   **Verbindungen & Protokoll:** Zugangsschlüssel gelten 1 Stunde und erneuern sich automatisch. Eine Verbindung endet nach 30 Tagen ohne Nutzung. Alle Verbindungen sind einzeln trennbar, der Hauptschalter beendet sofort alle. Jede Aktion der KI landet in einem Protokoll (90 Tage Aufbewahrung).
+
 ## Key Features (Stripped)
 
 
