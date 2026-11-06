@@ -6,6 +6,11 @@ Alle wichtigen Änderungen am Theme. Ältere Versionen (vor 1.0) sind auf der [R
 
 ### Neu
 
+- **Link-Klicks im Analytics** statt Track The Click. Neue Karte „Link-Klicks“ auf der Analytics-Seite: Diagramm pro Tag und Tabelle mit Link-URL, Anchor, Seite und Klicks.
+  - Zählt Klicks auf Links, auch `tel:`, `mailto:` und WhatsApp.
+  - Filter nach Gerät: Desktop (über 1024 px), Tablet (768–1024 px), Mobil (unter 768 px). Gemessen wird die Browserbreite beim Klick.
+  - Links auf die eigene Domain werden ausgeblendet. Weitere Domains trägst du in den Analytics-Einstellungen ein.
+  - Bots, ausgeschlossene Rollen und IPs sowie die Aufbewahrungsdauer gelten wie bei den Seitenaufrufen.
 - **KI-Verbindung (MCP)** statt Easy MCP AI. Unter *SNN Settings → KI-Verbindung (MCP)* kannst du Claude mit der Seite verbinden (claude.ai, Desktop-App, Claude Code).
   - Standardmäßig aus. Die Server-URL ist `https://deine-seite/dw-mcp`.
   - Anmeldung per OAuth mit „Erlauben“-Seite. Nur Benutzer, die du anhakst, dürfen eine Verbindung erlauben.

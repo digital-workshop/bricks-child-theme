@@ -591,6 +591,9 @@ function snn_analytics_register_meta_boxes() {
     add_meta_box( 'snn_analytics_referrers', __( 'Top 10 Referrers', 'snn' ), 'snn_analytics_mb_referrers', $screen, 'side', 'default' );
     add_meta_box( 'snn_analytics_social', __( 'Social Media Traffic', 'snn' ), 'snn_analytics_mb_social', $screen, 'side', 'default' );
 
+    // Lets other analytics features (e.g. link clicks) add their own cards.
+    do_action( 'snn_analytics_register_meta_boxes', $screen );
+
     wp_enqueue_script( 'postbox' );
 }
 
@@ -1138,6 +1141,7 @@ function snn_analytics_settings_page() {
                         <p class="description"><?php esc_html_e( 'Older records are automatically deleted daily.', 'snn' ); ?></p>
                     </td>
                 </tr>
+                <?php do_action( 'snn_analytics_settings_rows' ); ?>
             </table>
             <p><button type="submit" name="snn_analytics_save_settings" class="button button-primary"><?php esc_html_e( 'Save Settings', 'snn' ); ?></button></p>
         </form>

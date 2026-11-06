@@ -29,6 +29,10 @@ msgstr "%d Datei(en) konnten nicht gelöscht werden."
 msgid "%d new"
 msgstr "%d neu"
 
+#: includes/features/analytics-clicks.php
+msgid "%s clicks in this period"
+msgstr "%s Klicks in diesem Zeitraum"
+
 #: includes/features/two-factor-auth.php:368
 msgid "&larr; Back to login"
 msgstr "&larr; Zurück zum Login"
@@ -332,6 +336,10 @@ msgstr "Alle Änderungen aus dem Entwurf wurden auf diesen Beitrag übertragen. 
 msgid "All connections removed."
 msgstr "Alle Verbindungen getrennt."
 
+#: includes/features/analytics-clicks.php
+msgid "All devices"
+msgstr "Alle Geräte"
+
 #: includes/features/custom-code-snippets.php:1076
 msgid "All error logs have been cleared."
 msgstr "Alle Fehlerprotokolle wurden gelöscht."
@@ -397,6 +405,10 @@ msgstr "Immer gesperrt"
 #: includes/features/analytics.php
 msgid "Analytics"
 msgstr "Analytics"
+
+#: includes/features/analytics-clicks.php
+msgid "Anchor"
+msgstr "Anchor-Text"
 
 #: includes/elements/gsap-animations.php:69
 msgid "Animation"
@@ -989,6 +1001,10 @@ msgstr "Klicke auf „Seite scannen“, um alle Scripts auf dieser Seite zu anal
 msgid "Click to pick icon"
 msgstr "Klicken, um Symbol auszuwählen"
 
+#: includes/features/analytics-clicks.php
+msgid "Clicks"
+msgstr "Klicks"
+
 #: includes/elements/gsap-multi-element-register.php:243
 msgid "Clip Blob Morph In"
 msgstr "Clip Blob-Morphing rein"
@@ -1550,6 +1566,10 @@ msgstr "Entsättigen rein"
 #: includes/features/custom-code-snippets.php:1369
 msgid "Description"
 msgstr "Beschreibung"
+
+#: includes/features/analytics-clicks.php
+msgid "Desktop"
+msgstr "Desktop"
 
 #: includes/elements/gsap-multi-element-register.php:600
 msgid "Desktop False"
@@ -2364,6 +2384,10 @@ msgstr "Ausnahme: Nutzer, deren einzige Rolle(n) WooCommerce \"Kunde\" und/oder 
 #: includes/features/post-types-settings.php:184
 msgid "Excerpt"
 msgstr "Auszug (Excerpt)"
+
+#: includes/features/analytics-clicks.php
+msgid "Exclude Domains from Click Tracking"
+msgstr "Domains vom Klick-Tracking ausschließen"
 
 #: includes/features/analytics.php
 msgid "Exclude IP Addresses"
@@ -3200,10 +3224,26 @@ msgstr "Zeile"
 msgid "Linear interpolation intensity (0.01 to 1). Lower = smoother. Default: 0.1"
 msgstr "Intensität der linearen Interpolation (0.01 bis 1). Niedriger = weicher. Standard: 0.1"
 
+#: includes/features/analytics-clicks.php
+msgid "Link Clicks"
+msgstr "Link-Klicks"
+
 #: includes/features/taxonomy-settings.php:103
 #: includes/features/taxonomy-settings.php:206
 msgid "Link Post Types"
 msgstr "Beitragstypen verlinken"
+
+#: includes/features/analytics-clicks.php
+msgid "Link URL"
+msgstr "Link-URL"
+
+#: includes/features/analytics-clicks.php
+msgid "Link clicks per day"
+msgstr "Link-Klicks pro Tag"
+
+#: includes/features/analytics-clicks.php
+msgid "Links to your own domain (%s) are hidden automatically. Add further domains here, one per line, e.g. the www variant. The clicks are still recorded, only hidden in the table."
+msgstr "Links auf deine eigene Domain (%s) werden automatisch ausgeblendet. Trage hier weitere Domains ein, eine pro Zeile, z. B. die www-Variante. Die Klicks werden trotzdem gespeichert, nur in der Tabelle versteckt."
 
 #: includes/features/mcp-server-abilities.php:1348
 msgid "List ACF field groups"
@@ -3442,6 +3482,10 @@ msgstr "Ahmt Touch-Geräte-Scrolling nach (kann auf iOS<16 instabil sein). Stand
 msgid "Missing revision ID."
 msgstr "Fehlende Revisions-ID."
 
+#: includes/features/analytics-clicks.php
+msgid "Mobile"
+msgstr "Mobil"
+
 #: includes/elements/gsap-multi-element-register.php:602
 msgid "Mobile False"
 msgstr "Mobil Falsch"
@@ -3540,6 +3584,10 @@ msgstr "Keine aktiven Verbindungen."
 #: includes/features/custom-field-settings.php:1599
 msgid "No choices defined."
 msgstr "Keine Auswahlmöglichkeiten definiert."
+
+#: includes/features/analytics-clicks.php
+msgid "No clicks recorded in this period."
+msgstr "In diesem Zeitraum wurden keine Klicks erfasst."
 
 #: includes/features/custom-code-snippets.php:31
 msgid "No code snippets found"
@@ -5544,6 +5592,10 @@ msgstr "TLS-Verschlüsselung fehlgeschlagen: Es konnte keine sichere TLS-Verbind
 msgid "TLS Error: Server does not support STARTTLS or rejected the request. Response: %s"
 msgstr "TLS-Fehler: Der Server unterstützt STARTTLS nicht oder hat die Anfrage abgelehnt. Antwort: %s"
 
+#: includes/features/analytics-clicks.php
+msgid "Tablet"
+msgstr "Tablet"
+
 #: includes/elements/gsap-multi-element-register.php:601
 msgid "Tablet False"
 msgstr "Tablet Falsch"
@@ -6346,6 +6398,10 @@ msgstr "bereits gelöscht"
 #: includes/features/settings-page.php:60
 msgid "and"
 msgstr "und"
+
+#: includes/features/analytics-clicks.php
+msgid "clicks"
+msgstr "Klicks"
 
 #: includes/features/custom-code-snippets.php:1395
 msgid "comma, separated, tags"

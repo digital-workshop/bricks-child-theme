@@ -29,6 +29,10 @@ msgstr ""
 msgid "%d new"
 msgstr ""
 
+#: includes/features/analytics-clicks.php
+msgid "%s clicks in this period"
+msgstr ""
+
 #: includes/features/two-factor-auth.php:368
 msgid "&larr; Back to login"
 msgstr ""
@@ -324,6 +328,10 @@ msgstr ""
 msgid "All connections removed."
 msgstr ""
 
+#: includes/features/analytics-clicks.php
+msgid "All devices"
+msgstr ""
+
 #: includes/features/custom-code-snippets.php:1076
 msgid "All error logs have been cleared."
 msgstr ""
@@ -376,6 +384,10 @@ msgstr ""
 
 #: includes/features/mcp-server-admin.php:402
 msgid "Always blocked"
+msgstr ""
+
+#: includes/features/analytics-clicks.php
+msgid "Anchor"
 msgstr ""
 
 #: includes/elements/gsap-animations.php:69
@@ -969,6 +981,10 @@ msgstr ""
 msgid "Click to pick icon"
 msgstr ""
 
+#: includes/features/analytics-clicks.php
+msgid "Clicks"
+msgstr ""
+
 #: includes/elements/gsap-multi-element-register.php:243
 msgid "Clip Blob Morph In"
 msgstr ""
@@ -1529,6 +1545,10 @@ msgstr ""
 #: includes/features/custom-code-snippets.php:1192
 #: includes/features/custom-code-snippets.php:1369
 msgid "Description"
+msgstr ""
+
+#: includes/features/analytics-clicks.php
+msgid "Desktop"
 msgstr ""
 
 #: includes/elements/gsap-multi-element-register.php:600
@@ -2339,6 +2359,10 @@ msgstr ""
 #: includes/features/post-types-settings.php:30
 #: includes/features/post-types-settings.php:184
 msgid "Excerpt"
+msgstr ""
+
+#: includes/features/analytics-clicks.php
+msgid "Exclude Domains from Click Tracking"
 msgstr ""
 
 #: includes/features/redirects.php:573
@@ -3164,9 +3188,25 @@ msgstr ""
 msgid "Linear interpolation intensity (0.01 to 1). Lower = smoother. Default: 0.1"
 msgstr ""
 
+#: includes/features/analytics-clicks.php
+msgid "Link Clicks"
+msgstr ""
+
 #: includes/features/taxonomy-settings.php:103
 #: includes/features/taxonomy-settings.php:206
 msgid "Link Post Types"
+msgstr ""
+
+#: includes/features/analytics-clicks.php
+msgid "Link URL"
+msgstr ""
+
+#: includes/features/analytics-clicks.php
+msgid "Link clicks per day"
+msgstr ""
+
+#: includes/features/analytics-clicks.php
+msgid "Links to your own domain (%s) are hidden automatically. Add further domains here, one per line, e.g. the www variant. The clicks are still recorded, only hidden in the table."
 msgstr ""
 
 #: includes/features/mcp-server-abilities.php:1348
@@ -3402,6 +3442,10 @@ msgstr ""
 msgid "Missing revision ID."
 msgstr ""
 
+#: includes/features/analytics-clicks.php
+msgid "Mobile"
+msgstr ""
+
 #: includes/elements/gsap-multi-element-register.php:602
 msgid "Mobile False"
 msgstr ""
@@ -3499,6 +3543,10 @@ msgstr ""
 #: includes/features/custom-field-settings.php:1580
 #: includes/features/custom-field-settings.php:1599
 msgid "No choices defined."
+msgstr ""
+
+#: includes/features/analytics-clicks.php
+msgid "No clicks recorded in this period."
 msgstr ""
 
 #: includes/features/custom-code-snippets.php:31
@@ -5468,6 +5516,10 @@ msgstr ""
 msgid "TLS Error: Server does not support STARTTLS or rejected the request. Response: %s"
 msgstr ""
 
+#: includes/features/analytics-clicks.php
+msgid "Tablet"
+msgstr ""
+
 #: includes/elements/gsap-multi-element-register.php:601
 msgid "Tablet False"
 msgstr ""
@@ -6233,6 +6285,10 @@ msgstr ""
 
 #: includes/features/settings-page.php:60
 msgid "and"
+msgstr ""
+
+#: includes/features/analytics-clicks.php
+msgid "clicks"
 msgstr ""
 
 #: includes/features/custom-code-snippets.php:1395
