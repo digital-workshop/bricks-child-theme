@@ -2,7 +2,7 @@
 
 Alle wichtigen Änderungen am Theme. Ältere Versionen (vor 1.0) sind auf der [Releases-Seite](https://github.com/digital-workshop/bricks-child-theme/releases) dokumentiert.
 
-## [1.1.0] – unveröffentlicht
+## [1.1.0] – 2026-11-06
 
 ### Neu
 
@@ -21,6 +21,10 @@ Alle wichtigen Änderungen am Theme. Ältere Versionen (vor 1.0) sind auf der [R
   - Verbindungen enden nach 30 Tagen ohne Nutzung. Jede Verbindung lässt sich einzeln trennen.
   - Jede Aktion der KI landet in einem Protokoll (90 Tage).
   - Die KI kann die globalen SEOPress-Einstellungen ändern: Titel & Metas, Social Media und Sitemaps. Das geht nur mit Admin-Rechten. Instant Indexing und Analytics bleiben gesperrt.
+
+### Behoben
+
+- **Analytics:** Die Reihenfolge der Karten und das Einklappen werden jetzt gespeichert. Vorher sprangen die Karten bei jedem Laden zurück.
 
 ## [1.0.1] – 2026-10-20
 
