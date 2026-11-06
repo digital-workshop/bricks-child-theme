@@ -2,6 +2,12 @@
 
 Alle wichtigen Änderungen am Theme. Ältere Versionen (vor 1.0) sind auf der [Releases-Seite](https://github.com/digital-workshop/bricks-child-theme/releases) dokumentiert.
 
+## [1.1.1] – 2026-11-06
+
+### Behoben
+
+- **Analytics zählt weniger Bots:** Seitenaufrufe werden jetzt erst gezählt, wenn die Seite im Browser geladen ist (kleines JavaScript im Footer). Bots, die kein JavaScript ausführen, zählen nicht mehr. 404-Seiten werden ebenfalls nicht mehr gezählt. Das wirkt auch hinter einem Seiten-Cache. Bereits gespeicherte Zahlen bleiben unverändert.
+
 ## [1.1.0] – 2026-11-06
 
 ### Neu

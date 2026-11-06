@@ -202,15 +202,6 @@ function snn_analytics_should_track() {
     if ( empty( snn_analytics_get_options()['enabled'] ) ) {
         return false;
     }
-    if ( is_admin() || wp_doing_ajax() || wp_doing_cron() ) {
-        return false;
-    }
-    if ( defined( 'REST_REQUEST' ) && REST_REQUEST ) {
-        return false;
-    }
-    if ( is_feed() ) {
-        return false;
-    }
     if ( snn_analytics_is_bot( $_SERVER['HTTP_USER_AGENT'] ?? '' ) ) {
         return false;
     }
@@ -223,24 +214,62 @@ function snn_analytics_should_track() {
     return true;
 }
 
-function snn_analytics_record_pageview() {
+/**
+ * Pageviews are counted by a small script in the page (see
+ * snn_analytics_print_pageview_script()) that reports to admin-ajax once the
+ * page is really loaded in a browser. Simple bots never run JavaScript, so
+ * they no longer inflate the numbers. It also works behind page caches.
+ */
+function snn_analytics_print_pageview_script() {
+    if ( is_admin() || is_feed() || is_404() || is_customize_preview() || is_preview() ) {
+        return;
+    }
+    foreach ( array( 'bricks_is_builder', 'bricks_is_builder_iframe', 'bricks_is_builder_call' ) as $bricks_check ) {
+        if ( function_exists( $bricks_check ) && $bricks_check() ) {
+            return;
+        }
+    }
     if ( ! snn_analytics_should_track() ) {
         return;
+    }
+    ?>
+    <script>
+    ( function() {
+        if ( navigator.webdriver ) { return; }
+        var data = new FormData();
+        data.append( 'action', 'snn_track_pageview' );
+        data.append( 'path', location.pathname );
+        data.append( 'ref', document.referrer || '' );
+        var url = <?php echo wp_json_encode( admin_url( 'admin-ajax.php' ) ); ?>;
+        if ( navigator.sendBeacon ) {
+            navigator.sendBeacon( url, data );
+        } else if ( window.fetch ) {
+            fetch( url, { method: 'POST', body: data, keepalive: true, credentials: 'same-origin' } );
+        }
+    } )();
+    </script>
+    <?php
+}
+add_action( 'wp_footer', 'snn_analytics_print_pageview_script', 98 );
+
+function snn_analytics_ajax_record_pageview() {
+    if ( ! snn_analytics_should_track() ) {
+        wp_die();
     }
 
     global $wpdb;
 
     $path = '/';
-    if ( ! empty( $_SERVER['REQUEST_URI'] ) ) {
-        $parsed = wp_parse_url( sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ), PHP_URL_PATH );
-        if ( $parsed ) {
+    if ( ! empty( $_POST['path'] ) ) {
+        $parsed = wp_parse_url( sanitize_text_field( wp_unslash( $_POST['path'] ) ), PHP_URL_PATH );
+        if ( $parsed && '/' === $parsed[0] ) {
             $path = substr( $parsed, 0, 255 );
         }
     }
 
     $referrer_host = null;
-    if ( ! empty( $_SERVER['HTTP_REFERER'] ) ) {
-        $ref_host  = wp_parse_url( sanitize_text_field( wp_unslash( $_SERVER['HTTP_REFERER'] ) ), PHP_URL_HOST );
+    if ( ! empty( $_POST['ref'] ) ) {
+        $ref_host  = wp_parse_url( sanitize_text_field( wp_unslash( $_POST['ref'] ) ), PHP_URL_HOST );
         $site_host = wp_parse_url( home_url(), PHP_URL_HOST );
         if ( $ref_host && $ref_host !== $site_host ) {
             $referrer_host = substr( $ref_host, 0, 255 );
@@ -261,8 +290,10 @@ function snn_analytics_record_pageview() {
         ),
         array( '%s', '%s', '%s', '%s' )
     );
+    wp_die();
 }
-add_action( 'wp', 'snn_analytics_record_pageview', 20 );
+add_action( 'wp_ajax_nopriv_snn_track_pageview', 'snn_analytics_ajax_record_pageview' );
+add_action( 'wp_ajax_snn_track_pageview', 'snn_analytics_ajax_record_pageview' );
 
 // ----------------------------------------------------------------------
 // Dashboard queries
