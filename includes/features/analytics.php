@@ -1055,6 +1055,13 @@ function snn_analytics_page() {
             <?php endforeach; ?>
         </nav>
 
+        <?php
+        // postboxes.js sends these nonces when saving the card order and the
+        // collapsed state. Without them the AJAX save is rejected and the
+        // cards jump back to their default place on every reload.
+        wp_nonce_field( 'closedpostboxes', 'closedpostboxesnonce', false );
+        wp_nonce_field( 'meta-box-order', 'meta-box-order-nonce', false );
+        ?>
         <div id="dashboard-widgets-wrap">
             <div id="dashboard-widgets" class="metabox-holder columns-2">
                 <div id="postbox-container-1" class="postbox-container">
