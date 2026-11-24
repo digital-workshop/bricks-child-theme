@@ -24,7 +24,7 @@ function add_average_comment_rating_tag_to_builder($tags) {
     $tags[] = [
         'name'  => '{average_comment_rating}',
         'label' => 'Average Comment Rating',
-        'group' => 'SNN',
+        'group' => 'DW',
     ];
 
     return $tags;

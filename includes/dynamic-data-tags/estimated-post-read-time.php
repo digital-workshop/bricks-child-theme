@@ -14,7 +14,7 @@ function add_estimated_post_read_time_tag_to_builder( $tags ) {
     $tags[] = [
         'name'  => '{estimated_post_read_time}',
         'label' => 'Estimated Post Read Time',
-        'group' => 'SNN',
+        'group' => 'DW',
     ];
     return $tags;
 }

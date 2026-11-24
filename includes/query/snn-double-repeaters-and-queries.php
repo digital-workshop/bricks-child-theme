@@ -58,7 +58,7 @@ add_filter('bricks/setup/control_options', function($control_options) {
         if (!empty($field['repeater']) && isset($field['type']) && in_array($field['type'], ['double_text', 'double_textarea'])) {
             $type_key = 'snn_repeater_' . $field['name'];
             $field_type_label = ($field['type'] === 'double_text') ? 'Double Text' : 'Double Textarea';
-            $label = 'SNN ' . $field_type_label . ' Repeater ' . $field['label'];
+            $label = 'DW ' . $field_type_label . ' Repeater ' . $field['label'];
             $control_options['queryTypes'][$type_key] = esc_html($label);
         }
     }
@@ -139,14 +139,14 @@ add_filter('bricks/dynamic_tags_list', function($tags) {
             $tags[] = [
                 'name'  => '{snn_cf_' . $field_name . '_0}',
                 'label' => $field_label . ' - Value 1',
-                'group' => 'SNN',
+                'group' => 'DW',
             ];
             
             // Register tag for second text/textarea value (index 1)
             $tags[] = [
                 'name'  => '{snn_cf_' . $field_name . '_1}',
                 'label' => $field_label . ' - Value 2',
-                'group' => 'SNN',
+                'group' => 'DW',
             ];
         }
     }

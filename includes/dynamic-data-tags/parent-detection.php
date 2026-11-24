@@ -16,12 +16,12 @@ function register_parent_detection_tag( $tags ) {
     $tags[] = [
         'name'  => '{parent_detection}',
         'label' => 'Parent Detection',
-        'group' => 'SNN',
+        'group' => 'DW',
     ];
     $tags[] = [
         'name'  => '{parent_detection:depth}',
         'label' => 'Parent Detection - Depth',
-        'group' => 'SNN',
+        'group' => 'DW',
     ];
     return $tags;
 }

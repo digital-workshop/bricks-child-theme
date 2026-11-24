@@ -47,7 +47,7 @@ function add_get_contextual_slug_tags_to_builder($tags) {
         $tags[] = [
             'name'  => "{get_contextual_slug:$type}",
             'label' => $label,
-            'group' => 'SNN', // Group name in Bricks Builder.
+            'group' => 'DW', // Group name in Bricks Builder.
         ];
     }
 

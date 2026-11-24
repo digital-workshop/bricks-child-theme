@@ -2721,7 +2721,7 @@ msgid "General Settings"
 msgstr ""
 
 #: includes/features/settings-page.php:171
-msgid "General setting for the SNN menu page."
+msgid "General setting for the DW menu page."
 msgstr ""
 
 #: includes/features/editor-settings-panel-clamp.php:10
@@ -4604,13 +4604,13 @@ msgid "SMTP host is required. Please configure your SMTP settings."
 msgstr ""
 
 #: includes/features/cookie-banner.php:17
-msgid "SNN Cookie Settings"
+msgid "DW Cookie Settings"
 msgstr ""
 
 #: includes/features/settings-page.php:4
 #: includes/features/settings-page.php:19
 #: includes/features/settings-page.php:175
-msgid "SNN Settings"
+msgid "DW Settings"
 msgstr ""
 
 #: includes/features/editor-settings-panel-bricks.php:31
@@ -6162,7 +6162,7 @@ msgid "You can now edit this draft. When ready, click \"Sync with Original\" to 
 msgstr ""
 
 #: includes/features/settings-page.php:177
-msgid "You can rename SNN Settings title."
+msgid "You can rename DW Settings title."
 msgstr ""
 
 #: includes/features/login-settings.php:131
@@ -6212,7 +6212,7 @@ msgid "Your mail server address. mail.yourdomain.com"
 msgstr ""
 
 #: includes/features/mcp-server-admin.php:62
-msgid "Your user account may not allow AI connections. An administrator can change this under SNN Settings → AI Connection (MCP)."
+msgid "Your user account may not allow AI connections. An administrator can change this under DW Settings → AI Connection (MCP)."
 msgstr ""
 
 #: includes/elements/gsap-multi-element-register.php:42
@@ -6456,6 +6456,14 @@ msgstr ""
 
 #: includes/features/media-image-opt.php:2841
 msgid "🔍 Debug: Raw Metadata"
+msgstr ""
+
+#: includes/features/analytics.php
+msgid "Analytics Module"
+msgstr ""
+
+#: includes/features/analytics.php
+msgid "Master switch. When turned off, Analytics is disabled completely: no pageviews or link clicks are recorded and the Analytics menu item is hidden. Previously collected data is kept and shows again when you turn this back on."
 msgstr ""
 
 #: includes/features/analytics.php

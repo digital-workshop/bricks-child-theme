@@ -73,7 +73,7 @@ add_filter('bricks/setup/control_options', function($control_options) {
     foreach ($custom_fields as $field) {
         if (!empty($field['repeater'])) {
             $type_key = 'snn_repeater_' . $field['name'];
-            $label = 'SNN Repeater ' . $field['label'];
+            $label = 'DW Repeater ' . $field['label'];
             $control_options['queryTypes'][$type_key] = esc_html($label);
         }
     }
@@ -137,7 +137,7 @@ add_filter('bricks/setup/control_options', function($control_options) {
     foreach ($custom_fields as $field) {
         if (!empty($field['repeater'])) {
             $type_key = 'snn_repeater_' . $field['name'];
-            $label = 'SNN Repeater ' . $field['label'];
+            $label = 'DW Repeater ' . $field['label'];
             $control_options['queryTypes'][$type_key] = esc_html($label);
         }
     }
@@ -197,7 +197,7 @@ add_filter('bricks/dynamic_tags_list', function($tags) {
             $tags[] = [
                 'name'  => '{snn_cf_' . $field_name . '}',
                 'label' => $field_label . ' (Current Item)',
-                'group' => 'SNN',
+                'group' => 'DW',
             ];
         }
     }

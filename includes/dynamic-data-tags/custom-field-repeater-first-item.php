@@ -3,7 +3,7 @@
  * -----------------------------------------------------------------------
  * Dynamic Tag: Custom Field Repeater First Item
  * -----------------------------------------------------------------------
- * Group: SNN
+ * Group: DW
  * 
  * Usage:
  *   1) Use the tag format in Bricks Builder:
@@ -29,7 +29,7 @@ add_filter( 'bricks/dynamic_tags_list', function( $tags ) {
     $tags[] = [
         'name'  => '{custom_field_repeater_first_item:your_field_name}', // Shows curly braces and placeholder in list.
         'label' => 'Custom Field Repeater First Item',
-        'group' => 'SNN', // Use "SNN" group.
+        'group' => 'DW', // Use "DW" group.
     ];
     return $tags;
 });

@@ -16,12 +16,12 @@ function add_raw_all_custom_fields_tag_to_builder( $tags ) {
     $tags[] = [
         'name'  => '{raw_all_custom_fields}',
         'label' => 'Raw All Custom Fields',
-        'group' => 'SNN',
+        'group' => 'DW',
     ];
     $tags[] = [
         'name'  => '{raw_all_author_fields}',
         'label' => 'Raw All Author Fields',
-        'group' => 'SNN',
+        'group' => 'DW',
     ];
     return $tags;
 }

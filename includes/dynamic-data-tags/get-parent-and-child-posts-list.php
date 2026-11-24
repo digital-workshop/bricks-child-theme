@@ -32,7 +32,7 @@ function add_parent_and_child_list_tags_to_builder($tags) {
         $tags[] = [
             'name'  => $tag_name,
             'label' => $label,
-            'group' => 'SNN',
+            'group' => 'DW',
         ];
     }
 

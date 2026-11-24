@@ -42,7 +42,7 @@ function register_current_author_tag( $tags ) {
         $tags[] = [
             'name'  => "{current_author:$type}",
             'label' => $label,
-            'group' => 'SNN',
+            'group' => 'DW',
         ];
     }
 

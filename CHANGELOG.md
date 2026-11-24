@@ -2,6 +2,12 @@
 
 Alle wichtigen Änderungen am Theme. Ältere Versionen (vor 1.0) sind auf der [Releases-Seite](https://github.com/digital-workshop/bricks-child-theme/releases) dokumentiert.
 
+## [1.1.3] – 2026-11-24
+
+### Geändert
+
+- **Branding „DW“ statt „SNN“:** Sichtbare Bezeichnungen heißen jetzt „DW“, z. B. der Menüpunkt „DW Settings“ (sofern kein eigener Titel gespeichert ist), die Dynamic-Data-Gruppe im Bricks-Builder und die Repeater-Labels. Interne Namen bleiben unverändert, bestehende Seiten funktionieren weiter.
+
 ## [1.1.2] – 2026-11-24
 
 ### Neu

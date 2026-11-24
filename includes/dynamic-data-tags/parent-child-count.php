@@ -15,7 +15,7 @@ function snn_parents_register_child_posts_count_tag( $tags ) {
     $tags[] = [
         'name'  => '{parents_child_posts_count}',
         'label' => 'Parent\'s Child Posts Count',
-        'group' => 'SNN',
+        'group' => 'DW',
     ];
     return $tags;
 }

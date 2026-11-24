@@ -49,7 +49,7 @@ function add_get_contextual_id_tags_to_builder($tags) {
         $tags[] = [
             'name'  => "{get_contextual_id:$type}",
             'label' => $label,
-            'group' => 'SNN', // Group name in Bricks Builder.
+            'group' => 'DW', // Group name in Bricks Builder.
         ];
     }
 

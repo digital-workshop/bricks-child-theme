@@ -16,7 +16,7 @@ function register_parent_id_tag( $tags ) {
     $tags[] = [
         'name'  => '{parent_id}',
         'label' => 'Parent ID',
-        'group' => 'SNN',
+        'group' => 'DW',
     ];
     return $tags;
 }

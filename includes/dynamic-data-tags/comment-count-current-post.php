@@ -19,7 +19,7 @@ function snn_register_comment_count_post_tag($tags) {
     $tags[] = [
         'name'  => '{comment_count_current_post}',
         'label' => 'Comment Count (Current Post)',
-        'group' => 'SNN',
+        'group' => 'DW',
     ];
 
     return $tags;

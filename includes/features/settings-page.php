@@ -1,7 +1,7 @@
 <?php
 
 function snn_add_menu_page() {
-    $dynamic_title = get_option('snn_menu_title', __('SNN Settings', 'snn'));
+    $dynamic_title = get_option('snn_menu_title', __('DW Settings', 'snn'));
 
     add_menu_page(
         $dynamic_title,
@@ -16,7 +16,7 @@ function snn_add_menu_page() {
 add_action('admin_menu', 'snn_add_menu_page');
 
 function snn_settings_page_callback() {
-    $dynamic_title = get_option('snn_menu_title', __('SNN Settings', 'snn'));
+    $dynamic_title = get_option('snn_menu_title', __('DW Settings', 'snn'));
     ?>
     <div class="wrap">
         <h1><?php echo esc_html($dynamic_title); ?> - <?php _e('Bricks Builder Child Theme Settings', 'snn'); ?></h1>
@@ -169,13 +169,13 @@ function snn_register_settings() {
 add_action('admin_init', 'snn_register_settings');
 
 function snn_general_section_callback() {
-    echo '<p>' . esc_html__('General setting for the SNN menu page.', 'snn') . '</p>';
+    echo '<p>' . esc_html__('General setting for the DW menu page.', 'snn') . '</p>';
 }
 
 function snn_menu_title_field_callback() {
-    $menu_title = get_option('snn_menu_title', __('SNN Settings', 'snn'));
+    $menu_title = get_option('snn_menu_title', __('DW Settings', 'snn'));
     echo '<input type="text" name="snn_menu_title" value="' . esc_attr($menu_title) . '" class="regular-text">';
-    echo '<p>' . esc_html__('You can rename SNN Settings title.', 'snn') . '</p>';
+    echo '<p>' . esc_html__('You can rename DW Settings title.', 'snn') . '</p>';
 }
 
 function mytheme_customize_register( $wp_customize ) {

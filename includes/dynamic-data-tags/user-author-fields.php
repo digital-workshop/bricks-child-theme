@@ -32,7 +32,7 @@ function add_dynamic_user_field_tags_to_builder($tags) {
         $tags[] = [
             'name'  => "{current_user_field:$field}",
             'label' => "Current User - $label",
-            'group' => 'SNN', // Group name in Bricks Builder.
+            'group' => 'DW', // Group name in Bricks Builder.
         ];
     }
 

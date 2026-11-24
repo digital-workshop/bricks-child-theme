@@ -37,7 +37,7 @@ function add_child_post_count_tags_to_builder($tags) {
         $tags[] = [
             'name'  => $tag_name,
             'label' => "Child Post Count ($level_label)",
-            'group' => 'SNN',
+            'group' => 'DW',
         ];
     }
 
@@ -51,7 +51,7 @@ function add_child_post_count_tags_to_builder($tags) {
             $tags[] = [
                 'name'  => $tag_name,
                 'label' => "Child Post Count: {$pt->label} ($level_label)",
-                'group' => 'SNN',
+                'group' => 'DW',
             ];
         }
     }

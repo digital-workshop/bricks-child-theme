@@ -22,7 +22,7 @@ function add_total_video_duration_tag_to_builder($tags) {
     $tags[] = [
         'name'  => '{total_video_duration}',
         'label' => 'Total Video Duration (Parent + Children)',
-        'group' => 'SNN',
+        'group' => 'DW',
     ];
 
     return $tags;

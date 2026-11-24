@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Admin side of the MCP server (see mcp-server.php):
  *  - the OAuth consent screen (admin.php?page=snn-mcp-authorize), and
- *  - the settings page under SNN Settings (admin.php?page=snn-mcp).
+ *  - the settings page under DW Settings (admin.php?page=snn-mcp).
  */
 
 // ----------------------------------------------------------------------
@@ -59,7 +59,7 @@ function snn_mcp_consent_screen() {
     $user = wp_get_current_user();
     if ( ! snn_mcp_user_is_allowed( $user->ID ) ) {
         wp_die(
-            esc_html__( 'Your user account may not allow AI connections. An administrator can change this under SNN Settings → AI Connection (MCP).', 'snn' ),
+            esc_html__( 'Your user account may not allow AI connections. An administrator can change this under DW Settings → AI Connection (MCP).', 'snn' ),
             '',
             array( 'response' => 403 )
         );

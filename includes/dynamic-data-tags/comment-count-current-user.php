@@ -27,13 +27,13 @@ function register_comment_count_current_user_tag($tags) {
     $tags[] = [
         'name'  => '{comment_count_current_user}',
         'label' => 'Comment Count (Current User)',
-        'group' => 'SNN',
+        'group' => 'DW',
     ];
 
     $tags[] = [
         'name'  => '{comment_count_current_user:month}',
         'label' => 'Comment Count (Current User) - Current Month',
-        'group' => 'SNN',
+        'group' => 'DW',
     ];
 
     return $tags;

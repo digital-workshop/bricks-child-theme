@@ -66,7 +66,7 @@ function add_get_contextual_content_tags_to_builder($tags) {
         $tags[] = [
             'name'  => "{get_contextual_content:$type}",
             'label' => $label,
-            'group' => 'SNN',
+            'group' => 'DW',
         ];
     }
 
@@ -82,7 +82,7 @@ function add_get_contextual_content_tags_to_builder($tags) {
         $tags[] = [
             'name'  => "{get_contextual_content:$type}",
             'label' => $label,
-            'group' => 'SNN',
+            'group' => 'DW',
         ];
     }
 

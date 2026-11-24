@@ -14,7 +14,7 @@ function snn_is_cookie_banner_enabled() {
 function snn_add_cookie_settings_submenu() {
     add_submenu_page(
         'snn-settings',               
-        __('SNN Cookie Settings', 'snn'),        
+        __('DW Cookie Settings', 'snn'),        
         __('Cookie Settings', 'snn'),          
         'manage_options',          
         'snn-cookie-settings',      

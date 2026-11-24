@@ -49,7 +49,7 @@ function add_attachment_metadata_tags_to_builder($tags) {
         $tags[] = [
             'name'  => "{attachment_metadata:$field}",
             'label' => $label,
-            'group' => 'SNN',
+            'group' => 'DW',
         ];
     }
 

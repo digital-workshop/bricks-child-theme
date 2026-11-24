@@ -38,7 +38,7 @@ function add_first_child_post_tags_to_builder($tags) {
         $tags[] = [
             'name'  => $tag_name,
             'label' => $label,
-            'group' => 'SNN',
+            'group' => 'DW',
         ];
     }
 

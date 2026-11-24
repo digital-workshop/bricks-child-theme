@@ -22,7 +22,7 @@ function add_single_video_duration_tag_to_builder($tags) {
     $tags[] = [
         'name'  => '{single_video_duration}',
         'label' => 'Single Video Duration',
-        'group' => 'SNN',
+        'group' => 'DW',
     ];
 
     return $tags;

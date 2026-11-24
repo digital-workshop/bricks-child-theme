@@ -2753,8 +2753,8 @@ msgid "General Settings"
 msgstr "Allgemeine Einstellungen"
 
 #: includes/features/settings-page.php:171
-msgid "General setting for the SNN menu page."
-msgstr "Allgemeine Einstellung für die SNN-Menüseite."
+msgid "General setting for the DW menu page."
+msgstr "Allgemeine Einstellung für die DW-Menüseite."
 
 #: includes/features/editor-settings-panel-clamp.php:10
 msgid "Generate CSS clamp() values for responsive typography and spacing. Copy the generated value or save it directly to Bricks Global Variables for easy reuse. (Do not forget to match your HTML font-size with clamp. Go to: Theme Styles > Typography > HTML font-size)"
@@ -4676,14 +4676,14 @@ msgid "SMTP host is required. Please configure your SMTP settings."
 msgstr "SMTP-Host ist erforderlich. Bitte konfiguriere deine SMTP-Einstellungen."
 
 #: includes/features/cookie-banner.php:17
-msgid "SNN Cookie Settings"
-msgstr "SNN Cookie-Einstellungen"
+msgid "DW Cookie Settings"
+msgstr "DW Cookie-Einstellungen"
 
 #: includes/features/settings-page.php:4
 #: includes/features/settings-page.php:19
 #: includes/features/settings-page.php:175
-msgid "SNN Settings"
-msgstr "SNN-Einstellungen"
+msgid "DW Settings"
+msgstr "DW-Einstellungen"
 
 #: includes/features/editor-settings-panel-bricks.php:31
 msgid "SNN-BRX"
@@ -6274,8 +6274,8 @@ msgid "You can now edit this draft. When ready, click \"Sync with Original\" to 
 msgstr "Du kannst diesen Entwurf jetzt bearbeiten. Klicke auf \"Mit Original synchronisieren\", sobald du fertig bist, um den Original-Beitrag zu aktualisieren."
 
 #: includes/features/settings-page.php:177
-msgid "You can rename SNN Settings title."
-msgstr "Du kannst den Titel der SNN-Einstellungen umbenennen."
+msgid "You can rename DW Settings title."
+msgstr "Du kannst den Titel der DW-Einstellungen umbenennen."
 
 #: includes/features/login-settings.php:131
 msgid "You can use HTML tags in this text."
@@ -6324,8 +6324,8 @@ msgid "Your mail server address. mail.yourdomain.com"
 msgstr "Die Adresse deines Mailservers. mail.yourdomain.com"
 
 #: includes/features/mcp-server-admin.php:62
-msgid "Your user account may not allow AI connections. An administrator can change this under SNN Settings → AI Connection (MCP)."
-msgstr "Dein Benutzerkonto darf keine KI-Verbindungen erlauben. Ein Administrator kann das unter SNN Settings → KI-Verbindung (MCP) ändern."
+msgid "Your user account may not allow AI connections. An administrator can change this under DW Settings → AI Connection (MCP)."
+msgstr "Dein Benutzerkonto darf keine KI-Verbindungen erlauben. Ein Administrator kann das unter DW Settings → KI-Verbindung (MCP) ändern."
 
 #: includes/elements/gsap-multi-element-register.php:42
 msgid "Zoom In"
@@ -6569,6 +6569,14 @@ msgstr "⚠ WARNUNG – Du kannst mehrere Rollen zuweisen, aber sich überlappen
 #: includes/features/media-image-opt.php:2841
 msgid "🔍 Debug: Raw Metadata"
 msgstr "🔍 Debug: Rohe Metadaten"
+
+#: includes/features/analytics.php
+msgid "Analytics Module"
+msgstr "Analytics-Modul"
+
+#: includes/features/analytics.php
+msgid "Master switch. When turned off, Analytics is disabled completely: no pageviews or link clicks are recorded and the Analytics menu item is hidden. Previously collected data is kept and shows again when you turn this back on."
+msgstr "Hauptschalter. Ist er aus, ist Analytics komplett deaktiviert: Es werden weder Seitenaufrufe noch Link-Klicks erfasst und der Menüpunkt „Analytics“ ist ausgeblendet. Bereits gesammelte Daten bleiben erhalten und erscheinen wieder, sobald du den Schalter einschaltest."
 
 #: includes/features/analytics.php
 msgid "Analytics Module"

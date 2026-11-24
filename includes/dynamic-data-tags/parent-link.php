@@ -62,7 +62,7 @@ function register_parent_link_tag($tags) {
             $tags[] = [
                 'name'  => $tag_name,
                 'label' => $option_label . $property_label,
-                'group' => 'SNN',
+                'group' => 'DW',
             ];
         }
     }

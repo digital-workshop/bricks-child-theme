@@ -24,7 +24,7 @@ function add_post_term_count_tags_to_builder($tags) {
         $tags[] = [
             'name'  => "{post_term_count:{$post_type->name}}",
             'label' => "Count of {$post_type->label}",
-            'group' => 'SNN', // Group name in Bricks Builder.
+            'group' => 'DW', // Group name in Bricks Builder.
         ];
     }
 
@@ -34,7 +34,7 @@ function add_post_term_count_tags_to_builder($tags) {
         $tags[] = [
             'name'  => "{post_term_count:{$taxonomy->name}}",
             'label' => "Count of Terms in {$taxonomy->label}",
-            'group' => 'SNN', // Group name in Bricks Builder.
+            'group' => 'DW', // Group name in Bricks Builder.
         ];
     }
 

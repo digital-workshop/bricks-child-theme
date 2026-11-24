@@ -13,7 +13,7 @@ function add_taxonomy_term_slug_tag_to_builder( $tags ) {
     $tags[] = [
         'name'  => '{taxonomy_term_slug}',
         'label' => 'Taxonomy Term Slug',
-        'group' => 'SNN BRX',
+        'group' => 'DW',
     ];
     return $tags;
 }

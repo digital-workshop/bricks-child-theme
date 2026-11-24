@@ -33,7 +33,7 @@ function add_dynamic_post_custom_field_tags_to_builder($tags) {
         $tags[] = [
             'name'  => "{snn_custom_field_current_post_output:$field}",
             'label' => "Current Post Custom Field - $label",
-            'group' => 'SNN', // Group name in Bricks Builder.
+            'group' => 'DW', // Group name in Bricks Builder.
         ];
     }
 

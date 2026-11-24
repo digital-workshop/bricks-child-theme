@@ -17,7 +17,7 @@ function add_parent_post_count_tags_to_builder($tags) {
         $tags[] = [
             'name'  => "{parent_post_count:{$pt->name}}",
             'label' => "Parent Post Count: {$pt->label}",
-            'group' => 'SNN',
+            'group' => 'DW',
         ];
     }
     return $tags;
