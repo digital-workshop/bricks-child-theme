@@ -127,6 +127,9 @@ function snn_analytics_clicks_excluded_hosts() {
  * check (the click arrives through admin-ajax).
  */
 function snn_analytics_clicks_should_track() {
+    if ( ! snn_analytics_module_enabled() ) {
+        return false;
+    }
     if ( empty( snn_analytics_get_options()['enabled'] ) ) {
         return false;
     }

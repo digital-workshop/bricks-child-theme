@@ -6570,3 +6570,11 @@ msgstr "⚠ WARNUNG – Du kannst mehrere Rollen zuweisen, aber sich überlappen
 msgid "🔍 Debug: Raw Metadata"
 msgstr "🔍 Debug: Rohe Metadaten"
 
+#: includes/features/analytics.php
+msgid "Analytics Module"
+msgstr "Analytics-Modul"
+
+#: includes/features/analytics.php
+msgid "Master switch. When turned off, Analytics is disabled completely: no pageviews or link clicks are recorded and the Analytics menu item is hidden. Previously collected data is kept and shows again when you turn this back on."
+msgstr "Hauptschalter. Ist er aus, ist Analytics komplett deaktiviert: Es werden weder Seitenaufrufe noch Link-Klicks erfasst und der Menüpunkt „Analytics“ ist ausgeblendet. Bereits gesammelte Daten bleiben erhalten und erscheinen wieder, sobald du den Schalter einschaltest."
+

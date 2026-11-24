@@ -6458,3 +6458,11 @@ msgstr ""
 msgid "🔍 Debug: Raw Metadata"
 msgstr ""
 
+#: includes/features/analytics.php
+msgid "Analytics Module"
+msgstr ""
+
+#: includes/features/analytics.php
+msgid "Master switch. When turned off, Analytics is disabled completely: no pageviews or link clicks are recorded and the Analytics menu item is hidden. Previously collected data is kept and shows again when you turn this back on."
+msgstr ""
+

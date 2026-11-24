@@ -21,6 +21,7 @@ function snn_admin_ui_design_page_slugs() {
         'snn-cookie-settings',
         'snn-redirects',
         'snn-mcp',
+        'snn-analytics-settings',
     );
 }
 

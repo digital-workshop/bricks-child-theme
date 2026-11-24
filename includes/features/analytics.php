@@ -25,6 +25,7 @@ function snn_analytics_markers_table() {
 
 function snn_analytics_get_options() {
     $defaults = array(
+        'module_enabled' => true,
         'enabled'        => true,
         'excluded_roles' => array( 'administrator' ),
         'ip_exclusion'   => array(),
@@ -33,6 +34,15 @@ function snn_analytics_get_options() {
     );
     $options = get_option( SNN_ANALYTICS_OPTIONS_KEY, array() );
     return wp_parse_args( is_array( $options ) ? $options : array(), $defaults );
+}
+
+/**
+ * Master switch: when off, the whole Analytics module is inert -- no tracking
+ * (pageviews or link clicks), no top-level Analytics menu. Stored data is
+ * kept; the settings page stays reachable to switch it back on.
+ */
+function snn_analytics_module_enabled() {
+    return ! empty( snn_analytics_get_options()['module_enabled'] );
 }
 
 /**
@@ -199,6 +209,9 @@ function snn_analytics_is_ip_excluded() {
 }
 
 function snn_analytics_should_track() {
+    if ( ! snn_analytics_module_enabled() ) {
+        return false;
+    }
     if ( empty( snn_analytics_get_options()['enabled'] ) ) {
         return false;
     }
@@ -585,6 +598,9 @@ function snn_analytics_query_social_breakdown( $start, $end ) {
 // ----------------------------------------------------------------------
 
 function snn_analytics_add_submenu() {
+    if ( ! snn_analytics_module_enabled() ) {
+        return;
+    }
     // Own top-level menu item, positioned right after "Dashboard" (position 2)
     // and before "Posts" (position 5), so it's immediately visible without
     // digging into theme settings or the Dashboard submenu flyout.
@@ -888,8 +904,10 @@ function snn_analytics_handle_form_submit() {
 
     $retention_days = isset( $_POST['retention_days'] ) ? max( 1, absint( $_POST['retention_days'] ) ) : 400;
     $enabled        = isset( $_POST['enabled'] ) ? 1 : 0;
+    $module_enabled = isset( $_POST['module_enabled'] ) ? 1 : 0;
 
     update_option( SNN_ANALYTICS_OPTIONS_KEY, array(
+        'module_enabled' => $module_enabled,
         'enabled'        => $enabled,
         'excluded_roles' => $excluded_roles,
         'ip_exclusion'   => $ip_exclusion,
@@ -1130,6 +1148,13 @@ function snn_analytics_settings_page() {
         <form method="post" class="snn-analytics-settings-wrap">
             <?php wp_nonce_field( 'snn_analytics_save_settings_action', 'snn_analytics_nonce' ); ?>
             <table class="form-table">
+                <tr>
+                    <th><?php esc_html_e( 'Analytics Module', 'snn' ); ?></th>
+                    <td>
+                        <label class="snn-admin-toggle"><input type="checkbox" name="module_enabled" value="1" <?php checked( ! empty( $options['module_enabled'] ) ); ?>><span class="snn-admin-toggle-slider"></span></label>
+                        <p class="description"><?php esc_html_e( 'Master switch. When turned off, Analytics is disabled completely: no pageviews or link clicks are recorded and the Analytics menu item is hidden. Previously collected data is kept and shows again when you turn this back on.', 'snn' ); ?></p>
+                    </td>
+                </tr>
                 <tr>
                     <th><?php esc_html_e( 'Enable Analytics', 'snn' ); ?></th>
                     <td>

@@ -2,6 +2,12 @@
 
 Alle wichtigen Änderungen am Theme. Ältere Versionen (vor 1.0) sind auf der [Releases-Seite](https://github.com/digital-workshop/bricks-child-theme/releases) dokumentiert.
 
+## [1.1.2] – 2026-11-24
+
+### Neu
+
+- **Analytics komplett abschaltbar:** Neuer Hauptschalter „Analytics-Modul“ in den Analytics-Einstellungen. Ist er aus, werden weder Seitenaufrufe noch Link-Klicks erfasst und der Menüpunkt „Analytics“ ist ausgeblendet. Gespeicherte Daten bleiben erhalten.
+
 ## [1.1.1] – 2026-11-06
 
 ### Behoben
